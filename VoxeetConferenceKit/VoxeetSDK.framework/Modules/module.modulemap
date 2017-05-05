@@ -1,0 +1,10 @@
+framework module VoxeetSDK {
+  umbrella header "VoxeetSDK.h"
+
+  export *
+  module * { export * }
+}
+
+module VoxeetSDK.Swift {
+    header "VoxeetSDK-Swift.h"
+}

@@ -1,0 +1,10 @@
+framework module VoxeetConferenceKit {
+  umbrella header "VoxeetConferenceKit.h"
+
+  export *
+  module * { export * }
+}
+
+module VoxeetConferenceKit.Swift {
+    header "VoxeetConferenceKit-Swift.h"
+}

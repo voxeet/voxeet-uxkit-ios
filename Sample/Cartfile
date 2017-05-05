@@ -1,0 +1,2 @@
+# Kingfisher is a lightweight, pure-Swift library for downloading and caching images from the web.
+github "onevcat/Kingfisher"
