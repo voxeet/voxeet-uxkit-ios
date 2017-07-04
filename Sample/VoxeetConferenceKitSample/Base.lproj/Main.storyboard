@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -21,38 +21,89 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="IXU-Lm-BEs">
-                                <rect key="frame" x="36" y="70" width="303" height="75"/>
-                                <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Conference_name" borderStyle="roundedRect" placeholder="Conference name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3MD-zC-871">
-                                        <rect key="frame" x="0.0" y="0.0" width="303" height="30"/>
-                                        <nil key="textColor"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qjk-1y-2Fc">
-                                        <rect key="frame" x="0.0" y="45" width="303" height="30"/>
-                                        <state key="normal" title="Join conference"/>
-                                        <connections>
-                                            <action selector="joinConferenceAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GcY-K0-4lQ"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                            </stackView>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lU2-l0-PXU">
+                                <rect key="frame" x="0.0" y="383" width="375" height="216"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="777-B8-8no"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="nDK-EW-Zxg"/>
+                                </connections>
+                            </pickerView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qjk-1y-2Fc">
+                                <rect key="frame" x="16" y="599" width="343" height="48"/>
+                                <color key="backgroundColor" red="0.41568627450000001" green="0.73333333329999995" blue="0.27058823529999998" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="4uZ-8X-1Gf"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
+                                <state key="normal" title="Start">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="joinConferenceAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GcY-K0-4lQ"/>
+                                </connections>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Conference_name" borderStyle="roundedRect" placeholder="Conference name" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="3MD-zC-871">
+                                <rect key="frame" x="16" y="302" width="343" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="Ory-2R-Mn6"/>
+                                </connections>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select your user:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ULV-U8-11J">
+                                <rect key="frame" x="16" y="364" width="343" height="29"/>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Conference name:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8IF-aL-FdX">
+                                <rect key="frame" x="16" y="257" width="343" height="29"/>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Voxeet-logo-dev" translatesAutoresizingMaskIntoConstraints="NO" id="ZS3-Qv-TI9">
+                                <rect key="frame" x="127.5" y="30" width="120" height="120"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="IXU-Lm-BEs" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="50" id="6xC-5r-hhY"/>
-                            <constraint firstItem="IXU-Lm-BEs" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="CaX-u1-ePD"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="IXU-Lm-BEs" secondAttribute="trailing" constant="20" id="FtM-O1-MZL"/>
+                            <constraint firstItem="3MD-zC-871" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="1f0-EM-766"/>
+                            <constraint firstItem="lU2-l0-PXU" firstAttribute="top" secondItem="ULV-U8-11J" secondAttribute="bottom" constant="-10" id="5YA-d9-7Xg"/>
+                            <constraint firstItem="ULV-U8-11J" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="BGI-5g-aSS"/>
+                            <constraint firstItem="3MD-zC-871" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="BVX-xK-4t3"/>
+                            <constraint firstItem="8IF-aL-FdX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="FNI-UZ-48g"/>
+                            <constraint firstAttribute="trailing" secondItem="lU2-l0-PXU" secondAttribute="trailing" id="HnX-uH-cQ2"/>
+                            <constraint firstItem="ZS3-Qv-TI9" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Kao-dn-an9"/>
+                            <constraint firstItem="8IF-aL-FdX" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="OYP-x0-fEz"/>
+                            <constraint firstItem="ULV-U8-11J" firstAttribute="top" secondItem="3MD-zC-871" secondAttribute="bottom" constant="32" id="PCe-Da-5c3"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ULV-U8-11J" secondAttribute="trailing" id="Rm6-dD-2Xw"/>
+                            <constraint firstItem="lU2-l0-PXU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Uks-8P-Trg"/>
+                            <constraint firstItem="Qjk-1y-2Fc" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="aS0-BU-Thj"/>
+                            <constraint firstItem="Qjk-1y-2Fc" firstAttribute="top" secondItem="lU2-l0-PXU" secondAttribute="bottom" id="bG8-Dz-c5F"/>
+                            <constraint firstItem="Qjk-1y-2Fc" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="ec7-0Q-OcY"/>
+                            <constraint firstItem="ZS3-Qv-TI9" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="10" id="kWw-x9-2dD"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Qjk-1y-2Fc" secondAttribute="bottom" constant="20" id="pJd-ZJ-HZe"/>
+                            <constraint firstItem="3MD-zC-871" firstAttribute="top" secondItem="8IF-aL-FdX" secondAttribute="bottom" constant="16" id="plU-50-ovr"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="conferenceIDTextField" destination="3MD-zC-871" id="iJZ-hc-WFV"/>
+                        <outlet property="conferenceNameTextField" destination="3MD-zC-871" id="PMl-58-j8U"/>
+                        <outlet property="participantsPickerView" destination="lU2-l0-PXU" id="QvE-LT-O3B"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="24.375" y="34.859154929577464"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Voxeet-logo-dev" width="120" height="120"/>
+    </resources>
 </document>
