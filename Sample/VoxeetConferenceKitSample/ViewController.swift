@@ -23,7 +23,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         // Set up participants.
-        participants.append(VoxeetParticipant(id: "", name: "- - - - - - - - - - - - - - -", avatarURL: nil)) // Logout participant.
+        participants.append(VoxeetParticipant(id: "", name: "None", avatarURL: nil)) // Logout participant.
         participants.append(VoxeetParticipant(id: "1", name: "Benoit", avatarURL: URL(string: "https://cdn.voxeet.com/images/team-benoit-senard.png")))
         participants.append(VoxeetParticipant(id: "2", name: "Stephane", avatarURL: URL(string: "https://cdn.voxeet.com/images/team-stephane-giraudie.png")))
         participants.append(VoxeetParticipant(id: "3", name: "Corentin", avatarURL: URL(string: "https://cdn.voxeet.com/images/team-corentin.png")))
