@@ -143,7 +143,7 @@ extension AppDelegate {
 VoxeetConferenceKit.shared.initialize(consumerKey: "consumerKey", consumerSecret: "consumerSecret")
 
 // With all parameters.
-VoxeetConferenceKit.shared.initializeSDK(consumerKey: "consumerKey", consumerSecret: "consumerSecret", userInfo: nil, connectSession: true)
+VoxeetConferenceKit.shared.initialize(consumerKey: "consumerKey", consumerSecret: "consumerSecret", userInfo: nil, connectSession: true)
 ```
 
 If you use external login like O365, LDAP, or custom login to retrieve contact details it's possible to also add your contact ID with the display name, the photo URL avatar and any kind of extra information.
@@ -220,8 +220,8 @@ If you have correctly generated a VoIP certificate and invite is true, it will r
 var users = [VTUser]()
 
 users.append(VTUser(id: "111", name: "Benoit", photoURL: "https://cdn.voxeet.com/images/team-benoit-senard.png"))
-        users.append(VTUser(id: "222", name: "Stephane", photoURL: "https://cdn.voxeet.com/images/team-stephane-giraudie.png"))
-        users.append(VTUser(id: "333", name: "Thomas", photoURL: "https://cdn.voxeet.com/images/team-thomas.png"))
+users.append(VTUser(id: "222", name: "Stephane", photoURL: "https://cdn.voxeet.com/images/team-stephane-giraudie.png"))
+users.append(VTUser(id: "333", name: "Thomas", photoURL: "https://cdn.voxeet.com/images/team-thomas.png"))
 
 VoxeetConferenceKit.shared.startConference(id: "conferenceID", users: users, invite: true, success: { (json) in
 }, fail: { (error) in
