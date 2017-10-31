@@ -7,16 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CC26652C1F2B2DBA0077CFF5 /* CallKitOnHold.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CC26652B1F2B2DBA0077CFF5 /* CallKitOnHold.mp3 */; };
+		CC6477081FA8D679005891DD /* VoxeetConferenceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC6477061FA8D679005891DD /* VoxeetConferenceKit.framework */; };
+		CC6477091FA8D679005891DD /* VoxeetConferenceKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CC6477061FA8D679005891DD /* VoxeetConferenceKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CC64770A1FA8D679005891DD /* VoxeetSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC6477071FA8D679005891DD /* VoxeetSDK.framework */; };
+		CC64770B1FA8D679005891DD /* VoxeetSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CC6477071FA8D679005891DD /* VoxeetSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CC8B8B071E8E3C0600AEDD3B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8B8B061E8E3C0600AEDD3B /* AppDelegate.swift */; };
 		CC8B8B091E8E3C0600AEDD3B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8B8B081E8E3C0600AEDD3B /* ViewController.swift */; };
 		CC8B8B0C1E8E3C0600AEDD3B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC8B8B0A1E8E3C0600AEDD3B /* Main.storyboard */; };
 		CC8B8B0E1E8E3C0600AEDD3B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC8B8B0D1E8E3C0600AEDD3B /* Assets.xcassets */; };
 		CC8B8B111E8E3C0600AEDD3B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC8B8B0F1E8E3C0600AEDD3B /* LaunchScreen.storyboard */; };
 		CCADC3CA1EBA0A8200B85516 /* CallKitSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CCADC3C91EBA0A8200B85516 /* CallKitSound.mp3 */; };
-		CCC53A7A1F0D28B100372027 /* VoxeetConferenceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCC53A781F0D28B100372027 /* VoxeetConferenceKit.framework */; };
-		CCC53A7B1F0D28B100372027 /* VoxeetConferenceKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CCC53A781F0D28B100372027 /* VoxeetConferenceKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		CCC53A7C1F0D28B100372027 /* VoxeetSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCC53A791F0D28B100372027 /* VoxeetSDK.framework */; };
-		CCC53A7D1F0D28B100372027 /* VoxeetSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CCC53A791F0D28B100372027 /* VoxeetSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CCD0ED631EAF97DC00612478 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCD0ED621EAF97DC00612478 /* Kingfisher.framework */; };
 		CCD3DBB21ECB2A04007CC2C1 /* VoxeetConferenceKitSampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD3DBB11ECB2A04007CC2C1 /* VoxeetConferenceKitSampleUITests.swift */; };
 /* End PBXBuildFile section */
@@ -32,14 +33,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		CC5AA7681F02598E0032D5AF /* Embed Frameworks */ = {
+		CC64770C1FA8D67A005891DD /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				CCC53A7D1F0D28B100372027 /* VoxeetSDK.framework in Embed Frameworks */,
-				CCC53A7B1F0D28B100372027 /* VoxeetConferenceKit.framework in Embed Frameworks */,
+				CC64770B1FA8D679005891DD /* VoxeetSDK.framework in Embed Frameworks */,
+				CC6477091FA8D679005891DD /* VoxeetConferenceKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -47,6 +48,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		CC26652B1F2B2DBA0077CFF5 /* CallKitOnHold.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CallKitOnHold.mp3; sourceTree = "<group>"; };
+		CC6477061FA8D679005891DD /* VoxeetConferenceKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VoxeetConferenceKit.framework; path = ../../VoxeetConferenceKit/VoxeetConferenceKit.framework; sourceTree = "<group>"; };
+		CC6477071FA8D679005891DD /* VoxeetSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VoxeetSDK.framework; path = ../../VoxeetConferenceKit/VoxeetSDK.framework; sourceTree = "<group>"; };
 		CC693E9D1EA9FD37004985B7 /* VoxeetConferenceKitSample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VoxeetConferenceKitSample.entitlements; sourceTree = "<group>"; };
 		CC8B8B031E8E3C0600AEDD3B /* VoxeetConferenceKitSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VoxeetConferenceKitSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC8B8B061E8E3C0600AEDD3B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -56,8 +60,6 @@
 		CC8B8B101E8E3C0600AEDD3B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CC8B8B121E8E3C0600AEDD3B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CCADC3C91EBA0A8200B85516 /* CallKitSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CallKitSound.mp3; sourceTree = "<group>"; };
-		CCC53A781F0D28B100372027 /* VoxeetConferenceKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VoxeetConferenceKit.framework; path = ../../VoxeetConferenceKit/VoxeetConferenceKit.framework; sourceTree = "<group>"; };
-		CCC53A791F0D28B100372027 /* VoxeetSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VoxeetSDK.framework; path = ../../VoxeetConferenceKit/VoxeetSDK.framework; sourceTree = "<group>"; };
 		CCD0ED621EAF97DC00612478 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = SOURCE_ROOT; };
 		CCD3DBAF1ECB2A04007CC2C1 /* VoxeetConferenceKitSampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VoxeetConferenceKitSampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCD3DBB11ECB2A04007CC2C1 /* VoxeetConferenceKitSampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoxeetConferenceKitSampleUITests.swift; sourceTree = "<group>"; };
@@ -69,8 +71,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CCC53A7C1F0D28B100372027 /* VoxeetSDK.framework in Frameworks */,
-				CCC53A7A1F0D28B100372027 /* VoxeetConferenceKit.framework in Frameworks */,
+				CC64770A1FA8D679005891DD /* VoxeetSDK.framework in Frameworks */,
+				CC6477081FA8D679005891DD /* VoxeetConferenceKit.framework in Frameworks */,
 				CCD0ED631EAF97DC00612478 /* Kingfisher.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -120,8 +122,8 @@
 		CC8B8B181E8E3C6A00AEDD3B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CCC53A791F0D28B100372027 /* VoxeetSDK.framework */,
-				CCC53A781F0D28B100372027 /* VoxeetConferenceKit.framework */,
+				CC6477071FA8D679005891DD /* VoxeetSDK.framework */,
+				CC6477061FA8D679005891DD /* VoxeetConferenceKit.framework */,
 				CCD0ED621EAF97DC00612478 /* Kingfisher.framework */,
 			);
 			name = Frameworks;
@@ -149,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				CCADC3C91EBA0A8200B85516 /* CallKitSound.mp3 */,
+				CC26652B1F2B2DBA0077CFF5 /* CallKitOnHold.mp3 */,
 			);
 			name = Sounds;
 			sourceTree = "<group>";
@@ -182,7 +185,7 @@
 				CC8B8B001E8E3C0600AEDD3B /* Frameworks */,
 				CC8B8B011E8E3C0600AEDD3B /* Resources */,
 				CCD0ED641EAF97EB00612478 /* Carthage Run Script */,
-				CC5AA7681F02598E0032D5AF /* Embed Frameworks */,
+				CC64770C1FA8D67A005891DD /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -218,7 +221,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0820;
+				LastUpgradeCheck = 0900;
 				ORGANIZATIONNAME = "Corentin Larroque";
 				TargetAttributes = {
 					CC8B8B021E8E3C0600AEDD3B = {
@@ -268,6 +271,7 @@
 			files = (
 				CC8B8B111E8E3C0600AEDD3B /* LaunchScreen.storyboard in Resources */,
 				CC8B8B0E1E8E3C0600AEDD3B /* Assets.xcassets in Resources */,
+				CC26652C1F2B2DBA0077CFF5 /* CallKitOnHold.mp3 in Resources */,
 				CC8B8B0C1E8E3C0600AEDD3B /* Main.storyboard in Resources */,
 				CCADC3CA1EBA0A8200B85516 /* CallKitSound.mp3 in Resources */,
 			);
@@ -357,7 +361,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -365,7 +371,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -395,6 +405,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -408,7 +419,9 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
@@ -416,7 +429,11 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -438,6 +455,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -446,7 +464,6 @@
 		CC8B8B161E8E3C0600AEDD3B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = VoxeetConferenceKitSample/VoxeetConferenceKitSample.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -455,21 +472,19 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/VoxeetConferenceKitSample",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
-					"$(PROJECT_DIR)/../VoxeetConferenceKit/",
+					"$(PROJECT_DIR)/../VoxeetConferenceKit",
 				);
 				INFOPLIST_FILE = VoxeetConferenceKitSample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.voxeet.VoxeetConferenceKitSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		CC8B8B171E8E3C0600AEDD3B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = VoxeetConferenceKitSample/VoxeetConferenceKitSample.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -478,14 +493,13 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/VoxeetConferenceKitSample",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
-					"$(PROJECT_DIR)/../VoxeetConferenceKit/",
+					"$(PROJECT_DIR)/../VoxeetConferenceKit",
 				);
 				INFOPLIST_FILE = VoxeetConferenceKitSample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.voxeet.VoxeetConferenceKitSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -499,7 +513,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.voxeet.VoxeetConferenceKitSampleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = VoxeetConferenceKitSample;
 			};
 			name = Debug;
@@ -514,7 +527,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.voxeet.VoxeetConferenceKitSampleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = VoxeetConferenceKitSample;
 			};
 			name = Release;

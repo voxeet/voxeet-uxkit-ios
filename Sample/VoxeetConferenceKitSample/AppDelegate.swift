@@ -20,8 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         VoxeetConferenceKit.shared.defaultBuiltInSpeaker = true
         VoxeetConferenceKit.shared.screenAutoLock = false
         
-        // Initialization of the Voxeet conference kit (open session later).
-        VoxeetConferenceKit.shared.initialize(consumerKey: "consumerKey", consumerSecret: "consumerSecret", automaticallyOpenSession: false)
+        // Initialization of the Voxeet conference kit (session connection is done later).
+        VoxeetConferenceKit.shared.initialize(consumerKey: "consumerKey", consumerSecret: "consumerSecret", connectSession: false)
         
         return true
     }
@@ -32,12 +32,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
  */
 
 extension AppDelegate {
-    /// Usefull bellow iOS 10.
+    /// Useful bellow iOS 10.
     func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
         VoxeetConferenceKit.shared.application(application, didReceive: notification)
     }
     
-    /// Usefull bellow iOS 10.
+    /// Useful bellow iOS 10.
     func application(_ application: UIApplication, handleActionWithIdentifier identifier: String?, for notification: UILocalNotification, completionHandler: @escaping () -> Void) {
         VoxeetConferenceKit.shared.application(application, handleActionWithIdentifier: identifier, for: notification, completionHandler: completionHandler)
     }

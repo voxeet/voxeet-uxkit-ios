@@ -7,4 +7,5 @@ framework module VoxeetConferenceKit {
 
 module VoxeetConferenceKit.Swift {
     header "VoxeetConferenceKit-Swift.h"
+    requires objc
 }

@@ -74,5 +74,6 @@ typedef enum{
 - (void)flipCamera;
 - (void)startVideo;
 - (void)stopVideo;
+- (void)resetAudioDevices;
 
 @end

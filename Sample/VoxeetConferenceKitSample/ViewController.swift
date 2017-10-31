@@ -16,21 +16,27 @@ let pickerViewRowNSUserDefaults = "pickerViewRowNSUserDefaults"
 class ViewController: UIViewController {
     @IBOutlet weak private var conferenceNameTextField: UITextField!
     @IBOutlet weak private var participantsPickerView: UIPickerView!
+    @IBOutlet weak private var startConferenceButton: UIButton!
     
-    fileprivate var participants = [VoxeetParticipant]()
+    private var users = [VTUser]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Set up participants.
-        participants.append(VoxeetParticipant(id: "", name: "None", avatarURL: nil)) // Logout participant.
-        participants.append(VoxeetParticipant(id: "1", name: "Benoit", avatarURL: URL(string: "https://cdn.voxeet.com/images/team-benoit-senard.png")))
-        participants.append(VoxeetParticipant(id: "2", name: "Stephane", avatarURL: URL(string: "https://cdn.voxeet.com/images/team-stephane-giraudie.png")))
-        participants.append(VoxeetParticipant(id: "3", name: "Corentin", avatarURL: URL(string: "https://cdn.voxeet.com/images/team-corentin.png")))
-        participants.append(VoxeetParticipant(id: "4", name: "Thomas", avatarURL: URL(string: "https://media.licdn.com/mpr/mpr/shrinknp_200_200/AAEAAQAAAAAAAAayAAAAJDQ4MTY5NGI3LWM0NjEtNGQ3Ny1iNjBjLTIzNTYwMDVjNjQzYg.jpg")))
+        users.append(VTUser()) // Logout.
+        users.append(VTUser(id: "111", name: "Benoit", photoURL: "https://cdn.voxeet.com/images/team-benoit-senard.png"))
+        users.append(VTUser(id: "222", name: "Stephane", photoURL: "https://cdn.voxeet.com/images/team-stephane-giraudie.png"))
+        users.append(VTUser(id: "333", name: "Thomas", photoURL: "https://cdn.voxeet.com/images/team-thomas.png"))
+        users.append(VTUser(id: "444", name: "Raphael", photoURL: "https://cdn.voxeet.com/images/team-raphael.png"))
+        users.append(VTUser(id: "555", name: "Julie", photoURL: "https://cdn.voxeet.com/images/team-julie-egglington.png"))
+        users.append(VTUser(id: "666", name: "Alexis", photoURL: "https://cdn.voxeet.com/images/team-alexis.png"))
+        users.append(VTUser(id: "777", name: "Barnabé", photoURL: "https://cdn.voxeet.com/images/team-barnabe.png"))
+        users.append(VTUser(id: "888", name: "Corentin", photoURL: "https://cdn.voxeet.com/images/team-corentin.png"))
+        users.append(VTUser(id: "999", name: "Romain", photoURL: "https://cdn.voxeet.com/images/team-romain.png"))
         
         // Pre-open a session with the previous participant used.
-        if let selectedRow = UserDefaults.standard.object(forKey: pickerViewRowNSUserDefaults) as? Int, selectedRow <= participants.count && selectedRow != 0 {
+        if let selectedRow = UserDefaults.standard.object(forKey: pickerViewRowNSUserDefaults) as? Int, selectedRow <= users.count && selectedRow != 0 {
             participantsPickerView.selectRow(selectedRow, inComponent: 0, animated: false)
             
             // Logs your user to Voxeet in order to receive VoIP push notifications or any Voxeet notifications before starting a conference.
@@ -38,52 +44,58 @@ class ViewController: UIViewController {
         }
     }
     
-    fileprivate func login(row: Int) {
+    private func login(row: Int) {
         participantsPickerView.isUserInteractionEnabled = false
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
-        // Close the previous session if there is one before oppening a new.
-        VoxeetConferenceKit.shared.closeSession { (error) in
-            // Open session with the current selected participant.
-            VoxeetConferenceKit.shared.openSession(participant: self.participants[row]) { (error) in
-                self.participantsPickerView.isUserInteractionEnabled = true
-                UIApplication.shared.isNetworkActivityIndicatorVisible = false
-            }
-        }
-    }
-    
-    fileprivate func logout() {
-        participantsPickerView.isUserInteractionEnabled = false
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-
-        VoxeetConferenceKit.shared.closeSession { (error) in
+        // Open session with the current selected participant.
+        VoxeetConferenceKit.shared.openSession(user: self.users[row]) { (error) in
             self.participantsPickerView.isUserInteractionEnabled = true
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
     }
     
-    @IBAction func joinConferenceAction(_ sender: Any) {
+    private func logout(completion: ((NSError?) -> Void)? = nil) {
+        participantsPickerView.isUserInteractionEnabled = false
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        
+        VoxeetConferenceKit.shared.closeSession { (error) in
+            self.participantsPickerView.isUserInteractionEnabled = true
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            
+            completion?(error)
+        }
+    }
+    
+    @IBAction func startConferenceAction(_ sender: Any) {
         guard let conferenceID = conferenceNameTextField.text else {
             print("[VoxeetConferenceKitSample] \(String(describing: self)).\(#function).\(#line) - Error: Invalid conference ID")
             return
         }
-        // Remove own participant.
-        let participants = self.participants.filter({ !$0.id.isEmpty && $0.id != self.participants[UserDefaults.standard.integer(forKey: pickerViewRowNSUserDefaults)].id })
         
-        // Initialize conference.
-        VoxeetConferenceKit.shared.initializeConference(id: conferenceID, participants: participants)
+        // Disable startConferenceButton during request network.
+        startConferenceButton.isEnabled = false
+        
+        // Get conference participants without own user.
+        let users = self.users.filter({ $0.externalID() != nil && $0.externalID() != self.users[UserDefaults.standard.integer(forKey: pickerViewRowNSUserDefaults)].externalID() })
         
         // Start and join conference.
-        VoxeetConferenceKit.shared.startConference(sendInvitation: true, success: { (json) in
+        VoxeetConferenceKit.shared.startConference(id: conferenceID, users: users, invite: true, success: { (json) in
+            // Re-enable startConferenceButton when the request finish.
+            self.startConferenceButton.isEnabled = true
+            
             // Debug.
             print("[VoxeetConferenceKitSample] \(String(describing: self)).\(#function).\(#line) - Conference successfully started")
         }, fail: { (error) in
             // Debug.
             print("[VoxeetConferenceKitSample] \(String(describing: self)).\(#function).\(#line) - Error: \(error)")
             
-            // Error message.
             DispatchQueue.main.async {
-                let alert = UIAlertController(title: "Error", message: "Something went wrong with the conference.", preferredStyle: UIAlertControllerStyle.alert)
+                // Re-enable startConferenceButton when the request finish.
+                self.startConferenceButton.isEnabled = true
+                
+                // Error message.
+                let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil))
                 self.present(alert, animated: true, completion: nil)
                 
@@ -111,7 +123,7 @@ extension ViewController: UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return participants.count
+        return users.count
     }
 }
 
@@ -125,13 +137,13 @@ extension ViewController: UIPickerViewDelegate {
         
         // Avatar image.
         let participantAvatar = UIImageView(frame: CGRect(x: 8, y: 5, width: 50, height: 50))
-        participantAvatar.kf.setImage(with: participants[row].avatarURL)
+        participantAvatar.kf.setImage(with: URL(string: users[row].externalPhotoURL() ?? ""))
         participantAvatar.layer.cornerRadius = participantAvatar.frame.width / 2
         participantAvatar.layer.masksToBounds = true
         
         // Label name.
         let participantName = UILabel(frame: CGRect(x: participantAvatar.frame.origin.x + participantAvatar.frame.width + 8, y: 0, width: pickerView.frame.width, height: 60))
-        participantName.text = participants[row].name
+        participantName.text = users[row].externalName()
         participantName.font = UIFont.systemFont(ofSize: 14)
         
         customView.addSubview(participantName)
@@ -141,8 +153,8 @@ extension ViewController: UIPickerViewDelegate {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if VoxeetSDK.shared.conference.hasLiveConference() != nil {
-            if let selectedRow = UserDefaults.standard.object(forKey: pickerViewRowNSUserDefaults) as? Int, selectedRow <= participants.count {
+        if VoxeetSDK.shared.conference.liveConferenceID() != nil {
+            if let selectedRow = UserDefaults.standard.object(forKey: pickerViewRowNSUserDefaults) as? Int, selectedRow <= users.count {
                 pickerView.selectRow(selectedRow, inComponent: 0, animated: true)
             }
             return
@@ -153,7 +165,9 @@ extension ViewController: UIPickerViewDelegate {
         UserDefaults.standard.synchronize()
         
         if row != 0 {
-            login(row: row)
+            logout { (error) in
+                self.login(row: row)
+            }
         } else {
             logout()
         }

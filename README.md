@@ -21,9 +21,9 @@ The VoxeetConferenceKit is a Swift project allowing users to:
 
 ## Requirements
 
-  - iOS 9+
-  - Xcode 8+
-  - Swift 3.1+
+  - iOS 9.0+
+  - Xcode 9.0+
+  - Swift 4.0+ / Objective-C
 
 ## Sample application
 
@@ -33,27 +33,27 @@ A sample application is available on this [public repository](https://github.com
 
 ## Project setup
 
-Before importing the VoxeetConferenceKit, here is a few things to do:
+Before implementing the VoxeetConferenceKit, there are a few things to do first:
 
-Disable **Bitcode** in your Xcode target settings: 'Build Settings' -> 'Enable Bitcode' -> No
+You need to disable **Bitcode** in your Xcode target settings: 'Build Settings' -> 'Enable Bitcode' -> No
 
-Enable **Background Modes**, go to your target settings -> 'Capabilities' -> 'Background Modes'
+Enable **background mode** (go to your target settings -> 'Capabilities' -> 'Background Modes')
 - Turn on 'Audio, AirPlay and Picture in Picture'  
-- Turn on 'Voice over IP'
+- Turn on 'Voice over IP' ([Xcode 9 bug missing](https://stackoverflow.com/a/46463150))
 
-If you want to support CallKit (receiving incoming call when application is killed) and VoIP push notifications, also enable **Push Notifications** (you will need to send your voip push certificates to Voxeet). Go to your target settings -> 'Capabilities' -> 'Push Notifications'
+If you want to support CallKit (receiving incoming call when application is killed) with VoIP push notification, enable 'Push Notifications' (you will need to send your [VoIP push certificate](https://developer.apple.com/account/ios/certificate/) to Voxeet).
 
 <p align=“center”>
 <img src="http://cdn.voxeet.com/images/VoxeetConferenceKitCapabilitiesXCode2.png" alt=“Capabilities” title=“Capabilities” width=“500”/>
 </p>
 
 Privacy **permissions**, in your plist add two new keys: 
-- Privacy - Camera Usage Description
 - Privacy - Microphone Usage Description
+- Privacy - Camera Usage Description
 
 ## Initializing the kit
 
-    You can get access to the entire VoxeetConferenceKit code if you want to have a full custom conference room. The only thing to do is to request access by sending an email to Voxeet.
+    You can access to the entire VoxeetConferenceKit code if you want to custom the conference room. The only thing to do is to request access by sending us an email.
 
 ### Carthage
 
@@ -85,7 +85,7 @@ Then in the general tab of your target, add the `VoxeetConferenceKit.framework` 
 ### Dependencies
 
 VoxeetConferenceKit is also using some external libraries like Kingfisher for downloading and caching images from the web (users' avatars).
-You can either download this framework at this link [Kingfisher](https://github.com/onevcat/Kingfisher) or install it with Carthage (or CocoaPods).
+You can either download this framework at [this link](https://github.com/onevcat/Kingfisher) or install it with Carthage (or CocoaPods).
 
 At the end 'Embedded Binaries' and 'Linked Frameworks and Libraries' sections should look like this:
 
@@ -95,7 +95,7 @@ At the end 'Embedded Binaries' and 'Linked Frameworks and Libraries' sections sh
 
 ## Integrating to your project
 
-In your `AppDelegate.swift` initialize the conference kit like this:
+In your `AppDelegate.swift` initialize the kit like this:
 
 ```swift
 import VoxeetConferenceKit
@@ -106,15 +106,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
-        // Initialization of the Voxeet conference kit (open session later).
-        VoxeetConferenceKit.shared.initialize(consumerKey: "consumerKey", consumerSecret: "consumerSecret", automaticallyOpenSession: false)
+        // Initialization of the Voxeet conference kit (connect the session later).
+        VoxeetConferenceKit.shared.initialize(consumerKey: "consumerKey", consumerSecret: "consumerSecret", connectSession: false)
         
         return true
     }
 }
 ```
 
-To support notifications add this extension to your AppDelegate:
+To support push notifications add this extension to your AppDelegate:
 
 ```swift
 /*
@@ -122,12 +122,12 @@ To support notifications add this extension to your AppDelegate:
  */
 
 extension AppDelegate {
-    /// Usefull bellow iOS 10.
+    /// Useful bellow iOS 10.
     func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
         VoxeetConferenceKit.shared.application(application, didReceive: notification)
     }
     
-    /// Usefull bellow iOS 10.
+    /// Useful bellow iOS 10.
     func application(_ application: UIApplication, handleActionWithIdentifier identifier: String?, for notification: UILocalNotification, completionHandler: @escaping () -> Void) {
         VoxeetConferenceKit.shared.application(application, handleActionWithIdentifier: identifier, for: notification, completionHandler: completionHandler)
     }
@@ -143,10 +143,11 @@ extension AppDelegate {
 VoxeetConferenceKit.shared.initialize(consumerKey: "consumerKey", consumerSecret: "consumerSecret")
 
 // With all parameters.
-VoxeetConferenceKit.shared.initializeSDK(consumerKey: "consumerKey", consumerSecret: "consumerSecret", userInfo: nil, automaticallyOpenSession: true)
+VoxeetConferenceKit.shared.initializeSDK(consumerKey: "consumerKey", consumerSecret: "consumerSecret", userInfo: nil, connectSession: true)
 ```
 
-If you use external login like O365, LDAP, or custom login to retrieve contact details it's possible to also add your contact ID with the display name, the photo URL avatar and any kind of extra information. This allows you to ask guest users to introduce themselves and provide their display name and for your authenticated users in your enterprise or for your clients the ID that can be retrieved from O365 (name, department, etc).
+If you use external login like O365, LDAP, or custom login to retrieve contact details it's possible to also add your contact ID with the display name, the photo URL avatar and any kind of extra information.
+This allows you to ask guest users to introduce themselves and provide their display name and for your authenticated users in your enterprise or for your clients the ID that can be retrieved from O365 (name, department, etc).
 
 ```swift
 VoxeetConferenceKit.shared.initialize(consumerKey: "consumerKey", consumerSecret: "consumerSecret", userInfo: ["externalId": "1234", "externalName": "User", "externalPhotoUrl": "http://voxeet.com/voxeet-logo.jpg"])
@@ -154,16 +155,19 @@ VoxeetConferenceKit.shared.initialize(consumerKey: "consumerKey", consumerSecret
 
 ### Openning a session *(manually)*
 
-Openning a session is like a login. However you need to have initialized the SDK with `automaticallyOpenSession` sets to **false**.
+Openning a session is like a login. However you need to have initialized the SDK with `connectSession` sets to **false**.
 
 ```swift
-let participant = VoxeetParticipant(id: "123456789", name: "John Smith", avatarURL: URL(string: "https://www.test.com/my-image.png"))
+import VoxeetSDK
+import VoxeetConferenceKit
 
-VoxeetConferenceKit.shared.openSession(participant: participant, completion: { (error) in
+let user = VTUser(id: "111", name: "Benoit", photoURL: "https://cdn.voxeet.com/images/team-benoit-senard.png")
+
+VoxeetConferenceKit.shared.openSession(user: user, completion: { (error) in
 })
 ```
 
-It is also possible to open a session with custom user information like this for example: ["externalName": "User", "externalPhotoUrl": "http://voxeet.com/voxeet-logo.jpg", "myCustomInfo": "test", ...].
+It is also possible to open a session with custom user information like this: ["externalName": "User", "externalPhotoUrl": "http://voxeet.com/voxeet-logo.jpg", "myCustomInfo": "test", ...].
 
 ```swift
 VoxeetConferenceKit.shared.openSession(userID: "123456789", userInfo: ["externalName": "John Smith"], completion: { (error) in
@@ -172,43 +176,29 @@ VoxeetConferenceKit.shared.openSession(userID: "123456789", userInfo: ["external
 
 ### Updating a session *(manually)*
 
-Updates current user information. You can use this method to update the user name, avatar URL or any other information you want.
+Updates current user information. You can use this method to update the user name, photo URL or any other information you want.
 
 ```swift
-let participant = VoxeetParticipant(id: "123456789", name: "John Bis", avatarURL: URL(string: "https://www.test.com/my-image.png"))
+let user = VTUser(id: "111", name: "John", photoURL: "https://cdn.voxeet.com/images/team-benoit-senard.png")
 
-VoxeetConferenceKit.shared.updateSession(participant: participant, completion: { (error) in
+VoxeetConferenceKit.shared.updateSession(user: user, completion: { (error) in
 })
 ```
 
 Or
 
 ```swift
-VoxeetConferenceKit.shared.updateSession(userID: "123456789", userInfo: ["externalName": "John Bis"], completion: { (error) in
+VoxeetConferenceKit.shared.updateSession(userID: "123456789", userInfo: ["externalName": "John"], completion: { (error) in
 })
 ```
 
 ### Closing a session *(manually)*
 
-Closing a session is like a logout, it will stop the socket and stop sending VoIP push notification.
+Closing a session is like a logout, it stops the socket and it also stops sending VoIP push notification.
 
 ```swift
 VoxeetConferenceKit.shared.closeSession(completion: { (error) in
 })
-```
-
-### Initialize conference
-
-Once the session is opened (automatically or manually) we can now initialized the conference.
-
-You can optionnally set some participants, they will appear in an inactive state as long as they don't join the conference.
-You can also update participants later with `add`, `remove` and `update` methods.
-
-```swift
-let participant1 = VoxeetParticipant(id: "11", name: "User 1", avatarURL: nil)
-let participant2 = VoxeetParticipant(id: "22", name: "User 2", avatarURL: nil)
-
-VoxeetConferenceKit.shared.initializeConference(id: "conferenceID", participants: [participant1, participant2])
 ```
 
 ### Start conference
@@ -216,15 +206,24 @@ VoxeetConferenceKit.shared.initializeConference(id: "conferenceID", participants
 Starts the conference. As soon as this method is called, the voxeet conference UI is displayed.
 
 ```swift
-VoxeetConferenceKit.shared.startConference(success: { (json) in
+VoxeetConferenceKit.shared.startConference(id: "conferenceID", success: { (json) in
 }, fail: { (error) in
 })
 ```
 
-You can also invite all participants previously initialized with sendInvitation sets to true. If you have correctly generated a VoIP certificate, it will ring through CallKit (above iOS 10) or with a classic VoIP push notification on the other hand.
+You can optionnally pass some users (they will appear in an inactive state if they haven't join the conference yet).
+You can also update users later with `add`, `remove` and `update` methods.
+
+If you have correctly generated a VoIP certificate and invite is true, it will ring through CallKit (above iOS 10) or with a classic VoIP push notification.
 
 ```swift
-VoxeetConferenceKit.shared.startConference(sendInvitation: true, success: { (json) in
+var users = [VTUser]()
+
+users.append(VTUser(id: "111", name: "Benoit", photoURL: "https://cdn.voxeet.com/images/team-benoit-senard.png"))
+        users.append(VTUser(id: "222", name: "Stephane", photoURL: "https://cdn.voxeet.com/images/team-stephane-giraudie.png"))
+        users.append(VTUser(id: "333", name: "Thomas", photoURL: "https://cdn.voxeet.com/images/team-thomas.png"))
+
+VoxeetConferenceKit.shared.startConference(id: "conferenceID", users: users, invite: true, success: { (json) in
 }, fail: { (error) in
 })
 ```
@@ -238,35 +237,35 @@ VoxeetConferenceKit.shared.stopConference(completion: { (error) in
 })
 ```
 
-### Participant management: Add
+### User management: Add
 
-Adds one participant to the conference (after starting a conference).
+Adds one user to the users' bar manually (conference needs to be started).
 
 ```swift
-let participant = VoxeetParticipant(id: "123456789", name: "John Smith", avatarURL: URL(string: "https://www.test.com/my-image.png"))
+let user = VTUser(id: "333", name: "Thomas", photoURL: "https://cdn.voxeet.com/images/team-thomas.png")
 
-VoxeetConferenceKit.shared.add(participant: participant)
+VoxeetConferenceKit.shared.add(user: user)
 ```
 
-### Participant management: Update
+### User management: Update
 
-Updates one/many participant(s) (after starting a conference).
+Updates a user's name, photo, ... (conference needs to be started).
 
 ```swift
-let participant = VoxeetParticipant(id: "123456789", name: "John Smith", avatarURL: URL(string: "https://www.test.com/my-image.png"))
+let user = VTUser(id: "333", name: "Raphael", photoURL: "https://cdn.voxeet.com/images/team-raphael.png")
 
-VoxeetConferenceKit.shared.update(participant: participant)
-VoxeetConferenceKit.shared.update(participants: [participant])
+VoxeetConferenceKit.shared.update(user: user)
+VoxeetConferenceKit.shared.update(users: [user])
 ```
 
-### Participant management: Remove
+### User management: Remove
 
-Removes one participant from the conference (after starting a conference).
+Removes one user from the users' bar manually (after starting a conference).
 
 ```swift
-let participant = VoxeetParticipant(id: "123456789", name: "John Smith", avatarURL: URL(string: "https://www.test.com/my-image.png"))
+let user = VTUser(id: "333", name: "Thomas", photoURL: "https://cdn.voxeet.com/images/team-thomas.png")
 
-VoxeetConferenceKit.shared.remove(participant: participant)
+VoxeetConferenceKit.shared.remove(user: user)
 ```
 
 ### Useful variables
@@ -277,13 +276,13 @@ Conference appear animation default starts maximized. If false, the conference w
 VoxeetConferenceKit.shared.appearMaximized = false
 ```
 
-The default behavior (true) start the conference on the built in speaker (main). If false, it will start on the built in receiver.
+The default behavior (false) start the conference on the built in receiver. If true, it will start on the built in speaker.
 
 ```swift
-VoxeetConferenceKit.shared.defaultBuiltInSpeaker = false
+VoxeetConferenceKit.shared.defaultBuiltInSpeaker = true
 ```
 
-Disable the screen automatic lock of the device if setted to false (in all case when the camera is activated, the screen can’t go to sleep).
+Disable the screen automatic lock of the device if setted to false (if a camera is active, the screen won't go to sleep).
 
 ```swift
 VoxeetConferenceKit.shared.screenAutoLock = false
@@ -291,16 +290,16 @@ VoxeetConferenceKit.shared.screenAutoLock = false
 
 ### CallKit sound and image
 
-If `CallKitSound.mp3` is override, the ringing sound will be your mp3 sound.
-Same as `IconMask.png`, if override it will replace the CallKit default one by your image (40x40 px).
+If `CallKitSound.mp3` is overridden, the ringing sound will be your mp3 sound.
+Same as `IconMask.png`, if overridden it will replace the CallKit default image by yours (40x40 px).
 
 ## Version
 
-1.0.1
+1.0.2
 
 ## Tech
 
-The Voxeet iOS SDK and Conference Kit use a number of open source projects to work properly:
+The Voxeet iOS SDK and conference Kit use a number of open source projects to work properly:
 
 * [Kingfisher](https://github.com/onevcat/Kingfisher) - Kingfisher is a lightweight, pure-Swift library for downloading and caching images from the web.
 * [Starscream](https://github.com/daltoniam/Starscream) - Starscream is a conforming WebSocket (RFC 6455) client library in Swift for iOS and OSX.

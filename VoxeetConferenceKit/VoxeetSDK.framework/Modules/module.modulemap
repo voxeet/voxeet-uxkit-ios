@@ -7,4 +7,5 @@ framework module VoxeetSDK {
 
 module VoxeetSDK.Swift {
     header "VoxeetSDK-Swift.h"
+    requires objc
 }
