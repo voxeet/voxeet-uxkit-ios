@@ -295,7 +295,7 @@ Same as `IconMask.png`, if overridden it will replace the CallKit default image 
 
 ## Version
 
-1.0.3
+1.0.4
 
 ## Tech
 

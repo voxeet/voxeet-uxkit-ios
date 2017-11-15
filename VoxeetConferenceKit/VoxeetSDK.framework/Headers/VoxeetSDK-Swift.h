@@ -238,9 +238,14 @@ SWIFT_CLASS("_TtC9VoxeetSDK12VTConference")
 @interface VTConference : NSObject
 /// Conference delegate.
 @property (nonatomic, weak) id <VTConferenceDelegate> _Nullable delegate;
-@property (nonatomic, readonly, strong) VTUser * _Nullable ownUser;
+/// Getting live conference ID (Voxeet internal identifier). If <code>nil</code> there isn’t any current conference.
+@property (nonatomic, readonly, copy) NSString * _Nullable id;
+/// Getting the live conference alias. If <code>nil</code> there isn’t any current conference.
+@property (nonatomic, readonly, copy) NSString * _Nullable alias;
+/// Gettings all current conference’s users.
 @property (nonatomic, readonly, copy) NSArray<VTUser *> * _Nonnull users;
 @property (nonatomic, readonly) enum VTConferenceState state;
+@property (nonatomic, readonly, strong) VTUser * _Nullable ownUser;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
 
@@ -261,15 +266,23 @@ SWIFT_CLASS("_TtC9VoxeetSDK12VTConference")
 ///
 - (void)demoWithCompletion:(void (^ _Nullable)(NSError * _Nullable))completion;
 /// Manually create a conference (the join method implicitly creates one if it’s not already created).
-/// \param parameters You can optionally pass some parameters when you create a conference such as <code>conferenceAlias</code> (example: <code>["conferenceAlias": "myCustomConferenceAlias", "conferenceType": "standard", "metadata": ...]</code>). Those parameters are specific to a conference (not to be confused with userInfos).
+/// \param parameters You can optionally pass some parameters when you create a conference such as <code>conferenceAlias</code> (example: <code>["conferenceAlias": "myCustomConferenceAlias", "conferenceType": "standard", "metadata": ...]</code>). Those parameters are specific to a conference (not to be confused with userInfo).
 ///
 /// \param success A block object to be executed when the server connection sequence ends. This block has no return value and takes a <code>[String: Any]?</code> argument which correspond to a JSON object.
 ///
 /// \param fail A block object to be executed when the server connection sequence ends. This block has no return value and takes a single <code>NSError</code> argument that indicates whether or not the connection to the server succeeded.
 ///
 - (void)createWithParameters:(NSDictionary<NSString *, id> * _Nullable)parameters success:(void (^ _Nullable)(NSDictionary<NSString *, id> * _Nullable))successCompletion fail:(void (^ _Nullable)(NSError * _Nonnull))failCompletion;
-/// Joining a conference with an ID (if the conference isn’t created yet, this method will automatically create a new one and joint it).
+/// Invite some users in a conference.
 /// \param conferenceID Conference ID.
+///
+/// \param ids User’s ids to invite.
+///
+/// \param completion A block object to be executed when the server connection sequence ends. This block has no return value and takes a single <code>NSError</code> argument that indicates whether or not the connection to the server succeeded.
+///
+- (void)inviteWithConferenceID:(NSString * _Nonnull)confID ids:(NSArray<NSString *> * _Nonnull)ids completion:(void (^ _Nullable)(NSError * _Nullable))completion;
+/// Joining a conference with an ID (if the conference isn’t created yet, this method will automatically create a new one and joint it).
+/// \param conferenceID Conference identifier retrieved from create response (also compatible with conference alias).
 ///
 /// \param video Starts own video when launching the conference (false by default).
 ///
@@ -284,6 +297,7 @@ SWIFT_CLASS("_TtC9VoxeetSDK12VTConference")
 /// \param completion A block object to be executed when the server connection sequence ends. This block has no return value and takes a single <code>NSError</code> argument that indicates whether or not the connection to the server succeeded.
 ///
 - (void)leaveWithCompletion:(void (^ _Nullable)(NSError * _Nullable))completion;
+- (void)declineWithConferenceID:(NSString * _Nonnull)confID completion:(void (^ _Nullable)(NSError * _Nullable))completion;
 /// Sending broadcast message to the current conference.
 /// \param message The string message that will be sent to the current conference.
 ///
@@ -332,15 +346,6 @@ SWIFT_CLASS("_TtC9VoxeetSDK12VTConference")
 /// \param fail A block object to be executed when the server connection sequence ends. This block has no return value and takes a single <code>NSError</code> argument that indicates whether or not the connection to the server succeeded.
 ///
 - (void)historiesWithNbEvents:(NSInteger)nbEvents success:(void (^ _Nullable)(NSArray * _Nullable))successCompletion fail:(void (^ _Nullable)(NSError * _Nonnull))failCompletion;
-/// Invite some users in a conference.
-/// \param conferenceID Conference ID.
-///
-/// \param ids User’s ids to invite.
-///
-/// \param completion A block object to be executed when the server connection sequence ends. This block has no return value and takes a single <code>NSError</code> argument that indicates whether or not the connection to the server succeeded.
-///
-- (void)inviteWithConferenceID:(NSString * _Nonnull)confID ids:(NSArray<NSString *> * _Nonnull)ids completion:(void (^ _Nullable)(NSError * _Nullable))completion;
-- (void)declineWithConferenceID:(NSString * _Nonnull)confID completion:(void (^ _Nullable)(NSError * _Nullable))completion;
 /// Start recording the current conference.
 /// \param conferenceID Conference ID.
 ///
@@ -376,7 +381,7 @@ SWIFT_CLASS("_TtC9VoxeetSDK12VTConference")
 ///
 /// returns:
 /// current conference ID.
-- (NSString * _Nullable)liveConferenceID SWIFT_WARN_UNUSED_RESULT;
+- (NSString * _Nullable)liveConferenceID SWIFT_WARN_UNUSED_RESULT SWIFT_DEPRECATED_MSG("Has been renamed as `VoxeetSDK.shared.conference.id`", "id");
 /// Getting a specific user.
 /// \param userID User ID.
 ///
@@ -404,7 +409,7 @@ SWIFT_CLASS("_TtC9VoxeetSDK12VTConference")
 /// \param distance Changes the user position with a distance.
 ///
 - (void)userPositionWithUserID:(NSString * _Nonnull)userID distance:(double)distance;
-/// Muting / Unmuting a user.
+/// Muting / unmuting a user.
 /// \param userID User ID.
 ///
 /// \param isMuted Mute or unmute a user.
@@ -482,6 +487,8 @@ enum VTSessionState : NSInteger;
 
 SWIFT_CLASS("_TtC9VoxeetSDK9VTSession")
 @interface VTSession : NSObject
+/// Current session user.
+@property (nonatomic, readonly, strong) VTUser * _Nullable user;
 /// Getting current session state.
 @property (nonatomic, readonly) enum VTSessionState state;
 /// Session delegate.
@@ -550,7 +557,9 @@ SWIFT_CLASS("_TtC9VoxeetSDK9VoxeetSDK")
 /// Voxeet SDK singleton.
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) VoxeetSDK * _Nonnull shared;)
 + (VoxeetSDK * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
+/// Session (socket related).
 @property (nonatomic, readonly, strong) VTSession * _Nonnull session;
+/// Conference manager.
 @property (nonatomic, readonly, strong) VTConference * _Nonnull conference;
 /// Includes CallKit calls in the system’s Recents list at the end of each call if true (available for iOS 11 or higher).
 @property (nonatomic) BOOL includesCallsInRecents;

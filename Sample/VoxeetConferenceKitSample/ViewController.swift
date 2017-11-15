@@ -153,7 +153,7 @@ extension ViewController: UIPickerViewDelegate {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if VoxeetSDK.shared.conference.liveConferenceID() != nil {
+        if VoxeetSDK.shared.conference.id != nil {
             if let selectedRow = UserDefaults.standard.object(forKey: pickerViewRowNSUserDefaults) as? Int, selectedRow <= users.count {
                 pickerView.selectRow(selectedRow, inComponent: 0, animated: true)
             }

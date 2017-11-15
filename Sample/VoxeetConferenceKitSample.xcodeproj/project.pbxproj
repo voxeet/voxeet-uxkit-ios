@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		CC26652C1F2B2DBA0077CFF5 /* CallKitOnHold.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CC26652B1F2B2DBA0077CFF5 /* CallKitOnHold.mp3 */; };
+		CC2EF9A91FBCA18C0007B23D /* VoxeetConferenceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC2EF9A71FBCA18C0007B23D /* VoxeetConferenceKit.framework */; };
+		CC2EF9AA1FBCA18C0007B23D /* VoxeetConferenceKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CC2EF9A71FBCA18C0007B23D /* VoxeetConferenceKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CC2EF9AB1FBCA18C0007B23D /* VoxeetSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC2EF9A81FBCA18C0007B23D /* VoxeetSDK.framework */; };
+		CC2EF9AC1FBCA18C0007B23D /* VoxeetSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CC2EF9A81FBCA18C0007B23D /* VoxeetSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CC8B8B071E8E3C0600AEDD3B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8B8B061E8E3C0600AEDD3B /* AppDelegate.swift */; };
 		CC8B8B091E8E3C0600AEDD3B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8B8B081E8E3C0600AEDD3B /* ViewController.swift */; };
 		CC8B8B0C1E8E3C0600AEDD3B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC8B8B0A1E8E3C0600AEDD3B /* Main.storyboard */; };
@@ -16,10 +20,6 @@
 		CCADC3CA1EBA0A8200B85516 /* CallKitSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CCADC3C91EBA0A8200B85516 /* CallKitSound.mp3 */; };
 		CCD0ED631EAF97DC00612478 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCD0ED621EAF97DC00612478 /* Kingfisher.framework */; };
 		CCD3DBB21ECB2A04007CC2C1 /* VoxeetConferenceKitSampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD3DBB11ECB2A04007CC2C1 /* VoxeetConferenceKitSampleUITests.swift */; };
-		CCDFC6151FB067B0009CD395 /* VoxeetConferenceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCDFC6131FB067AF009CD395 /* VoxeetConferenceKit.framework */; };
-		CCDFC6161FB067B0009CD395 /* VoxeetConferenceKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CCDFC6131FB067AF009CD395 /* VoxeetConferenceKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		CCDFC6171FB067B0009CD395 /* VoxeetSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCDFC6141FB067B0009CD395 /* VoxeetSDK.framework */; };
-		CCDFC6181FB067B0009CD395 /* VoxeetSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CCDFC6141FB067B0009CD395 /* VoxeetSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,8 +39,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				CCDFC6181FB067B0009CD395 /* VoxeetSDK.framework in Embed Frameworks */,
-				CCDFC6161FB067B0009CD395 /* VoxeetConferenceKit.framework in Embed Frameworks */,
+				CC2EF9AC1FBCA18C0007B23D /* VoxeetSDK.framework in Embed Frameworks */,
+				CC2EF9AA1FBCA18C0007B23D /* VoxeetConferenceKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -49,6 +49,8 @@
 
 /* Begin PBXFileReference section */
 		CC26652B1F2B2DBA0077CFF5 /* CallKitOnHold.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CallKitOnHold.mp3; sourceTree = "<group>"; };
+		CC2EF9A71FBCA18C0007B23D /* VoxeetConferenceKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VoxeetConferenceKit.framework; path = ../../VoxeetConferenceKit/VoxeetConferenceKit.framework; sourceTree = "<group>"; };
+		CC2EF9A81FBCA18C0007B23D /* VoxeetSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VoxeetSDK.framework; path = ../../VoxeetConferenceKit/VoxeetSDK.framework; sourceTree = "<group>"; };
 		CC693E9D1EA9FD37004985B7 /* VoxeetConferenceKitSample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VoxeetConferenceKitSample.entitlements; sourceTree = "<group>"; };
 		CC8B8B031E8E3C0600AEDD3B /* VoxeetConferenceKitSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VoxeetConferenceKitSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC8B8B061E8E3C0600AEDD3B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -62,8 +64,6 @@
 		CCD3DBAF1ECB2A04007CC2C1 /* VoxeetConferenceKitSampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VoxeetConferenceKitSampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCD3DBB11ECB2A04007CC2C1 /* VoxeetConferenceKitSampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoxeetConferenceKitSampleUITests.swift; sourceTree = "<group>"; };
 		CCD3DBB31ECB2A04007CC2C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CCDFC6131FB067AF009CD395 /* VoxeetConferenceKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VoxeetConferenceKit.framework; path = ../VoxeetConferenceKit/VoxeetConferenceKit.framework; sourceTree = "<group>"; };
-		CCDFC6141FB067B0009CD395 /* VoxeetSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VoxeetSDK.framework; path = ../VoxeetConferenceKit/VoxeetSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,8 +71,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CCDFC6171FB067B0009CD395 /* VoxeetSDK.framework in Frameworks */,
-				CCDFC6151FB067B0009CD395 /* VoxeetConferenceKit.framework in Frameworks */,
+				CC2EF9AB1FBCA18C0007B23D /* VoxeetSDK.framework in Frameworks */,
+				CC2EF9A91FBCA18C0007B23D /* VoxeetConferenceKit.framework in Frameworks */,
 				CCD0ED631EAF97DC00612478 /* Kingfisher.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -90,8 +90,6 @@
 		CC8B8AFA1E8E3C0600AEDD3B = {
 			isa = PBXGroup;
 			children = (
-				CCDFC6131FB067AF009CD395 /* VoxeetConferenceKit.framework */,
-				CCDFC6141FB067B0009CD395 /* VoxeetSDK.framework */,
 				CC8B8B051E8E3C0600AEDD3B /* VoxeetConferenceKitSample */,
 				CC8B8B181E8E3C6A00AEDD3B /* Frameworks */,
 				CCD3DBB01ECB2A04007CC2C1 /* VoxeetConferenceKitSampleUITests */,
@@ -124,6 +122,8 @@
 		CC8B8B181E8E3C6A00AEDD3B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CC2EF9A81FBCA18C0007B23D /* VoxeetSDK.framework */,
+				CC2EF9A71FBCA18C0007B23D /* VoxeetConferenceKit.framework */,
 				CCD0ED621EAF97DC00612478 /* Kingfisher.framework */,
 			);
 			name = Frameworks;
@@ -473,7 +473,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/VoxeetConferenceKitSample",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
-					"$(PROJECT_DIR)/../VoxeetConferenceKit/",
+					"$(PROJECT_DIR)/../VoxeetConferenceKit",
 				);
 				INFOPLIST_FILE = VoxeetConferenceKitSample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -495,7 +495,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/VoxeetConferenceKitSample",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
-					"$(PROJECT_DIR)/../VoxeetConferenceKit/",
+					"$(PROJECT_DIR)/../VoxeetConferenceKit",
 				);
 				INFOPLIST_FILE = VoxeetConferenceKitSample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
