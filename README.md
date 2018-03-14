@@ -1,7 +1,7 @@
 # Voxeet Conference Kit
 
 <p align="center">
-<img src="http://www.voxeet.com/wp-content/uploads/2016/05/SDK-API-768x180.png" alt="Voxeet SDK logo" title="Voxeet SDK logo" width="700"/>
+<img src="https://www.voxeet.com/wp-content/themes/wp-theme/assets/images/logo.svg" alt="Voxeet SDK logo" title="Voxeet SDK logo" width="100"/>
 </p>
 
 The VoxeetConferenceKit is a Swift project allowing users to:
