@@ -19,9 +19,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         VoxeetConferenceKit.shared.appearMaximized = true
         VoxeetConferenceKit.shared.defaultBuiltInSpeaker = true
         VoxeetConferenceKit.shared.screenAutoLock = false
+        VoxeetConferenceKit.shared.defaultVideo = false
+        VoxeetConferenceKit.shared.callKit = false
+        VoxeetConferenceKit.shared.telecom = false
         
-        // Initialization of the Voxeet conference kit (session connection is done later).
-        VoxeetConferenceKit.shared.initialize(consumerKey: "consumerKey", consumerSecret: "consumerSecret", connectSession: false)
+        // Initialization of the Voxeet conference kit.
+        VoxeetConferenceKit.shared.initialize(consumerKey: "consumerKey", consumerSecret: "consumerSecret")
         
         return true
     }

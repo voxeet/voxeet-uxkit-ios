@@ -107,7 +107,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
         // Initialization of the Voxeet conference kit (connect the session later).
-        VoxeetConferenceKit.shared.initialize(consumerKey: "consumerKey", consumerSecret: "consumerSecret", connectSession: false)
+        VoxeetConferenceKit.shared.initialize(consumerKey: "consumerKey", consumerSecret: "consumerSecret")
         
         return true
     }
@@ -141,16 +141,6 @@ extension AppDelegate {
 
 ```swift
 VoxeetConferenceKit.shared.initialize(consumerKey: "consumerKey", consumerSecret: "consumerSecret")
-
-// With all parameters.
-VoxeetConferenceKit.shared.initialize(consumerKey: "consumerKey", consumerSecret: "consumerSecret", userInfo: nil, connectSession: true)
-```
-
-If you use external login like O365, LDAP, or custom login to retrieve contact details it's possible to also add your contact ID with the display name, the photo URL avatar and any kind of extra information.
-This allows you to ask guest users to introduce themselves and provide their display name and for your authenticated users in your enterprise or for your clients the ID that can be retrieved from O365 (name, department, etc).
-
-```swift
-VoxeetConferenceKit.shared.initialize(consumerKey: "consumerKey", consumerSecret: "consumerSecret", userInfo: ["externalId": "1234", "externalName": "User", "externalPhotoUrl": "http://voxeet.com/voxeet-logo.jpg"])
 ```
 
 ### Openning a session *(manually)*
@@ -295,7 +285,7 @@ Same as `IconMask.png`, if overridden it will replace the CallKit default image 
 
 ## Version
 
-1.0.4
+1.0.5
 
 ## Tech
 

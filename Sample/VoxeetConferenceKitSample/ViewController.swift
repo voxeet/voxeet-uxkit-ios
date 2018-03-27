@@ -10,15 +10,14 @@ import UIKit
 import VoxeetSDK
 import VoxeetConferenceKit
 
-// NSUserDefaults.
-let pickerViewRowNSUserDefaults = "pickerViewRowNSUserDefaults"
-
 class ViewController: UIViewController {
     @IBOutlet weak private var conferenceNameTextField: UITextField!
     @IBOutlet weak private var participantsPickerView: UIPickerView!
     @IBOutlet weak private var startConferenceButton: UIButton!
     
     private var users = [VTUser]()
+    
+    let kPickerViewRowNSUserDefaults = "pickerViewRowNSUserDefaults"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,20 +35,17 @@ class ViewController: UIViewController {
         users.append(VTUser(id: "999", name: "Romain", photoURL: "https://cdn.voxeet.com/images/team-romain.png"))
         
         // Pre-open a session with the previous participant used.
-        if let selectedRow = UserDefaults.standard.object(forKey: pickerViewRowNSUserDefaults) as? Int, selectedRow <= users.count && selectedRow != 0 {
+        if let selectedRow = UserDefaults.standard.object(forKey: kPickerViewRowNSUserDefaults) as? Int, selectedRow <= users.count && selectedRow != 0 {
             participantsPickerView.selectRow(selectedRow, inComponent: 0, animated: false)
-            
-            // Logs your user to Voxeet in order to receive VoIP push notifications or any Voxeet notifications before starting a conference.
-            login(row: selectedRow)
         }
     }
     
-    private func login(row: Int) {
+    private func login(user: VTUser) {
         participantsPickerView.isUserInteractionEnabled = false
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
         // Open session with the current selected participant.
-        VoxeetConferenceKit.shared.openSession(user: self.users[row]) { (error) in
+        VoxeetConferenceKit.shared.openSession(user: user) { (error) in
             self.participantsPickerView.isUserInteractionEnabled = true
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
@@ -77,8 +73,8 @@ class ViewController: UIViewController {
         startConferenceButton.isEnabled = false
         
         // Get conference participants without own user.
-        let users = self.users.filter({ $0.externalID() != nil && $0.externalID() != self.users[UserDefaults.standard.integer(forKey: pickerViewRowNSUserDefaults)].externalID() })
-        
+        let users = self.users.filter({ $0.externalID() != nil && $0.externalID() != self.users[participantsPickerView.selectedRow(inComponent: 0)].externalID() })
+        print("test \(users)")
         // Start and join conference.
         VoxeetConferenceKit.shared.startConference(id: conferenceID, users: users, invite: true, success: { (json) in
             // Re-enable startConferenceButton when the request finish.
@@ -154,19 +150,19 @@ extension ViewController: UIPickerViewDelegate {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if VoxeetSDK.shared.conference.id != nil {
-            if let selectedRow = UserDefaults.standard.object(forKey: pickerViewRowNSUserDefaults) as? Int, selectedRow <= users.count {
+            if let selectedRow = UserDefaults.standard.object(forKey: kPickerViewRowNSUserDefaults) as? Int, selectedRow <= users.count {
                 pickerView.selectRow(selectedRow, inComponent: 0, animated: true)
             }
             return
         }
         
         // Save current picker view.
-        UserDefaults.standard.set(row, forKey: pickerViewRowNSUserDefaults)
+        UserDefaults.standard.set(row, forKey: kPickerViewRowNSUserDefaults)
         UserDefaults.standard.synchronize()
         
         if row != 0 {
             logout { (error) in
-                self.login(row: row)
+                self.login(user: self.users[row])
             }
         } else {
             logout()
