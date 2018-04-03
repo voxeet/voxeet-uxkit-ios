@@ -7,10 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CC036825206A7C3F00DF7144 /* VoxeetConferenceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC036821206A7C3300DF7144 /* VoxeetConferenceKit.framework */; };
-		CC036826206A7C3F00DF7144 /* VoxeetConferenceKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CC036821206A7C3300DF7144 /* VoxeetConferenceKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		CC036827206A7C3F00DF7144 /* VoxeetSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC036822206A7C3300DF7144 /* VoxeetSDK.framework */; };
-		CC036828206A7C3F00DF7144 /* VoxeetSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CC036822206A7C3300DF7144 /* VoxeetSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CC26652C1F2B2DBA0077CFF5 /* CallKitOnHold.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CC26652B1F2B2DBA0077CFF5 /* CallKitOnHold.mp3 */; };
 		CC8B8B071E8E3C0600AEDD3B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8B8B061E8E3C0600AEDD3B /* AppDelegate.swift */; };
 		CC8B8B091E8E3C0600AEDD3B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8B8B081E8E3C0600AEDD3B /* ViewController.swift */; };
@@ -20,6 +16,10 @@
 		CCADC3CA1EBA0A8200B85516 /* CallKitSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CCADC3C91EBA0A8200B85516 /* CallKitSound.mp3 */; };
 		CCD0ED631EAF97DC00612478 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCD0ED621EAF97DC00612478 /* Kingfisher.framework */; };
 		CCD3DBB21ECB2A04007CC2C1 /* VoxeetConferenceKitSampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD3DBB11ECB2A04007CC2C1 /* VoxeetConferenceKitSampleUITests.swift */; };
+		CCE6057E2073AD570042AC47 /* VoxeetConferenceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCE6057C2073AD570042AC47 /* VoxeetConferenceKit.framework */; };
+		CCE6057F2073AD570042AC47 /* VoxeetConferenceKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CCE6057C2073AD570042AC47 /* VoxeetConferenceKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CCE605802073AD570042AC47 /* VoxeetSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCE6057D2073AD570042AC47 /* VoxeetSDK.framework */; };
+		CCE605812073AD570042AC47 /* VoxeetSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CCE6057D2073AD570042AC47 /* VoxeetSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,8 +39,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				CC036828206A7C3F00DF7144 /* VoxeetSDK.framework in Embed Frameworks */,
-				CC036826206A7C3F00DF7144 /* VoxeetConferenceKit.framework in Embed Frameworks */,
+				CCE605812073AD570042AC47 /* VoxeetSDK.framework in Embed Frameworks */,
+				CCE6057F2073AD570042AC47 /* VoxeetConferenceKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -48,8 +48,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		CC036821206A7C3300DF7144 /* VoxeetConferenceKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VoxeetConferenceKit.framework; path = ../../VoxeetConferenceKit/VoxeetConferenceKit.framework; sourceTree = "<group>"; };
-		CC036822206A7C3300DF7144 /* VoxeetSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VoxeetSDK.framework; path = ../../VoxeetConferenceKit/VoxeetSDK.framework; sourceTree = "<group>"; };
 		CC26652B1F2B2DBA0077CFF5 /* CallKitOnHold.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CallKitOnHold.mp3; sourceTree = "<group>"; };
 		CC693E9D1EA9FD37004985B7 /* VoxeetConferenceKitSample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VoxeetConferenceKitSample.entitlements; sourceTree = "<group>"; };
 		CC8B8B031E8E3C0600AEDD3B /* VoxeetConferenceKitSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VoxeetConferenceKitSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -64,6 +62,8 @@
 		CCD3DBAF1ECB2A04007CC2C1 /* VoxeetConferenceKitSampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VoxeetConferenceKitSampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCD3DBB11ECB2A04007CC2C1 /* VoxeetConferenceKitSampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoxeetConferenceKitSampleUITests.swift; sourceTree = "<group>"; };
 		CCD3DBB31ECB2A04007CC2C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CCE6057C2073AD570042AC47 /* VoxeetConferenceKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VoxeetConferenceKit.framework; path = ../VoxeetConferenceKit/VoxeetConferenceKit.framework; sourceTree = "<group>"; };
+		CCE6057D2073AD570042AC47 /* VoxeetSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VoxeetSDK.framework; path = ../VoxeetConferenceKit/VoxeetSDK.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,8 +71,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CC036827206A7C3F00DF7144 /* VoxeetSDK.framework in Frameworks */,
-				CC036825206A7C3F00DF7144 /* VoxeetConferenceKit.framework in Frameworks */,
+				CCE605802073AD570042AC47 /* VoxeetSDK.framework in Frameworks */,
+				CCE6057E2073AD570042AC47 /* VoxeetConferenceKit.framework in Frameworks */,
 				CCD0ED631EAF97DC00612478 /* Kingfisher.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -90,6 +90,8 @@
 		CC8B8AFA1E8E3C0600AEDD3B = {
 			isa = PBXGroup;
 			children = (
+				CCE6057C2073AD570042AC47 /* VoxeetConferenceKit.framework */,
+				CCE6057D2073AD570042AC47 /* VoxeetSDK.framework */,
 				CC8B8B051E8E3C0600AEDD3B /* VoxeetConferenceKitSample */,
 				CC8B8B181E8E3C6A00AEDD3B /* Frameworks */,
 				CCD3DBB01ECB2A04007CC2C1 /* VoxeetConferenceKitSampleUITests */,
@@ -122,8 +124,6 @@
 		CC8B8B181E8E3C6A00AEDD3B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CC036821206A7C3300DF7144 /* VoxeetConferenceKit.framework */,
-				CC036822206A7C3300DF7144 /* VoxeetSDK.framework */,
 				CCD0ED621EAF97DC00612478 /* Kingfisher.framework */,
 			);
 			name = Frameworks;
@@ -221,7 +221,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Corentin Larroque";
 				TargetAttributes = {
 					CC8B8B021E8E3C0600AEDD3B = {
@@ -365,6 +365,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -372,6 +373,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -423,6 +425,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -430,6 +433,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
