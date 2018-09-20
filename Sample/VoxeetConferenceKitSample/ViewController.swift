@@ -13,6 +13,7 @@ import VoxeetConferenceKit
 class ViewController: UIViewController {
     @IBOutlet weak private var conferenceNameTextField: UITextField!
     @IBOutlet weak private var participantsPickerView: UIPickerView!
+    @IBOutlet weak private var logoutButton: UIButton!
     @IBOutlet weak private var startConferenceButton: UIButton!
     
     private var users = [VTUser]()
@@ -22,45 +23,70 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let none = VTUser()
+        none.name = "None"
+        
         // Set up participants.
-        users.append(VTUser()) // Logout.
-        users.append(VTUser(id: "111", name: "Benoit", photoURL: "https://cdn.voxeet.com/images/team-benoit-senard.png"))
-        users.append(VTUser(id: "222", name: "Stephane", photoURL: "https://cdn.voxeet.com/images/team-stephane-giraudie.png"))
-        users.append(VTUser(id: "333", name: "Thomas", photoURL: "https://cdn.voxeet.com/images/team-thomas.png"))
-        users.append(VTUser(id: "444", name: "Raphael", photoURL: "https://cdn.voxeet.com/images/team-raphael.png"))
-        users.append(VTUser(id: "555", name: "Julie", photoURL: "https://cdn.voxeet.com/images/team-julie-egglington.png"))
-        users.append(VTUser(id: "666", name: "Alexis", photoURL: "https://cdn.voxeet.com/images/team-alexis.png"))
-        users.append(VTUser(id: "777", name: "Barnabé", photoURL: "https://cdn.voxeet.com/images/team-barnabe.png"))
-        users.append(VTUser(id: "888", name: "Corentin", photoURL: "https://cdn.voxeet.com/images/team-corentin.png"))
-        users.append(VTUser(id: "999", name: "Romain", photoURL: "https://cdn.voxeet.com/images/team-romain.png"))
+        users.append(none) // Logout.
+        users.append(VTUser(externalID: "111", name: "Benoit", avatarURL: "https://cdn.voxeet.com/images/team-benoit-senard.png"))
+        users.append(VTUser(externalID: "222", name: "Stephane", avatarURL: "https://cdn.voxeet.com/images/team-stephane-giraudie.png"))
+        users.append(VTUser(externalID: "333", name: "Thomas", avatarURL: "https://cdn.voxeet.com/images/team-thomas.png"))
+        users.append(VTUser(externalID: "444", name: "Raphael", avatarURL: "https://cdn.voxeet.com/images/team-raphael.png"))
+        users.append(VTUser(externalID: "555", name: "Julie", avatarURL: "https://cdn.voxeet.com/images/team-julie-egglington.png"))
+        users.append(VTUser(externalID: "666", name: "Alexis", avatarURL: "https://cdn.voxeet.com/images/team-alexis.png"))
+        users.append(VTUser(externalID: "777", name: "Barnabé", avatarURL: "https://cdn.voxeet.com/images/team-barnabe.png"))
+        users.append(VTUser(externalID: "888", name: "Corentin", avatarURL: "https://cdn.voxeet.com/images/team-corentin.png"))
+        users.append(VTUser(externalID: "999", name: "Romain", avatarURL: "https://cdn.voxeet.com/images/team-romain.png"))
         
         // Pre-open a session with the previous participant used.
         if let selectedRow = UserDefaults.standard.object(forKey: kPickerViewRowNSUserDefaults) as? Int, selectedRow <= users.count && selectedRow != 0 {
             participantsPickerView.selectRow(selectedRow, inComponent: 0, animated: false)
+            logoutButton.isEnabled = true
         }
     }
     
     private func login(user: VTUser) {
         participantsPickerView.isUserInteractionEnabled = false
+        participantsPickerView.alpha = 0.7
+        logoutButton.isEnabled = false
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
         // Open session with the current selected participant.
         VoxeetConferenceKit.shared.openSession(user: user) { (error) in
             self.participantsPickerView.isUserInteractionEnabled = true
+            self.participantsPickerView.alpha = 1
+            self.logoutButton.isEnabled = true
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
         }
     }
     
     private func logout(completion: ((NSError?) -> Void)? = nil) {
         participantsPickerView.isUserInteractionEnabled = false
+        participantsPickerView.alpha = 0.7
+        logoutButton.isEnabled = false
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
         VoxeetConferenceKit.shared.closeSession { (error) in
             self.participantsPickerView.isUserInteractionEnabled = true
+            self.participantsPickerView.alpha = 1
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             
             completion?(error)
         }
+    }
+    
+    @IBAction func logoutAction(_ sender: Any) {
+        guard VoxeetSDK.shared.conference.id == nil else {
+            return
+        }
+        
+        // Remove current picker view.
+        UserDefaults.standard.removeObject(forKey: kPickerViewRowNSUserDefaults)
+        UserDefaults.standard.synchronize()
+        
+        // Reset picker view and logout.
+        participantsPickerView.selectRow(0, inComponent: 0, animated: true)
+        logout()
     }
     
     @IBAction func startConferenceAction(_ sender: Any) {
@@ -68,20 +94,23 @@ class ViewController: UIViewController {
             print("[VoxeetConferenceKitSample] \(String(describing: self)).\(#function).\(#line) - Error: Invalid conference ID")
             return
         }
+        guard VoxeetSDK.shared.conference.id == nil else {
+            return
+        }
         
         // Disable startConferenceButton during request network.
         startConferenceButton.isEnabled = false
         
         // Get conference participants without own user.
-        let users = self.users.filter({ $0.externalID() != nil && $0.externalID() != self.users[participantsPickerView.selectedRow(inComponent: 0)].externalID() })
-        print("test \(users)")
+        let users = self.users.filter({ $0.externalID != nil && $0.externalID != self.users[participantsPickerView.selectedRow(inComponent: 0)].externalID })
+        
         // Start and join conference.
         VoxeetConferenceKit.shared.startConference(id: conferenceID, users: users, invite: true, success: { (json) in
             // Re-enable startConferenceButton when the request finish.
             self.startConferenceButton.isEnabled = true
             
             // Debug.
-            print("[VoxeetConferenceKitSample] \(String(describing: self)).\(#function).\(#line) - Conference successfully started")
+            print("[VoxeetConferenceKitSample] \(String(describing: self)).\(#function).\(#line) - Conference started")
         }, fail: { (error) in
             // Debug.
             print("[VoxeetConferenceKitSample] \(String(describing: self)).\(#function).\(#line) - Error: \(error)")
@@ -133,13 +162,13 @@ extension ViewController: UIPickerViewDelegate {
         
         // Avatar image.
         let participantAvatar = UIImageView(frame: CGRect(x: 8, y: 5, width: 50, height: 50))
-        participantAvatar.kf.setImage(with: URL(string: users[row].externalPhotoURL() ?? ""))
+        participantAvatar.kf.setImage(with: URL(string: users[row].avatarURL ?? ""))
         participantAvatar.layer.cornerRadius = participantAvatar.frame.width / 2
         participantAvatar.layer.masksToBounds = true
         
         // Label name.
         let participantName = UILabel(frame: CGRect(x: participantAvatar.frame.origin.x + participantAvatar.frame.width + 8, y: 0, width: pickerView.frame.width, height: 60))
-        participantName.text = users[row].externalName()
+        participantName.text = users[row].name
         participantName.font = UIFont.systemFont(ofSize: 14)
         
         customView.addSubview(participantName)
@@ -156,11 +185,11 @@ extension ViewController: UIPickerViewDelegate {
             return
         }
         
-        // Save current picker view.
-        UserDefaults.standard.set(row, forKey: kPickerViewRowNSUserDefaults)
-        UserDefaults.standard.synchronize()
-        
         if row != 0 {
+            // Save current picker view.
+            UserDefaults.standard.set(row, forKey: kPickerViewRowNSUserDefaults)
+            UserDefaults.standard.synchronize()
+            
             logout { (error) in
                 self.login(user: self.users[row])
             }

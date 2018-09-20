@@ -1,2 +1,2 @@
-# Kingfisher is a lightweight, pure-Swift library for downloading and caching images from the web.
-github "onevcat/Kingfisher"
+github "voxeet/voxeet-ios-conferencekit" ~> 1.0
+github "onevcat/Kingfisher" "4.9.0"

@@ -18,7 +18,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Example of public variables to change the conference behavior.
         VoxeetConferenceKit.shared.appearMaximized = true
         VoxeetConferenceKit.shared.defaultBuiltInSpeaker = true
-        VoxeetConferenceKit.shared.screenAutoLock = false
         VoxeetConferenceKit.shared.defaultVideo = false
         VoxeetConferenceKit.shared.callKit = false
         VoxeetConferenceKit.shared.telecom = false

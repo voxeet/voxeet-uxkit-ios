@@ -227,37 +227,6 @@ VoxeetConferenceKit.shared.stopConference(completion: { (error) in
 })
 ```
 
-### User management: Add
-
-Adds one user to the users' bar manually (conference needs to be started).
-
-```swift
-let user = VTUser(id: "333", name: "Thomas", photoURL: "https://cdn.voxeet.com/images/team-thomas.png")
-
-VoxeetConferenceKit.shared.add(user: user)
-```
-
-### User management: Update
-
-Updates a user's name, photo, ... (conference needs to be started).
-
-```swift
-let user = VTUser(id: "333", name: "Raphael", photoURL: "https://cdn.voxeet.com/images/team-raphael.png")
-
-VoxeetConferenceKit.shared.update(user: user)
-VoxeetConferenceKit.shared.update(users: [user])
-```
-
-### User management: Remove
-
-Removes one user from the users' bar manually (after starting a conference).
-
-```swift
-let user = VTUser(id: "333", name: "Thomas", photoURL: "https://cdn.voxeet.com/images/team-thomas.png")
-
-VoxeetConferenceKit.shared.remove(user: user)
-```
-
 ### Useful variables
 
 Conference appear animation default starts maximized. If false, the conference will appear minimized.
@@ -285,7 +254,7 @@ Same as `IconMask.png`, if overridden it will replace the CallKit default image 
 
 ## Version
 
-1.0.6
+1.0.7
 
 ## Tech
 
