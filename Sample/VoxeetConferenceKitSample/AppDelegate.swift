@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import VoxeetSDK
 import VoxeetConferenceKit
 
 @UIApplicationMain
@@ -16,14 +17,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         // Example of public variables to change the conference behavior.
+        VoxeetSDK.shared.conference.defaultBuiltInSpeaker = true
+        VoxeetSDK.shared.conference.defaultVideo = false
+        VoxeetSDK.shared.callKit = true
         VoxeetConferenceKit.shared.appearMaximized = true
-        VoxeetConferenceKit.shared.defaultBuiltInSpeaker = true
-        VoxeetConferenceKit.shared.defaultVideo = false
-        VoxeetConferenceKit.shared.callKit = false
         VoxeetConferenceKit.shared.telecom = false
         
-        // Initialization of the Voxeet conference kit.
-        VoxeetConferenceKit.shared.initialize(consumerKey: "consumerKey", consumerSecret: "consumerSecret")
+        // Initialization of the Voxeet SDKs.
+        VoxeetSDK.shared.initialize(consumerKey: "YOUR_CONSUMER_KEY", consumerSecret: "YOUR_CONSUMER_SECRET", connectSession: false)
+        VoxeetConferenceKit.shared.initialize()
         
         return true
     }
@@ -36,11 +38,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate {
     /// Useful bellow iOS 10.
     func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
-        VoxeetConferenceKit.shared.application(application, didReceive: notification)
+        VoxeetSDK.shared.application(application, didReceive: notification)
     }
     
     /// Useful bellow iOS 10.
     func application(_ application: UIApplication, handleActionWithIdentifier identifier: String?, for notification: UILocalNotification, completionHandler: @escaping () -> Void) {
-        VoxeetConferenceKit.shared.application(application, handleActionWithIdentifier: identifier, for: notification, completionHandler: completionHandler)
+        VoxeetSDK.shared.application(application, handleActionWithIdentifier: identifier, for: notification, completionHandler: completionHandler)
     }
 }
