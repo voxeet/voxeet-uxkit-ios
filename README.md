@@ -61,13 +61,8 @@ $ brew install carthage
 To integrate [VoxeetConferenceKit](https://github.com/voxeet/voxeet-ios-conferencekit) into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "voxeet/voxeet-ios-conferencekit" ~> 1.0
-```
-
-Or if you just want to integrate [VoxeetSDK](https://github.com/voxeet/voxeet-ios-sdk):
-
-```ogdl
 github "voxeet/voxeet-ios-sdk" ~> 1.0
+github "voxeet/voxeet-ios-conferencekit" ~> 1.0
 ```
 
 Run `carthage update` to build the frameworks and drag `VoxeetConferenceKit.framework`, `VoxeetSDK.framework` and `WebRTC.framework` into your Xcode project *(needs to be dropped in 'Embedded Binaries')*.
@@ -146,3 +141,9 @@ VoxeetSDK.shared.conference.create(parameters: ["conferenceAlias": "MY_ALIAS"], 
 }, fail: { error in
 })
 ```
+
+## SDK version
+
+1.1.0
+
+© Voxeet, 2018
