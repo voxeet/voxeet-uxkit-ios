@@ -73,7 +73,7 @@ More information at [https://github.com/Carthage/Carthage#if-youre-building-for-
 Download the lastest release zip:
 
 **VoxeetConferenceKit:** https://github.com/voxeet/voxeet-ios-conferencekit/releases
-*or*
+*and*
 **VoxeetSDK:** https://github.com/voxeet/voxeet-ios-sdk/releases
 
 Unzip and drag and drop frameworks into your project, select 'Copy items if needed' with the right target. Then in the general tab of your target, add the `VoxeetConferenceKit.framework`, `VoxeetSDK.framework` and `WebRTC.framework` into **'Embedded Binaries'**.
@@ -89,11 +89,13 @@ At the end 'Embedded Binaries' and 'Linked Frameworks and Libraries' sections sh
 <img src="http://cdn.voxeet.com/images/XCodeFramework.png" alt=“Frameworks” title=“Frameworks” width=“500”/>
 </p>
 
+*(WebRTC.framework missing on this screenshot)*
+
 ## Voxeet Conference Kit usage
 
 ### `initialize`
 
-Use this method to initialize the iOS SDK with your Voxeet user information.
+Use these methods to initialize the Voxeet frameworks.
 
 #### Parameters
 -   `consumerKey` **String** - The consumer key for your app from [your developer account dashboard](https://developer.voxeet.com).
@@ -109,38 +111,129 @@ import VoxeetConferenceKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
-            // Initialization of the Voxeet conference kit.
-            VoxeetSDK.shared.initialize(consumerKey: "YOUR_CONSUMER_KEY", consumerSecret: "YOUR_CONSUMER_SECRET")
-            VoxeetConferenceKit.shared.initialize()
+        // Initialization of the Voxeet conference kit.
+        VoxeetSDK.shared.initialize(consumerKey: "YOUR_CONSUMER_KEY", consumerSecret: "YOUR_CONSUMER_SECRET")
+        VoxeetConferenceKit.shared.initialize()
 
         return true
     }
 }
 ```
 
-### `create conference`
+#### References
 
-#### Code examples
+https://github.com/voxeet/voxeet-ios-sdk#initialize-the-voxeet-sdk
+
+### `connect`
+
+*This method is optional.*
+Connect a session is like a login, however the SDK needs to be initialized with `connectSession` sets to `false`. This method can be useful if CallKit is implemented (VoIP push notifications) because once the session is openned, notifications can be received if there is an invitation.
+
+#### Parameters
+
+-   `user` **VTUser?** - A user to be linked to our server.
+-   `completion` **((_ error: NSError?) -> Void)?** - A block object to be executed when the server connection sequence ends. This block has no return value and takes a single `NSError` argument that indicates whether or not the connection to the server succeeded.
+
+#### Examples
 
 ```swift
-// Create a conference (with a custom conference alias).
-VoxeetSDK.shared.conference.create(parameters: ["conferenceAlias": "MY_ALIAS"], success: { json in
-    guard let confID = json?["conferenceId"] as? String, let isNew = json?["isNew"] as? Bool else {
-        return
-    }
+let user = VTUser(externalID: "1234", name: "Username", avatarURL: "https://voxeet.com/logo.jpg")
+VoxeetSDK.shared.session.connect(user: user) { error in
+}
+```
+
+#### References
+
+https://github.com/voxeet/voxeet-ios-sdk#connect
+
+### `disconnect`
+
+*This method is optional.*
+Close a session is like a logout, it will stop the socket and stop sending VoIP push notification.
+
+#### Parameters
+
+-   `completion` **((_ error: NSError?) -> Void)?** - A block object to be executed when the server connection sequence ends. This block has no return value and takes a single `NSError` argument that indicates whether or not the connection to the server succeeded.
+
+#### Examples
+
+```swift
+VoxeetSDK.shared.session.disconnect { error in
+}
+```
+
+#### References
+
+https://github.com/voxeet/voxeet-ios-sdk#disconnect
+
+### `start conference`
+
+Start the conference UI.
+
+#### Examples
+
+```swift
+// Create a conference.
+VoxeetSDK.shared.conference.create(success: { json in
+    guard let confID = json?["conferenceId"] as? String else { return }
     
     // Join the created conference.
     VoxeetSDK.shared.conference.join(conferenceID: confID, video: false, userInfo: nil, success: { json in
     }, fail: { error in
     })
     
-    // Invite other users if the conference is just created.
-    if isNew {
-        VoxeetSDK.shared.conference.invite(conferenceID: confID, externalIDs: users.map({ $0.externalID ?? "" }), completion: nil)
-    }
 }, fail: { error in
 })
 ```
+
+#### References
+
+https://github.com/voxeet/voxeet-ios-sdk#create
+https://github.com/voxeet/voxeet-ios-sdk#join
+
+### `stop conference`
+
+Stop the conference UI.
+
+#### Examples
+
+```swift
+VoxeetSDK.shared.conference.leave { error in
+}
+```
+
+#### References
+
+[https://github.com/voxeet/voxeet-ios-sdk#leave](https://github.com/voxeet/voxeet-ios-sdk#leave)
+
+### `useful variables`
+
+By default, conference appears maximized. If false, the conference will appear minimized.
+
+```swift
+VoxeetConferenceKit.shared.appearMaximized = true
+```
+
+If someone hangs up, everybody is kicked out of the conference.
+
+```swift
+VoxeetConferenceKit.shared.telecom = false
+```
+
+### `CallKit sound and image`
+
+If `CallKitSound.mp3` is overridden, the ringing sound will be replaced by your mp3. 
+Same as `IconMask.png` if overridden, it will replace the CallKit default image by yours (40x40px).
+
+## Tech
+
+The Voxeet iOS SDK and ConferenceKit rely on these open source projects:
+
+* [Kingfisher](https://github.com/onevcat/Kingfisher), a lightweight, pure-Swift library for downloading and caching images from the web.
+* [Starscream](https://github.com/daltoniam/Starscream), a conforming WebSocket (RFC 6455) client library in Swift for iOS and OSX.
+* [Alamofire](https://github.com/Alamofire/Alamofire), an HTTP networking library written in Swift.
+* [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON), a tool for handling JSON data in Swift.
+* [CryptoSwift](https://github.com/krzyzanowskim/CryptoSwift), a collection of Crypto-related functions and helpers for Swift implemented in Swift.
 
 ## SDK version
 
