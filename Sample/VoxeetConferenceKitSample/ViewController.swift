@@ -10,17 +10,27 @@ import UIKit
 import VoxeetSDK
 
 class ViewController: UIViewController {
+    @IBOutlet weak private var conferenceNameLabel: UILabel!
     @IBOutlet weak private var conferenceNameTextField: UITextField!
+    @IBOutlet weak private var participantsListLabel: UILabel!
     @IBOutlet weak private var participantsPickerView: UIPickerView!
     @IBOutlet weak private var logoutButton: UIButton!
     @IBOutlet weak private var startConferenceButton: UIButton!
     
     private var users = [VTUser]()
     
-    let kPickerViewRowNSUserDefaults = "pickerViewRowNSUserDefaults"
+    private let kConferenceNameNSUserDefaults = "conferenceNameNSUserDefaults"
+    private let kPickerViewRowNSUserDefaults = "pickerViewRowNSUserDefaults"
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Labels.
+        conferenceNameLabel.text = NSLocalizedString("CONFERENCE_NAME_LABEL", comment: "")
+        conferenceNameTextField.placeholder = NSLocalizedString("CONFERENCE_NAME_PLACEHOLDER", comment: "")
+        participantsListLabel.text = NSLocalizedString("PARTICIPANTS_LIST_LABEL", comment: "")
+        logoutButton.setTitle(NSLocalizedString("LOGOUT_BUTTON_TITLE", comment: ""), for: .normal)
+        startConferenceButton.setTitle(NSLocalizedString("START_BUTTON_TITLE", comment: ""), for: .normal)
         
         // Set up participants.
         users.append(VTUser(externalID: nil, name: "None", avatarURL: nil)) // Logout.
@@ -33,6 +43,11 @@ class ViewController: UIViewController {
         users.append(VTUser(externalID: "777", name: "Barnabé", avatarURL: "https://cdn.voxeet.com/images/team-barnabe.png"))
         users.append(VTUser(externalID: "888", name: "Corentin", avatarURL: "https://cdn.voxeet.com/images/team-corentin.png"))
         users.append(VTUser(externalID: "999", name: "Romain", avatarURL: "https://cdn.voxeet.com/images/team-romain.png"))
+        
+        // Saved conference name.
+        if let conferenceName = UserDefaults.standard.object(forKey: kConferenceNameNSUserDefaults) as? String {
+            conferenceNameTextField.text = conferenceName
+        }
         
         // Pre-open a session with the previous participant used.
         if let selectedRow = UserDefaults.standard.object(forKey: kPickerViewRowNSUserDefaults) as? Int, selectedRow <= users.count && selectedRow != 0 {
@@ -94,6 +109,10 @@ class ViewController: UIViewController {
         guard VoxeetSDK.shared.conference.id == nil else {
             return
         }
+        
+        // Save conference name.
+        UserDefaults.standard.set(conferenceID, forKey: kConferenceNameNSUserDefaults)
+        UserDefaults.standard.synchronize()
         
         // Disable startConferenceButton during request network.
         startConferenceButton.isEnabled = false

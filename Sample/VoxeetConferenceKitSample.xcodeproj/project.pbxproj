@@ -8,18 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		CC26652C1F2B2DBA0077CFF5 /* CallKitOnHold.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CC26652B1F2B2DBA0077CFF5 /* CallKitOnHold.mp3 */; };
+		CC8AD2D32189F48000AC8411 /* VoxeetConferenceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC8AD2CF2189F47600AC8411 /* VoxeetConferenceKit.framework */; };
+		CC8AD2D42189F48000AC8411 /* VoxeetConferenceKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CC8AD2CF2189F47600AC8411 /* VoxeetConferenceKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CC8AD2D52189F48000AC8411 /* VoxeetSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC8AD2CD2189F47600AC8411 /* VoxeetSDK.framework */; };
+		CC8AD2D62189F48000AC8411 /* VoxeetSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CC8AD2CD2189F47600AC8411 /* VoxeetSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CC8AD2D72189F48000AC8411 /* WebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC8AD2CE2189F47600AC8411 /* WebRTC.framework */; };
+		CC8AD2D82189F48000AC8411 /* WebRTC.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CC8AD2CE2189F47600AC8411 /* WebRTC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CC8B8B071E8E3C0600AEDD3B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8B8B061E8E3C0600AEDD3B /* AppDelegate.swift */; };
 		CC8B8B091E8E3C0600AEDD3B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8B8B081E8E3C0600AEDD3B /* ViewController.swift */; };
 		CC8B8B0C1E8E3C0600AEDD3B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC8B8B0A1E8E3C0600AEDD3B /* Main.storyboard */; };
 		CC8B8B0E1E8E3C0600AEDD3B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CC8B8B0D1E8E3C0600AEDD3B /* Assets.xcassets */; };
 		CC8B8B111E8E3C0600AEDD3B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC8B8B0F1E8E3C0600AEDD3B /* LaunchScreen.storyboard */; };
 		CCADC3CA1EBA0A8200B85516 /* CallKitSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CCADC3C91EBA0A8200B85516 /* CallKitSound.mp3 */; };
-		CCB49AF221888B12003DD11C /* VoxeetConferenceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCB49AED21888B05003DD11C /* VoxeetConferenceKit.framework */; };
-		CCB49AF321888B12003DD11C /* VoxeetConferenceKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CCB49AED21888B05003DD11C /* VoxeetConferenceKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		CCB49AF421888B12003DD11C /* VoxeetSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCB49AEE21888B05003DD11C /* VoxeetSDK.framework */; };
-		CCB49AF521888B12003DD11C /* VoxeetSDK.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CCB49AEE21888B05003DD11C /* VoxeetSDK.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		CCB49AF621888B12003DD11C /* WebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCB49AEC21888B05003DD11C /* WebRTC.framework */; };
-		CCB49AF721888B12003DD11C /* WebRTC.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CCB49AEC21888B05003DD11C /* WebRTC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CCB49B122189B076003DD11C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CCB49B142189B076003DD11C /* Localizable.strings */; };
 		CCC908DE21747EB7002FE6D6 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCD0ED621EAF97DC00612478 /* Kingfisher.framework */; };
 		CCD3DBB21ECB2A04007CC2C1 /* VoxeetConferenceKitSampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCD3DBB11ECB2A04007CC2C1 /* VoxeetConferenceKitSampleUITests.swift */; };
 /* End PBXBuildFile section */
@@ -41,9 +42,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				CCB49AF521888B12003DD11C /* VoxeetSDK.framework in Embed Frameworks */,
-				CCB49AF321888B12003DD11C /* VoxeetConferenceKit.framework in Embed Frameworks */,
-				CCB49AF721888B12003DD11C /* WebRTC.framework in Embed Frameworks */,
+				CC8AD2D62189F48000AC8411 /* VoxeetSDK.framework in Embed Frameworks */,
+				CC8AD2D42189F48000AC8411 /* VoxeetConferenceKit.framework in Embed Frameworks */,
+				CC8AD2D82189F48000AC8411 /* WebRTC.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -53,6 +54,9 @@
 /* Begin PBXFileReference section */
 		CC26652B1F2B2DBA0077CFF5 /* CallKitOnHold.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CallKitOnHold.mp3; sourceTree = "<group>"; };
 		CC693E9D1EA9FD37004985B7 /* VoxeetConferenceKitSample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VoxeetConferenceKitSample.entitlements; sourceTree = "<group>"; };
+		CC8AD2CD2189F47600AC8411 /* VoxeetSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VoxeetSDK.framework; path = Carthage/Build/iOS/VoxeetSDK.framework; sourceTree = SOURCE_ROOT; };
+		CC8AD2CE2189F47600AC8411 /* WebRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebRTC.framework; path = Carthage/Build/iOS/WebRTC.framework; sourceTree = SOURCE_ROOT; };
+		CC8AD2CF2189F47600AC8411 /* VoxeetConferenceKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VoxeetConferenceKit.framework; path = Carthage/Build/iOS/VoxeetConferenceKit.framework; sourceTree = SOURCE_ROOT; };
 		CC8B8B031E8E3C0600AEDD3B /* VoxeetConferenceKitSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VoxeetConferenceKitSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC8B8B061E8E3C0600AEDD3B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CC8B8B081E8E3C0600AEDD3B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -61,9 +65,8 @@
 		CC8B8B101E8E3C0600AEDD3B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CC8B8B121E8E3C0600AEDD3B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CCADC3C91EBA0A8200B85516 /* CallKitSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CallKitSound.mp3; sourceTree = "<group>"; };
-		CCB49AEC21888B05003DD11C /* WebRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebRTC.framework; path = Carthage/Build/iOS/WebRTC.framework; sourceTree = SOURCE_ROOT; };
-		CCB49AED21888B05003DD11C /* VoxeetConferenceKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VoxeetConferenceKit.framework; path = Carthage/Build/iOS/VoxeetConferenceKit.framework; sourceTree = SOURCE_ROOT; };
-		CCB49AEE21888B05003DD11C /* VoxeetSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VoxeetSDK.framework; path = Carthage/Build/iOS/VoxeetSDK.framework; sourceTree = SOURCE_ROOT; };
+		CCB49B132189B076003DD11C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CCB49B152189B092003DD11C /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CCD0ED621EAF97DC00612478 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = SOURCE_ROOT; };
 		CCD3DBAF1ECB2A04007CC2C1 /* VoxeetConferenceKitSampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VoxeetConferenceKitSampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCD3DBB11ECB2A04007CC2C1 /* VoxeetConferenceKitSampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VoxeetConferenceKitSampleUITests.swift; sourceTree = "<group>"; };
@@ -75,10 +78,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CCB49AF421888B12003DD11C /* VoxeetSDK.framework in Frameworks */,
-				CCB49AF221888B12003DD11C /* VoxeetConferenceKit.framework in Frameworks */,
+				CC8AD2D52189F48000AC8411 /* VoxeetSDK.framework in Frameworks */,
+				CC8AD2D32189F48000AC8411 /* VoxeetConferenceKit.framework in Frameworks */,
+				CC8AD2D72189F48000AC8411 /* WebRTC.framework in Frameworks */,
 				CCC908DE21747EB7002FE6D6 /* Kingfisher.framework in Frameworks */,
-				CCB49AF621888B12003DD11C /* WebRTC.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,9 +130,9 @@
 		CC8B8B181E8E3C6A00AEDD3B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CCB49AED21888B05003DD11C /* VoxeetConferenceKit.framework */,
-				CCB49AEE21888B05003DD11C /* VoxeetSDK.framework */,
-				CCB49AEC21888B05003DD11C /* WebRTC.framework */,
+				CC8AD2CF2189F47600AC8411 /* VoxeetConferenceKit.framework */,
+				CC8AD2CD2189F47600AC8411 /* VoxeetSDK.framework */,
+				CC8AD2CE2189F47600AC8411 /* WebRTC.framework */,
 				CCD0ED621EAF97DC00612478 /* Kingfisher.framework */,
 			);
 			name = Frameworks;
@@ -166,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				CC8B8B121E8E3C0600AEDD3B /* Info.plist */,
+				CCB49B142189B076003DD11C /* Localizable.strings */,
 				CC693E9D1EA9FD37004985B7 /* VoxeetConferenceKitSample.entitlements */,
 			);
 			name = Other;
@@ -260,6 +264,7 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
 			);
 			mainGroup = CC8B8AFA1E8E3C0600AEDD3B;
 			productRefGroup = CC8B8B041E8E3C0600AEDD3B /* Products */;
@@ -278,6 +283,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC8B8B111E8E3C0600AEDD3B /* LaunchScreen.storyboard in Resources */,
+				CCB49B122189B076003DD11C /* Localizable.strings in Resources */,
 				CC8B8B0E1E8E3C0600AEDD3B /* Assets.xcassets in Resources */,
 				CC26652C1F2B2DBA0077CFF5 /* CallKitOnHold.mp3 in Resources */,
 				CC8B8B0C1E8E3C0600AEDD3B /* Main.storyboard in Resources */,
@@ -360,6 +366,15 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
+		CCB49B142189B076003DD11C /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CCB49B132189B076003DD11C /* en */,
+				CCB49B152189B092003DD11C /* fr */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -367,6 +382,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -425,6 +441,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";

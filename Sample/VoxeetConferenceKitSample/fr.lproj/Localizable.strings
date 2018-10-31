@@ -1,0 +1,15 @@
+/* 
+  Localizable.strings
+  VoxeetConferenceKitSample
+
+  Created by Corentin Larroque on 10/31/18.
+  Copyright © 2018 Corentin Larroque. All rights reserved.
+*/
+
+LANGUAGE = "Français";
+
+CONFERENCE_NAME_LABEL = "Nom de la conférence";
+CONFERENCE_NAME_PLACEHOLDER = "Nom de la conférence";
+PARTICIPANTS_LIST_LABEL = "Sélection";
+LOGOUT_BUTTON_TITLE = "Déconnexion";
+START_BUTTON_TITLE = "Rejoindre la conférence";

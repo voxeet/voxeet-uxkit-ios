@@ -43,7 +43,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="voxeet" borderStyle="roundedRect" placeholder="Conference name" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="3MD-zC-871">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Conference name" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="3MD-zC-871">
                                         <rect key="frame" x="16" y="234.5" width="327" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="4yT-Ts-8jo"/>
@@ -173,8 +173,10 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="conferenceNameLabel" destination="8IF-aL-FdX" id="uq3-DZ-3Sg"/>
                         <outlet property="conferenceNameTextField" destination="3MD-zC-871" id="PMl-58-j8U"/>
                         <outlet property="logoutButton" destination="P3Y-47-3U4" id="HUO-At-uvi"/>
+                        <outlet property="participantsListLabel" destination="ULV-U8-11J" id="HdJ-MU-es8"/>
                         <outlet property="participantsPickerView" destination="lU2-l0-PXU" id="Cbm-j2-KnK"/>
                         <outlet property="startConferenceButton" destination="Qjk-1y-2Fc" id="gyD-zX-rQc"/>
                     </connections>
