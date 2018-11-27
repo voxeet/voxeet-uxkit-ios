@@ -10,7 +10,7 @@
 
 * **Operating systems:** iOS 9.0 and later versions
 * **IDE:** [Xcode 10.0+](https://developer.apple.com/xcode/)
-* **Languages:** Swift 4.2+, Objective-C
+* **Languages:** Swift 4.2+, Objective-C, [React Native](https://github.com/voxeet/react-native-voxeet-conferencekit), [Cordova](https://github.com/voxeet/voxeet-cordova-conferencekit)
 * **Supported architectures:** armv7, arm64
 
 ## Sample application
