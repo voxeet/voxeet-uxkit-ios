@@ -36,12 +36,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
  */
 
 extension AppDelegate {
-    /// Useful bellow iOS 10.
+    /// Useful below iOS 10.
     func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
         VoxeetSDK.shared.application(application, didReceive: notification)
     }
     
-    /// Useful bellow iOS 10.
+    /// Useful below iOS 10.
     func application(_ application: UIApplication, handleActionWithIdentifier identifier: String?, for notification: UILocalNotification, completionHandler: @escaping () -> Void) {
         VoxeetSDK.shared.application(application, handleActionWithIdentifier: identifier, for: notification, completionHandler: completionHandler)
     }

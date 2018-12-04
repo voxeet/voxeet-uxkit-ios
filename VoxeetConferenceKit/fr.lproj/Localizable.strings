@@ -1,0 +1,23 @@
+/* 
+  Localizable.strings
+  VoxeetConferenceKit
+
+  Created by Coco on 15/12/2017.
+  Copyright © 2017 Voxeet. All rights reserved.
+*/
+
+LANGUAGE = "Français";
+
+CONFERENCE_STATE_CALLING = "Veuillez patienter, nous attendons d'autres participants.";
+CONFERENCE_STATE_ENDED = "L'appel est terminé";
+CONFERENCE_STATE_DECLINED = "Appel refusé";
+
+MICROPHONE_ALERT_TITLE = "Autorisation du microphone";
+MICROPHONE_ALERT_MESSAGE = "La permission du microphone est requise pour communiquer avec d'autres personnes";
+MICROPHONE_ALERT_BUTTON_CANCEL = "Annuler";
+MICROPHONE_ALERT_BUTTON_SETTINGS = "Réglages";
+
+CAMERA_ALERT_TITLE = "Permission de la caméra";
+CAMERA_ALERT_MESSAGE = "La permission de la caméra est requise pour activer la vidéo";
+CAMERA_ALERT_BUTTON_CANCEL = "Annuler";
+CAMERA_ALERT_BUTTON_SETTINGS = "Réglages";

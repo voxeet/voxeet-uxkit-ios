@@ -1,3 +1,1 @@
-github "voxeet/voxeet-ios-sdk" ~> 1.0
 github "voxeet/voxeet-ios-conferencekit" ~> 1.0
-github "onevcat/Kingfisher" "4.10.0"

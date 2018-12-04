@@ -1,0 +1,23 @@
+/* 
+  Localizable.strings
+  VoxeetConferenceKit
+
+  Created by Coco on 15/12/2017.
+  Copyright © 2017 Voxeet. All rights reserved.
+*/
+
+LANGUAGE = "English";
+
+CONFERENCE_STATE_CALLING = "Hang Tight. We're waiting for other callers to arrive.";
+CONFERENCE_STATE_ENDED = "Call has ended";
+CONFERENCE_STATE_DECLINED = "Declined call";
+
+MICROPHONE_ALERT_TITLE = "Microphone permission";
+MICROPHONE_ALERT_MESSAGE = "Microphone permission is required in order to communicate with other people";
+MICROPHONE_ALERT_BUTTON_CANCEL = "Cancel";
+MICROPHONE_ALERT_BUTTON_SETTINGS = "Settings";
+
+CAMERA_ALERT_TITLE = "Camera permission";
+CAMERA_ALERT_MESSAGE = "Camera permission is required to activate the video";
+CAMERA_ALERT_BUTTON_CANCEL = "Cancel";
+CAMERA_ALERT_BUTTON_SETTINGS = "Settings";
