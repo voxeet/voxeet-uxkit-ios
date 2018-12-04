@@ -11,7 +11,7 @@
 * **Operating systems:** iOS 9.0 and later versions
 * **IDE:** [Xcode 10.0+](https://developer.apple.com/xcode/)
 * **Languages:** Swift 4.2+, Objective-C, [React Native](https://github.com/voxeet/react-native-voxeet-conferencekit), [Cordova](https://github.com/voxeet/voxeet-cordova-conferencekit)
-* **Supported architectures:** armv7, arm64
+* **Supported architectures:** armv7, arm64, i386, x86_64
 
 ## Sample application
 
@@ -61,7 +61,6 @@ $ brew install carthage
 To integrate [VoxeetConferenceKit](https://github.com/voxeet/voxeet-ios-conferencekit) into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "voxeet/voxeet-ios-sdk" ~> 1.0
 github "voxeet/voxeet-ios-conferencekit" ~> 1.0
 ```
 
@@ -237,6 +236,6 @@ The Voxeet iOS SDK and ConferenceKit rely on these open source projects:
 
 ## SDK version
 
-1.1.2
+1.1.4
 
 © Voxeet, 2018
