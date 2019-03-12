@@ -110,6 +110,8 @@ class VCKViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(deviceOrientationDidChange), name: UIDevice.orientationDidChangeNotification, object: nil)
         // Refresh users list to handle waiting room.
         NotificationCenter.default.addObserver(self, selector: #selector(participantAddedNotification), name: .VTParticipantAdded, object: nil)
+        // Observe CallKit mute behaviour to update UI.
+        NotificationCenter.default.addObserver(self, selector: #selector(callKitMuteToggled), name: .VTCallKitMuteToggled, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -171,7 +173,7 @@ class VCKViewController: UIViewController {
     }
     
     /*
-     *  MARK: Maximize / minimize UI
+     *  MARK: Maximize/minimize UI
      */
     
     func maximize(animated: Bool = true) {
@@ -252,6 +254,11 @@ class VCKViewController: UIViewController {
                 self.cameraButton.setImage(UIImage(named: "CameraOn", in: Bundle(for: type(of: self)), compatibleWith: nil), for: .normal)
                 
                 VoxeetSDK.shared.conference.startVideo(userID: userID)
+                
+                // Also switch to the built in speaker when the video starts.
+                if self.switchBuiltInSpeakerButton.tag != 0 {
+                    self.switchBuiltInSpeakerAction()
+                }
             } else {
                 self.cameraButton.tag = 0
                 self.cameraButton.setImage(UIImage(named: "CameraOff", in: Bundle(for: type(of: self)), compatibleWith: nil), for: .normal)
@@ -578,6 +585,11 @@ class VCKViewController: UIViewController {
         DispatchQueue.main.async {
             self.usersCollectionView.flashScrollIndicators()
         }
+    }
+    
+    @objc private func callKitMuteToggled(notification: NSNotification) {
+        guard let isMuted = notification.userInfo?["mute"] as? Bool else { return }
+        microphoneButton.setImage(UIImage(named: isMuted ? "MicrophoneOff" : "MicrophoneOn", in: Bundle(for: type(of: self)), compatibleWith: nil), for: .normal)
     }
 }
 

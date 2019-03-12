@@ -102,7 +102,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func startConferenceAction(_ sender: Any) {
-        guard let conferenceID = conferenceNameTextField.text else {
+        guard let conferenceAlias = conferenceNameTextField.text else {
             print("[VoxeetConferenceKitSample] \(String(describing: self)).\(#function).\(#line) - Error: Invalid conference ID")
             return
         }
@@ -111,7 +111,7 @@ class ViewController: UIViewController {
         }
         
         // Save conference name.
-        UserDefaults.standard.set(conferenceID, forKey: kConferenceNameNSUserDefaults)
+        UserDefaults.standard.set(conferenceAlias, forKey: kConferenceNameNSUserDefaults)
         UserDefaults.standard.synchronize()
         
         // Disable startConferenceButton during request network.
@@ -122,13 +122,13 @@ class ViewController: UIViewController {
         let users = self.users.filter({ $0.externalID != nil && $0.externalID != self.users[selectedRow].externalID })
         
         // Create a conference (with a custom conference alias).
-        VoxeetSDK.shared.conference.create(parameters: ["conferenceAlias": conferenceID], success: { (json) in
-            guard let confID = json?["conferenceId"] as? String, let isNew = json?["isNew"] as? Bool else {
+        VoxeetSDK.shared.conference.create(parameters: ["conferenceAlias": conferenceAlias], success: { (json) in
+            guard let conferenceID = json?["conferenceId"] as? String, let isNew = json?["isNew"] as? Bool else {
                 return
             }
             
             // Join the created conference.
-            VoxeetSDK.shared.conference.join(conferenceID: confID, video: false, userInfo: nil, success: { (json) in
+            VoxeetSDK.shared.conference.join(conferenceID: conferenceID, video: false, userInfo: nil, success: { (json) in
                 // Re-enable startConferenceButton when the request finish.
                 self.startConferenceButton.isEnabled = true
             }, fail: { (error) in
@@ -139,7 +139,7 @@ class ViewController: UIViewController {
             
             // Invite other users if the conference is just created.
             if isNew {
-                VoxeetSDK.shared.conference.invite(conferenceID: confID, externalIDs: users.map({ $0.externalID ?? "" }), completion: nil)
+                VoxeetSDK.shared.conference.invite(conferenceID: conferenceID, externalIDs: users.map({ $0.externalID ?? "" }), completion: nil)
             }
         }, fail: { (error) in
             // Re-enable startConferenceButton when the request finish.

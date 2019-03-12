@@ -10,7 +10,7 @@ import Foundation
 import VoxeetSDK
 
 extension VCKViewController: VTConferenceDelegate {
-    func participantJoined(userID: String, stream: RTCMediaStream) {
+    func participantJoined(userID: String, stream: MediaStream) {
         if userID == VoxeetSDK.shared.session.user?.id {
             // Monkey patch: Wait the WebRTC media to be started.
             conferenceStartTimer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(conferenceStart), userInfo: nil, repeats: false)
@@ -33,7 +33,7 @@ extension VCKViewController: VTConferenceDelegate {
         participantUpdated(userID: userID, stream: stream)
     }
     
-    func participantUpdated(userID: String, stream: RTCMediaStream) {
+    func participantUpdated(userID: String, stream: MediaStream) {
         if userID == VoxeetSDK.shared.session.user?.id {
             // Attach own stream to the own video renderer.
             if !stream.videoTracks.isEmpty {
@@ -88,7 +88,7 @@ extension VCKViewController: VTConferenceDelegate {
     
     func messageReceived(userID: String, message: String) {}
     
-    func screenShareStarted(userID: String, stream: RTCMediaStream) {
+    func screenShareStarted(userID: String, stream: MediaStream) {
         screenShareUserID = userID
         
         // Re-update the current main user to enable / disable a video stream.

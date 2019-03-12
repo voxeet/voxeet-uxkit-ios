@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vX9-VW-Q3b">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vX9-VW-Q3b">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -45,7 +45,7 @@
                                         <rect key="frame" x="0.0" y="597" width="375" height="70"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="raF-vO-NxX">
-                                                <rect key="frame" x="38.5" y="0.0" width="298" height="50"/>
+                                                <rect key="frame" x="69.5" y="0.0" width="236" height="50"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nyn-oN-qfM">
                                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -80,8 +80,8 @@
                                                             <action selector="switchBuiltInSpeakerAction:" destination="vX9-VW-Q3b" eventType="touchUpInside" id="5La-6l-JCA"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qpK-pq-ETC">
-                                                        <rect key="frame" x="186" y="0.0" width="50" height="50"/>
+                                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qpK-pq-ETC">
+                                                        <rect key="frame" x="180" y="0.0" width="50" height="50"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="qpK-pq-ETC" secondAttribute="height" multiplier="1:1" id="pC3-Ff-Izt"/>
                                                             <constraint firstAttribute="width" constant="50" id="spk-Lv-gIE"/>
@@ -92,7 +92,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QwX-rF-kVC">
-                                                        <rect key="frame" x="248" y="0.0" width="50" height="50"/>
+                                                        <rect key="frame" x="186" y="0.0" width="50" height="50"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" secondItem="QwX-rF-kVC" secondAttribute="height" multiplier="1:1" id="9wX-lb-Dgp"/>
                                                             <constraint firstAttribute="width" constant="50" id="X6m-Uw-YLg"/>

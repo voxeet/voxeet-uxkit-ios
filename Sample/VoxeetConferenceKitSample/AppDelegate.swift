@@ -15,15 +15,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
         // Example of public variables to change the conference behavior.
+        VoxeetSDK.shared.callKit = true
         VoxeetSDK.shared.conference.defaultBuiltInSpeaker = true
         VoxeetSDK.shared.conference.defaultVideo = false
-        VoxeetSDK.shared.callKit = true
+        VoxeetSDK.shared.conference.audio3D = true
         VoxeetConferenceKit.shared.appearMaximized = true
         VoxeetConferenceKit.shared.telecom = false
         
-        // Initialization of the Voxeet SDKs.
+        // Voxeet SDKs initialization.
         VoxeetSDK.shared.initialize(consumerKey: "YOUR_CONSUMER_KEY", consumerSecret: "YOUR_CONSUMER_SECRET", connectSession: false)
         VoxeetConferenceKit.shared.initialize()
         

@@ -232,10 +232,9 @@ The Voxeet iOS SDK and ConferenceKit rely on these open source projects:
 * [Starscream](https://github.com/daltoniam/Starscream), a conforming WebSocket (RFC 6455) client library in Swift for iOS and OSX.
 * [Alamofire](https://github.com/Alamofire/Alamofire), an HTTP networking library written in Swift.
 * [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON), a tool for handling JSON data in Swift.
-* [CryptoSwift](https://github.com/krzyzanowskim/CryptoSwift), a collection of Crypto-related functions and helpers for Swift implemented in Swift.
 
 ## SDK version
 
-1.1.4
+1.1.5
 
-© Voxeet, 2018
+© Voxeet, 2019

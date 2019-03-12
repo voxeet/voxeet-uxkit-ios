@@ -18,10 +18,9 @@ extension VCKViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "UserCell", for: indexPath) as! VCKViewControllerUserCell
         
         // Get user.
-        guard VoxeetSDK.shared.conference.users.count >= indexPath.row else {
-            return cell
-        }
-        let user = VoxeetSDK.shared.conference.users[indexPath.row]
+        let users = VoxeetSDK.shared.conference.users
+        guard users.count != 0 && indexPath.row <= users.count else { return cell }
+        let user = users[indexPath.row]
         
         // Cell data.
         if let avatarURL = user.avatarURL {
