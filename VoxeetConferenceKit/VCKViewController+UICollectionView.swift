@@ -72,7 +72,7 @@ extension VCKViewController: UICollectionViewDelegate {
         if let userID = user.id, user.status == .connected, userID != selectedUser?.id {
             var indexPaths = [indexPath]
             // Reload old selected user's cell.
-            if let selectedUserID = selectedUser?.id, let selectedUserIndex = VoxeetSDK.shared.conference.users.index(where: { $0.id == selectedUserID }) {
+            if let selectedUserID = selectedUser?.id, let selectedUserIndex = VoxeetSDK.shared.conference.users.firstIndex(where: { $0.id == selectedUserID }) {
                 let selectedUserIndexPath = IndexPath(item: selectedUserIndex, section: 0)
                 indexPaths.append(selectedUserIndexPath)
             }

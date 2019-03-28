@@ -1,3 +1,3 @@
-github "onevcat/Kingfisher" "0de66247a325db0cc827d92a140d1dd4cd4bc0ca"
-github "voxeet/voxeet-ios-conferencekit" "1.1.5"
-github "voxeet/voxeet-ios-sdk" "1.3.0"
+github "onevcat/Kingfisher" "f33cd77a61e231b688ca72fb73ad88258d42a7e8"
+github "voxeet/voxeet-ios-conferencekit" "1.1.6"
+github "voxeet/voxeet-ios-sdk" "1.3.4"

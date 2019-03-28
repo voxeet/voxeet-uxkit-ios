@@ -48,7 +48,7 @@ extension VCKViewController: VTConferenceDelegate {
         } else {
             // Reload users' collection view.
             let users = VoxeetSDK.shared.conference.users
-            if let index = users.index(where: { $0.id == userID }) {
+            if let index = users.firstIndex(where: { $0.id == userID }) {
                 usersCollectionView.reloadItems(at: [IndexPath(row: index, section: 0)])
             }
             

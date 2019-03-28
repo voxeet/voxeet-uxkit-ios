@@ -87,10 +87,10 @@ import VoxeetSDK
         window.addSubview(vckController!.view)
         
         // Appear constraints.
-        let widthConstraint = NSLayoutConstraint(item: vckController!.view, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: vckControllerMinimizeSize.width)
-        let heightConstraint = NSLayoutConstraint(item: vckController!.view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: vckControllerMinimizeSize.height)
-        let xConstraint = NSLayoutConstraint(item: vckController!.view, attribute: .centerX, relatedBy: .equal, toItem: window, attribute: .centerX, multiplier: 1, constant: 0)
-        let yConstraint = NSLayoutConstraint(item: vckController!.view, attribute: .centerY, relatedBy: .equal, toItem: window, attribute: .centerY, multiplier: 1, constant: 0)
+        let widthConstraint = NSLayoutConstraint(item: vckController!.view as Any, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: vckControllerMinimizeSize.width)
+        let heightConstraint = NSLayoutConstraint(item: vckController!.view as Any, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: vckControllerMinimizeSize.height)
+        let xConstraint = NSLayoutConstraint(item: vckController!.view as Any, attribute: .centerX, relatedBy: .equal, toItem: window, attribute: .centerX, multiplier: 1, constant: 0)
+        let yConstraint = NSLayoutConstraint(item: vckController!.view as Any, attribute: .centerY, relatedBy: .equal, toItem: window, attribute: .centerY, multiplier: 1, constant: 0)
         window.addConstraints([widthConstraint, heightConstraint, xConstraint, yConstraint])
         window.layoutIfNeeded()
         window.removeConstraints([widthConstraint, heightConstraint, xConstraint, yConstraint])
@@ -135,8 +135,8 @@ import VoxeetSDK
         window.removeConstraints(vckControllerConstraintsVertical)
         
         // Add maximize contraints.
-        vckControllerConstraintsHorizontal = NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[vckView]-0-|", options: [], metrics: nil, views: ["vckView": vckController.view])
-        vckControllerConstraintsVertical = NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[vckView]-0-|", options: [], metrics: nil, views: ["vckView": vckController.view])
+        vckControllerConstraintsHorizontal = NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[vckView]-0-|", options: [], metrics: nil, views: ["vckView": vckController.view as Any])
+        vckControllerConstraintsVertical = NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[vckView]-0-|", options: [], metrics: nil, views: ["vckView": vckController.view as Any])
         window.addConstraints(vckControllerConstraintsHorizontal)
         window.addConstraints(vckControllerConstraintsVertical)
         
@@ -173,8 +173,8 @@ import VoxeetSDK
         // Add minimize contraints.
         let safeArea = safeAreaInsets()
         vckControllerMinimizeVisualConstraintsVertical = vckControllerMinimizeVisualConstraintsVertical ?? "V:|-\(safeArea.top + 10)-[vckView(\(vckControllerMinimizeSize.height))]" // Keyboard opening particular case.
-        vckControllerConstraintsHorizontal = NSLayoutConstraint.constraints(withVisualFormat: vckControllerMinimizeVisualConstraintsHorizontal, options: [], metrics: nil, views: ["vckView": vckController.view])
-        vckControllerConstraintsVertical = NSLayoutConstraint.constraints(withVisualFormat: vckControllerMinimizeVisualConstraintsVertical, options: [], metrics: nil, views: ["vckView": vckController.view])
+        vckControllerConstraintsHorizontal = NSLayoutConstraint.constraints(withVisualFormat: vckControllerMinimizeVisualConstraintsHorizontal, options: [], metrics: nil, views: ["vckView": vckController.view as Any])
+        vckControllerConstraintsVertical = NSLayoutConstraint.constraints(withVisualFormat: vckControllerMinimizeVisualConstraintsVertical, options: [], metrics: nil, views: ["vckView": vckController.view as Any])
         window.addConstraints(vckControllerConstraintsHorizontal)
         window.addConstraints(vckControllerConstraintsVertical)
         
@@ -209,10 +209,10 @@ import VoxeetSDK
         
         if animated {
             // Disappear constraints.
-            widthConstraint = NSLayoutConstraint(item: vckController.view, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: vckControllerMinimizeSize.width)
-            heightConstraint = NSLayoutConstraint(item: vckController.view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: vckControllerMinimizeSize.height)
-            xConstraint = NSLayoutConstraint(item: vckController.view, attribute: .centerX, relatedBy: .equal, toItem: window, attribute: .centerX, multiplier: 1, constant: 0)
-            yConstraint = NSLayoutConstraint(item: vckController.view, attribute: .centerY, relatedBy: .equal, toItem: window, attribute: .centerY, multiplier: 1, constant: 0)
+            widthConstraint = NSLayoutConstraint(item: vckController.view as Any, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: vckControllerMinimizeSize.width)
+            heightConstraint = NSLayoutConstraint(item: vckController.view as Any, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: vckControllerMinimizeSize.height)
+            xConstraint = NSLayoutConstraint(item: vckController.view as Any, attribute: .centerX, relatedBy: .equal, toItem: window, attribute: .centerX, multiplier: 1, constant: 0)
+            yConstraint = NSLayoutConstraint(item: vckController.view as Any, attribute: .centerY, relatedBy: .equal, toItem: window, attribute: .centerY, multiplier: 1, constant: 0)
             window.addConstraints([widthConstraint, heightConstraint, xConstraint, yConstraint])
             
             vckController.view.tag = 1 // Lock hide animation.
