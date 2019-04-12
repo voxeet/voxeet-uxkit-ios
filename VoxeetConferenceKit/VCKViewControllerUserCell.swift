@@ -2,7 +2,7 @@
 //  VCKViewControllerUserCell.swift
 //  VoxeetConferenceKit
 //
-//  Created by Coco on 16/02/2017.
+//  Created by Corentin Larroque on 16/02/2017.
 //  Copyright © 2017 Voxeet. All rights reserved.
 //
 

@@ -2,7 +2,7 @@
 //  VCKViewController.swift
 //  VoxeetConferenceKit
 //
-//  Created by Coco on 15/02/2017.
+//  Created by Corentin Larroque on 15/02/2017.
 //  Copyright © 2017 Voxeet. All rights reserved.
 //
 
@@ -31,6 +31,7 @@ class VCKViewController: UIViewController {
     
     @IBOutlet weak private var mainAvatarContainer: UIView!
     @IBOutlet weak private var mainAvatar: UIImageView!
+    @IBOutlet weak private var mainAvatarLabel: UILabel!
     @IBOutlet weak private var voiceIndicatorConstraintLeading: NSLayoutConstraint!
     
     @IBOutlet weak var flipImage: UIImageView!
@@ -69,7 +70,7 @@ class VCKViewController: UIViewController {
         // Initialization of all UI components.
         initUI()
         
-        // Save when the user start the conference.
+        // Save when a user starts the conference.
         conferenceTimerStart = Date()
         
         // Active speaker mode.
@@ -106,18 +107,18 @@ class VCKViewController: UIViewController {
             switchBuiltInSpeakerButton.isHidden = true
         }
         
-        // Device orientation.
+        // Device orientation observer.
         NotificationCenter.default.addObserver(self, selector: #selector(deviceOrientationDidChange), name: UIDevice.orientationDidChangeNotification, object: nil)
-        // Refresh users list to handle waiting room.
+        // Refresh users list to handle waiting room observer.
         NotificationCenter.default.addObserver(self, selector: #selector(participantAddedNotification), name: .VTParticipantAdded, object: nil)
-        // Observe CallKit mute behaviour to update UI.
+        // CallKit mute behaviour to update UI observer.
         NotificationCenter.default.addObserver(self, selector: #selector(callKitMuteToggled), name: .VTCallKitMuteToggled, object: nil)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        // Checks microphone permission.
+        // Check microphone permission.
         VCKPermission.microphonePermission(controller: self)
     }
     
@@ -143,41 +144,77 @@ class VCKViewController: UIViewController {
     }
     
     private func initUI() {
-        // Hide by default the main avatar, own camera (with flip image) & conference timer.
-        mainAvatarContainer.alpha = 0
-        ownVideoRenderer.alpha = 0
-        flipImage.alpha = 0
-        conferenceTimerContainerView.alpha = 0
-        
-        // Selfie camera is mirror by default.
-        ownVideoRenderer.mirrorEffect = true
-        
-        // Default behavior to choose the internal or external speaker (UI update).
+        // Default behavior to choose between internal or external speakers.
         if !VoxeetSDK.shared.conference.defaultBuiltInSpeaker {
             switchBuiltInSpeakerAction()
         }
         
-        // Default behavior to check if the video is enable by default.
-        if VoxeetSDK.shared.conference.defaultVideo == true {
+        // Default behavior to check if video is enabled.
+        if VoxeetSDK.shared.conference.defaultVideo {
             cameraButton.tag = 1
             cameraButton.setImage(UIImage(named: "CameraOn", in: Bundle(for: type(of: self)), compatibleWith: nil), for: .normal)
         }
         
-        // Desactivate the automatic screen lock of the device.
+        // Hide by default minimized elements.
+        mainAvatarContainer.alpha = 0
+        alphaTransitionUI(minimized: false)
+        
+        // Main avatar corner radius.
+        mainAvatar.layer.cornerRadius = mainAvatar.frame.width / 2
+        
+        // Selfie camera mirror.
+        ownVideoRenderer.mirrorEffect = true
+        
+        // Disable automatic screen lock.
         UIApplication.shared.isIdleTimerDisabled = true
         
         // Hide screen share button for devices below iOS 11.
         if #available(iOS 11.0, *) {} else {
             screenShareButton.isHidden = true
         }
+        
+        // Disable buttons until the end of join process.
+        enableButtons(areEnabled: false)
+    }
+    
+    func enableButtons(areEnabled: Bool) {
+        let mode = VoxeetSDK.shared.conference.mode
+        
+        buttonTransitionAnimation(button: hangUpButton, isEnabled: areEnabled)
+        buttonTransitionAnimation(button: microphoneButton, isEnabled: mode != .standard ? false : areEnabled)
+        buttonTransitionAnimation(button: cameraButton, isEnabled: mode != .standard ? false : areEnabled)
+        buttonTransitionAnimation(button: switchBuiltInSpeakerButton, isEnabled: areEnabled)
+        buttonTransitionAnimation(button: screenShareButton, isEnabled: mode != .standard ? false : areEnabled)
+        buttonTransitionAnimation(button: minimizeButton, isEnabled: areEnabled)
+        
+        if mode != .standard {
+            UIView.animate(withDuration: 0.125) {
+                self.microphoneButton.alpha = 0
+                self.cameraButton.alpha = 0
+                self.screenShareButton.alpha = 0
+            }
+            UIView.animate(withDuration: 0.25) {
+                self.microphoneButton.isHidden = true
+                self.cameraButton.isHidden = true
+                self.screenShareButton.isHidden = true
+            }
+        }
+    }
+    
+    private func buttonTransitionAnimation(button: UIButton, isEnabled: Bool) {
+        UIView.transition(with: button,
+                          duration: 0.125,
+                          options: .transitionCrossDissolve,
+                          animations: { button.isEnabled = isEnabled },
+                          completion: nil)
     }
     
     /*
-     *  MARK: Maximize/minimize UI
+     *  MARK: Maximize / minimize UI
      */
     
     func maximize(animated: Bool = true) {
-        resizeTransitionUIAnimation(minimize: false, animated: animated)
+        resizeTransitionUI(minimized: false, animated: animated)
         
         // Reset container corner radius.
         self.view.layer.cornerRadius = 0
@@ -188,28 +225,30 @@ class VCKViewController: UIViewController {
     }
     
     func minimize(animated: Bool = true) {
-        resizeTransitionUIAnimation(minimize: true, animated: animated)
+        resizeTransitionUI(minimized: true, animated: animated)
         
         // Set container corner radius.
         self.view.layer.cornerRadius = 6
         mainContainer.layer.cornerRadius = self.view.layer.cornerRadius
     }
     
-    private func resizeTransitionUIAnimation(minimize: Bool, animated: Bool) {
+    private func resizeTransitionUI(minimized: Bool, animated: Bool) {
+        let animationDuration = 0.125
+        
         // Update all UI components (with an animation or not).
         if animated {
-            UIView.animate(withDuration: 0.20) {
-                self.resizeTransitionUI(minimize: minimize)
+            UIView.animate(withDuration: animationDuration) {
+                self.alphaTransitionUI(minimized: minimized)
             }
         } else {
-            resizeTransitionUI(minimize: minimize)
+            alphaTransitionUI(minimized: minimized)
         }
         
-        // Update main avatar corner radius (with an animation or not).
+        // Update main avatar corner radius.
         DispatchQueue.main.async {
             if animated {
                 let mainAvatarAnimation = CABasicAnimation(keyPath: "cornerRadius")
-                mainAvatarAnimation.duration = 0.20
+                mainAvatarAnimation.duration = animationDuration
                 mainAvatarAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
                 mainAvatarAnimation.fromValue = self.mainAvatar.layer.cornerRadius
                 mainAvatarAnimation.toValue = self.mainAvatar.frame.width / 2
@@ -219,14 +258,18 @@ class VCKViewController: UIViewController {
         }
     }
     
-    private func resizeTransitionUI(minimize: Bool) {
-        topView.alpha = minimize ? 0 : 1
-        bottomContainerView.alpha = minimize ? 0 : 1
-        conferenceTimerContainerView.alpha = minimize ? 1 : 0
+    private func alphaTransitionUI(minimized: Bool) {
+        topView.alpha = minimized ? 0 : 1
+        bottomContainerView.alpha = minimized ? 0 : 1
+        conferenceTimerContainerView.alpha = minimized ? 1 : 0
+        mainAvatarLabel.alpha = minimized ? 0 : 1
         
         if cameraButton.tag != 0 {
-            ownVideoRenderer.alpha = minimize ? 0 : 1
-            flipImage.alpha = minimize ? 0 : 1
+            ownVideoRenderer.alpha = minimized ? 0 : 1
+            flipImage.alpha = minimized ? 0 : 1
+        } else {
+            ownVideoRenderer.alpha = 0
+            flipImage.alpha = 0
         }
     }
     
@@ -245,7 +288,7 @@ class VCKViewController: UIViewController {
         }
     }
     
-    @IBAction func cameraAction(_ sender: Any) {
+    @IBAction func cameraAction(_ sender: Any? = nil) {
         VCKPermission.cameraPermission(controller: self) { granted in
             guard let userID = VoxeetSDK.shared.session.user?.id, granted else { return }
             
@@ -320,12 +363,21 @@ class VCKViewController: UIViewController {
         // Hang up sound.
         hangUpSound?.play()
         
-        // Block the hang up button.
-        hangUpButton.isEnabled = false
+        // Disable buttons when leaving.
+        enableButtons(areEnabled: false)
+        
+        // Remove audio observer to desactivate switchBuiltInSpeakerButton behaviour.
+        conferenceStartTimer?.invalidate()
+        NotificationCenter.default.removeObserver(self, name: AVAudioSession.routeChangeNotification, object: nil)
         
         // Hide conference state before stopping the conference.
         conferenceStateLabel.isHidden = true
         conferenceStateLabel.text = nil
+        
+        // Stop camera.
+        if cameraButton.tag != 0 {
+            cameraAction()
+        }
         
         // If the conference is not connected yet, retry the hang up action after few milliseconds to stop the conference.
         guard VoxeetSDK.shared.conference.state == .connected else {
@@ -363,7 +415,7 @@ class VCKViewController: UIViewController {
     
     @objc private func mainContainerPinchGesture(recognizer: UIPinchGestureRecognizer) {
         if recognizer.state == .ended {
-            // Main video view content fill/fit.
+            // Main video view content fill / fit.
             mainVideoRenderer.contentFill = recognizer.scale > 1 ? true : false
             mainVideoRenderer.setNeedsLayout()
         }
@@ -376,7 +428,7 @@ class VCKViewController: UIViewController {
     @objc func conferenceStart() {
         // Register to audio route changing.
         if UIDevice.current.userInterfaceIdiom == .phone {
-            NotificationCenter.default.addObserver(self, selector: #selector(self.audioSessionRouteChange), name: AVAudioSession.routeChangeNotification, object: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(audioSessionRouteChange), name: AVAudioSession.routeChangeNotification, object: nil)
         }
         
         // Set minimum audio.
@@ -499,18 +551,19 @@ class VCKViewController: UIViewController {
         } else if user != nil {
             mainAvatar.image = UIImage(named: "UserPlaceholder", in: Bundle(for: type(of: self)), compatibleWith: nil)
         }
+        mainAvatarLabel.text = user?.name
         
         let userID = user?.id
         let stream = VoxeetSDK.shared.conference.mediaStream(userID: userID ?? "")
         let screenStream = VoxeetSDK.shared.conference.screenShareMediaStream()
         
-        // Unattaching the old main stream.
+        // Unattach old main stream.
         if let previousStream = VoxeetSDK.shared.conference.mediaStream(userID: previousMainUser?.id ?? ""), !previousStream.videoTracks.isEmpty && (previousMainUser?.id != userID || userID == screenShareUserID) {
             VoxeetSDK.shared.conference.unattachMediaStream(previousStream, renderer: mainVideoRenderer)
         }
         
         if !(stream?.videoTracks.isEmpty ?? true) || (!(screenStream?.videoTracks.isEmpty ?? true) && userID == screenShareUserID) {
-            // Attaching the new one.
+            // Attach new stream.
             if let screenStream = screenStream, userID == screenShareUserID {
                 mainVideoRenderer.isHidden = true
                 screenShareVideoRenderer.isHidden = false
@@ -590,16 +643,5 @@ class VCKViewController: UIViewController {
     @objc private func callKitMuteToggled(notification: NSNotification) {
         guard let isMuted = notification.userInfo?["mute"] as? Bool else { return }
         microphoneButton.setImage(UIImage(named: isMuted ? "MicrophoneOff" : "MicrophoneOn", in: Bundle(for: type(of: self)), compatibleWith: nil), for: .normal)
-    }
-}
-
-extension MPVolumeView {
-    static func setVolume(_ volume: Float) {
-        let volumeView = MPVolumeView()
-        let slider = volumeView.subviews.first(where: { $0 is UISlider }) as? UISlider
-        
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.01) {
-            slider?.value = volume
-        }
     }
 }

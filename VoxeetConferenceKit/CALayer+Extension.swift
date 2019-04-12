@@ -2,7 +2,7 @@
 //  CALayer+Extension.swift
 //  VoxeetConferenceKit
 //
-//  Created by Coco on 15/02/2017.
+//  Created by Corentin Larroque on 15/02/2017.
 //  Copyright © 2017 Voxeet. All rights reserved.
 //
 

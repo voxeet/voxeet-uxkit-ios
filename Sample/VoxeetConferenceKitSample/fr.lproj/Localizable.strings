@@ -3,7 +3,7 @@
   VoxeetConferenceKitSample
 
   Created by Corentin Larroque on 10/31/18.
-  Copyright © 2018 Corentin Larroque. All rights reserved.
+  Copyright © 2018 Voxeet. All rights reserved.
 */
 
 LANGUAGE = "Français";
@@ -13,3 +13,8 @@ CONFERENCE_NAME_PLACEHOLDER = "Nom de la conférence";
 PARTICIPANTS_LIST_LABEL = "Sélection";
 LOGOUT_BUTTON_TITLE = "Déconnexion";
 START_BUTTON_TITLE = "Rejoindre la conférence";
+
+VT_NOTIFICATION_TITLE = "Appel entrant de _HANDLE_";
+VT_NOTIFICATION_BODY = "Conférence : _CONFERENCE_ALIAS_";
+VT_NOTIFICATION_ANSWER = "Répondre";
+VT_NOTIFICATION_DECLINE = "Décliner";

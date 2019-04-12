@@ -2,7 +2,7 @@
 //  VoxeetConferenceKit.swift
 //  VoxeetConferenceKit
 //
-//  Created by Coco on 15/02/2017.
+//  Created by Corentin Larroque on 15/02/2017.
 //  Copyright © 2017 Voxeet. All rights reserved.
 //
 
@@ -20,7 +20,7 @@ import VoxeetSDK
     /// Conference appear animation default starts maximized. If false, the conference will appear minimized.
     @objc public var appearMaximized = true
     
-    /// If true, the conference will behave like a cellular call, if a user hangs up or decline the caller will be disconnected.
+    /// If true, the conference will behave like a cellular call. if a user hangs up or declines a call, the caller will be disconnected.
     @objc public var telecom = false {
         didSet {
             if telecom {
@@ -32,12 +32,15 @@ import VoxeetSDK
     }
     
     // Conference's viewController properties.
-    private var vckController: VCKViewController?
-    private let vckControllerMinimizeSize = CGSize(width: 98, height: 130)
-    private var vckControllerConstraintsHorizontal = [NSLayoutConstraint]()
-    private var vckControllerConstraintsVertical = [NSLayoutConstraint]()
-    private var vckControllerMinimizeVisualConstraintsHorizontal: String!
-    private var vckControllerMinimizeVisualConstraintsVertical: String!
+    private var vckVC: VCKViewController?
+    private let vckVCMaximizeBgColor = UIColor(red: 49/255, green: 63/255, blue: 72/255, alpha: 1)
+    private let vckVCMinimizeBgColor = UIColor(red: 14/255, green: 18/255, blue: 21/255, alpha: 1)
+    private let vckVCMinimizeSize = CGSize(width: 98, height: 130)
+    private var vckVCConstraintsHorizontal = [NSLayoutConstraint]()
+    private var vckVCConstraintsVertical = [NSLayoutConstraint]()
+    private var vckVCMinimizeVisualConstraintsHorizontal: String!
+    private var vckVCMinimizeVisualConstraintsVertical: String!
+    
     private var keyboardOpenned = false
     
     /*
@@ -76,168 +79,180 @@ import VoxeetSDK
      */
     
     private func show(animated: Bool = true) {
-        guard vckController == nil else { return }
+        guard vckVC == nil else { return }
         
-        // Creates the conference UI and adds it to the window.
+        // Create conference UI and add it to the window.
         let storyboard = UIStoryboard(name: "VoxeetConferenceKit", bundle: Bundle(for: type(of: self)))
-        vckController = storyboard.instantiateInitialViewController() as? VCKViewController
-        vckController!.view.translatesAutoresizingMaskIntoConstraints = false
-        vckController!.view.alpha = 0
+        vckVC = storyboard.instantiateInitialViewController() as? VCKViewController
+        guard let vckVC = vckVC else { return }
+        vckVC.view.translatesAutoresizingMaskIntoConstraints = false
         guard let window = UIApplication.shared.keyWindow else { return }
-        window.addSubview(vckController!.view)
+        window.addSubview(vckVC.view)
+        
+        // Default constraints.
+        appearConstraints(window: window, vckView: vckVC.view)
+        window.layoutIfNeeded()
+        
+        // Disappear constraints.
+        disappearConstraints(window: window, vckView: vckVC.view)
+        window.layoutIfNeeded()
         
         // Appear constraints.
-        let widthConstraint = NSLayoutConstraint(item: vckController!.view as Any, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: vckControllerMinimizeSize.width)
-        let heightConstraint = NSLayoutConstraint(item: vckController!.view as Any, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: vckControllerMinimizeSize.height)
-        let xConstraint = NSLayoutConstraint(item: vckController!.view as Any, attribute: .centerX, relatedBy: .equal, toItem: window, attribute: .centerX, multiplier: 1, constant: 0)
-        let yConstraint = NSLayoutConstraint(item: vckController!.view as Any, attribute: .centerY, relatedBy: .equal, toItem: window, attribute: .centerY, multiplier: 1, constant: 0)
-        window.addConstraints([widthConstraint, heightConstraint, xConstraint, yConstraint])
-        window.layoutIfNeeded()
-        window.removeConstraints([widthConstraint, heightConstraint, xConstraint, yConstraint])
+        appearConstraints(window: window, vckView: vckVC.view)
+        
+        // Appear animation.
+        CATransaction.begin()
+        CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(controlPoints: 0.43, 0.91, 0.12, 0.95))
+        UIView.animate(withDuration: 0.50, animations: {
+            window.layoutIfNeeded()
+            vckVC.view.backgroundColor = self.vckVCMaximizeBgColor
+        }, completion: { _ in
+            if !self.appearMaximized {
+                self.minimize(animated: true, completion: nil)
+            }
+        })
+        CATransaction.commit()
         
         // Initialize minimize constraints.
         let safeArea = safeAreaInsets()
-        vckControllerMinimizeVisualConstraintsHorizontal = "H:[vckView(\(vckControllerMinimizeSize.width))]-10-|"
-        vckControllerMinimizeVisualConstraintsVertical = "V:|-\(safeArea.top + 10)-[vckView(\(vckControllerMinimizeSize.height))]"
+        vckVCMinimizeVisualConstraintsHorizontal = "H:[vckView(\(vckVCMinimizeSize.width))]-10-|"
+        vckVCMinimizeVisualConstraintsVertical = "V:|-\(safeArea.top + 10)-[vckView(\(vckVCMinimizeSize.height))]"
         
-        // Start animation with a minimized state and with a fade animation.
-        minimize(animated: true)
-        if animated {
-            UIView.animate(withDuration: 0.10, delay: 0, options: .curveLinear, animations: {
-                self.vckController!.view.alpha = 1
-            }, completion: nil)
-        } else {
-            vckController!.view.alpha = 1
-        }
-        
-        // Then if the `appear maximized` is wanted, extends the conference view to fullscreen.
-        if appearMaximized {
-            // Show conference view.
-            maximize(animated: animated)
-        }
+        // Close Keyboard.
+        closeKeyboard()
     }
     
     private func maximize(animated: Bool = true, completion: (() -> Void)? = nil) {
-        guard let vckController = vckController, let window = vckController.view.window else {
+        guard let vckVC = vckVC, let window = vckVC.view.window else {
             return
         }
-        vckController.maximize(animated: animated)
         
-        // Hide current keyboard.
-        let presentedViewController = window.rootViewController?.presentedViewController ?? window.rootViewController
-        presentedViewController?.view.endEditing(true)
-        
-        // Reset tap and pan gestures.
-        vckController.view.gestureRecognizers?.removeAll()
-        
-        // Reset constraints.
-        window.removeConstraints(vckControllerConstraintsHorizontal)
-        window.removeConstraints(vckControllerConstraintsVertical)
-        
-        // Add maximize contraints.
-        vckControllerConstraintsHorizontal = NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[vckView]-0-|", options: [], metrics: nil, views: ["vckView": vckController.view as Any])
-        vckControllerConstraintsVertical = NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[vckView]-0-|", options: [], metrics: nil, views: ["vckView": vckController.view as Any])
-        window.addConstraints(vckControllerConstraintsHorizontal)
-        window.addConstraints(vckControllerConstraintsVertical)
+        // Maximize contraints.
+        appearConstraints(window: window, vckView: vckVC.view)
         
         // Maximize animation.
+        vckVC.maximize(animated: animated)
         if animated {
-            UIView.animate(withDuration: 0.20, delay: 0, options: .curveEaseInOut, animations: {
+            CATransaction.begin()
+            CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(controlPoints: 0.43, 0.91, 0.12, 0.95))
+            UIView.animate(withDuration: 0.25, animations: {
                 window.layoutIfNeeded()
-                self.vckController!.view.backgroundColor = UIColor(red: 49/255, green: 63/255, blue: 72/255, alpha: 1)
+                vckVC.view.backgroundColor = self.vckVCMaximizeBgColor
             }, completion: { _ in
                 completion?()
             })
+            CATransaction.commit()
         } else {
             window.layoutIfNeeded()
-            self.vckController!.view.backgroundColor = UIColor(red: 49/255, green: 63/255, blue: 72/255, alpha: 1)
+            self.vckVC!.view.backgroundColor = vckVCMaximizeBgColor
             completion?()
         }
+        
+        // Reset tap and pan gestures.
+        vckVC.view.gestureRecognizers?.removeAll()
+        
+        // Close Keyboard.
+        closeKeyboard()
     }
     
     func minimize(animated: Bool = true, completion: (() -> Void)? = nil) {
-        guard let vckController = vckController, let window = vckController.view.window else {
-            return
+        guard let vckVC = vckVC, let window = vckVC.view.window else { return }
+        
+        // Minimize contraints.
+        minimizeConstraints(window: window, vckView: vckVC.view)
+        
+        // Minimize animation.
+        vckVC.minimize(animated: animated)
+        if animated {
+            CATransaction.begin()
+            CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(controlPoints: 0.43, 0.91, 0.12, 0.95))
+            UIView.animate(withDuration: 0.25, animations: {
+                window.layoutIfNeeded()
+                vckVC.view.backgroundColor = self.vckVCMinimizeBgColor
+            }, completion: { _ in
+                completion?()
+            })
+            CATransaction.commit()
+        } else {
+            window.layoutIfNeeded()
+            vckVC.view.backgroundColor = vckVCMinimizeBgColor
+            completion?()
         }
-        vckController.minimize(animated: animated)
         
         // Set tap and pan gestures.
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapGesture(recognizer:)))
         let pan = UIPanGestureRecognizer(target: self, action: #selector(panGesture(recognizer:)))
-        vckController.view.gestureRecognizers = [tap, pan]
+        vckVC.view.gestureRecognizers = [tap, pan]
+    }
+    
+    func hide(animated: Bool = true, completion: (() -> Void)? = nil) {
+        guard let vckVC = vckVC, let window = vckVC.view.window, vckVC.view.tag == 0 else { return }
         
-        // Reset constraints.
-        window.removeConstraints(vckControllerConstraintsHorizontal)
-        window.removeConstraints(vckControllerConstraintsVertical)
-        
-        // Add minimize contraints.
-        let safeArea = safeAreaInsets()
-        vckControllerMinimizeVisualConstraintsVertical = vckControllerMinimizeVisualConstraintsVertical ?? "V:|-\(safeArea.top + 10)-[vckView(\(vckControllerMinimizeSize.height))]" // Keyboard opening particular case.
-        vckControllerConstraintsHorizontal = NSLayoutConstraint.constraints(withVisualFormat: vckControllerMinimizeVisualConstraintsHorizontal, options: [], metrics: nil, views: ["vckView": vckController.view as Any])
-        vckControllerConstraintsVertical = NSLayoutConstraint.constraints(withVisualFormat: vckControllerMinimizeVisualConstraintsVertical, options: [], metrics: nil, views: ["vckView": vckController.view as Any])
-        window.addConstraints(vckControllerConstraintsHorizontal)
-        window.addConstraints(vckControllerConstraintsVertical)
-        
-        // Minimize animation.
         if animated {
-            UIView.animate(withDuration: 0.20, delay: 0, options: .curveEaseInOut, animations: {
-                window.layoutIfNeeded()
-                vckController.view.backgroundColor = UIColor(red: 14/255, green: 18/255, blue: 21/255, alpha: 1)
-            }, completion: { _ in
-                completion?()
-            })
+            if vckVC.view.frame.width == vckVCMinimizeSize.width {
+                UIView.animate(withDuration: 0.25, animations: {
+                    vckVC.view.alpha = 0
+                }, completion: { (finished) in
+                    // Reset constraints.
+                    window.removeConstraints(self.vckVCConstraintsHorizontal + self.vckVCConstraintsVertical)
+                    
+                    // Remove view from superview.
+                    vckVC.view.removeFromSuperview()
+                    self.vckVC = nil
+                    
+                    completion?()
+                })
+            } else {
+                // Disappear constraints.
+                disappearConstraints(window: window, vckView: vckVC.view)
+                
+                vckVC.view.tag = 1 /* Tag locks hide animation. */
+                CATransaction.begin()
+                CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(controlPoints: 0.43, 0.91, 0.12, 0.95))
+                UIView.animate(withDuration: 0.5, animations: {
+                    window.layoutIfNeeded()
+                }, completion: { (finished) in
+                    // Reset constraints.
+                    window.removeConstraints(self.vckVCConstraintsHorizontal + self.vckVCConstraintsVertical)
+                    
+                    // Remove view from superview.
+                    vckVC.view.removeFromSuperview()
+                    self.vckVC = nil
+                    
+                    completion?()
+                })
+                CATransaction.commit()
+            }
         } else {
-            window.layoutIfNeeded()
-            vckController.view.backgroundColor = UIColor(red: 14/255, green: 18/255, blue: 21/255, alpha: 1)
+            // Remove view from superview.
+            vckVC.view.removeFromSuperview()
+            self.vckVC = nil
+            
             completion?()
         }
     }
     
-    func hide(animated: Bool = true, completion: (() -> Void)? = nil) {
-        guard let vckController = vckController, let window = vckController.view.window, vckController.view.tag == 0 else {
-            return
-        }
-        
-        var widthConstraint = NSLayoutConstraint()
-        var heightConstraint = NSLayoutConstraint()
-        var xConstraint = NSLayoutConstraint()
-        var yConstraint = NSLayoutConstraint()
-        
-        // Reset previous constraints.
-        window.removeConstraints(self.vckControllerConstraintsHorizontal)
-        window.removeConstraints(self.vckControllerConstraintsVertical)
-        
-        if animated {
-            // Disappear constraints.
-            widthConstraint = NSLayoutConstraint(item: vckController.view as Any, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: vckControllerMinimizeSize.width)
-            heightConstraint = NSLayoutConstraint(item: vckController.view as Any, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: vckControllerMinimizeSize.height)
-            xConstraint = NSLayoutConstraint(item: vckController.view as Any, attribute: .centerX, relatedBy: .equal, toItem: window, attribute: .centerX, multiplier: 1, constant: 0)
-            yConstraint = NSLayoutConstraint(item: vckController.view as Any, attribute: .centerY, relatedBy: .equal, toItem: window, attribute: .centerY, multiplier: 1, constant: 0)
-            window.addConstraints([widthConstraint, heightConstraint, xConstraint, yConstraint])
-            
-            vckController.view.tag = 1 // Lock hide animation.
-            UIView.animate(withDuration: 0.20, animations: {
-                vckController.view.alpha = 0
-                window.layoutIfNeeded()
-            }, completion: { (finished) in
-                // Reset constraints.
-                window.removeConstraints([widthConstraint, heightConstraint, xConstraint, yConstraint])
-                window.removeConstraints(self.vckControllerConstraintsHorizontal)
-                window.removeConstraints(self.vckControllerConstraintsVertical)
-                
-                // Remove the view from the superview.
-                vckController.view.removeFromSuperview()
-                self.vckController = nil
-                
-                completion?()
-            })
-        } else {
-            // Remove the view from the superview.
-            vckController.view.removeFromSuperview()
-            self.vckController = nil
-            
-            completion?()
-        }
+    private func appearConstraints(window: UIWindow, vckView: UIView) {
+        window.removeConstraints(vckVCConstraintsHorizontal + vckVCConstraintsVertical)
+        vckVCConstraintsHorizontal = NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[vckView]-0-|", options: [], metrics: nil, views: ["vckView": vckView as Any])
+        vckVCConstraintsVertical = NSLayoutConstraint.constraints(withVisualFormat: "V:|-0-[vckView]-0-|", options: [], metrics: nil, views: ["vckView": vckView as Any])
+        window.addConstraints(vckVCConstraintsHorizontal + vckVCConstraintsVertical)
+    }
+    
+    private func disappearConstraints(window: UIWindow, vckView: UIView) {
+        window.removeConstraints(vckVCConstraintsHorizontal + vckVCConstraintsVertical)
+        vckVCConstraintsHorizontal = NSLayoutConstraint.constraints(withVisualFormat: "H:|-0-[vckView]-0-|", options: [], metrics: nil, views: ["vckView": vckView as Any])
+        vckVCConstraintsVertical = NSLayoutConstraint.constraints(withVisualFormat: "V:[vckView(\(window.frame.height))]-(\(-window.frame.height))-|", options: [], metrics: nil, views: ["vckView": vckView as Any])
+        window.addConstraints(vckVCConstraintsHorizontal + vckVCConstraintsVertical)
+    }
+    
+    private func minimizeConstraints(window: UIWindow, vckView: UIView) {
+        window.removeConstraints(vckVCConstraintsHorizontal + vckVCConstraintsVertical)
+        let safeArea = safeAreaInsets()
+        vckVCMinimizeVisualConstraintsVertical = vckVCMinimizeVisualConstraintsVertical ?? "V:|-\(safeArea.top + 10)-[vckView(\(vckVCMinimizeSize.height))]" // Keyboard opening particular case.
+        vckVCConstraintsHorizontal = NSLayoutConstraint.constraints(withVisualFormat: vckVCMinimizeVisualConstraintsHorizontal, options: [], metrics: nil, views: ["vckView": vckView as Any])
+        vckVCConstraintsVertical = NSLayoutConstraint.constraints(withVisualFormat: vckVCMinimizeVisualConstraintsVertical, options: [], metrics: nil, views: ["vckView": vckView as Any])
+        window.addConstraints(vckVCConstraintsHorizontal + vckVCConstraintsVertical)
     }
     
     /*
@@ -257,8 +272,8 @@ import VoxeetSDK
         switch recognizer.state {
         case .began:
             // Reset constraints.
-            window.removeConstraints(vckControllerConstraintsHorizontal)
-            window.removeConstraints(vckControllerConstraintsVertical)
+            window.removeConstraints(vckVCConstraintsHorizontal)
+            window.removeConstraints(vckVCConstraintsVertical)
             
             vckView.translatesAutoresizingMaskIntoConstraints = true
         case .changed:
@@ -267,11 +282,11 @@ import VoxeetSDK
             vckView.translatesAutoresizingMaskIntoConstraints = false
             
             // Update constraints and animate the magnet corner.
-            window.removeConstraints(vckControllerConstraintsHorizontal)
-            window.removeConstraints(vckControllerConstraintsVertical)
+            window.removeConstraints(vckVCConstraintsHorizontal)
+            window.removeConstraints(vckVCConstraintsVertical)
             generateMinimizeConstraints()
-            window.addConstraints(vckControllerConstraintsHorizontal)
-            window.addConstraints(vckControllerConstraintsVertical)
+            window.addConstraints(vckVCConstraintsHorizontal)
+            window.addConstraints(vckVCConstraintsVertical)
             UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseInOut, animations: {
                 window.layoutIfNeeded()
             }, completion: nil)
@@ -283,29 +298,27 @@ import VoxeetSDK
      */
     
     private func generateMinimizeConstraints() {
-        guard let vckView = vckController?.view, let window = vckView.window else {
-            return
-        }
+        guard let vckView = vckVC?.view, let window = vckView.window else { return }
         let safeArea = safeAreaInsets()
         
         // Generates magnet corner constraints.
         if vckView.frame.origin.x <= window.frame.width / 2 - vckView.frame.width / 2 {
-            vckControllerMinimizeVisualConstraintsHorizontal = "H:|-\(safeArea.left + 10)-[vckView(\(vckView.frame.width))]"
+            vckVCMinimizeVisualConstraintsHorizontal = "H:|-\(safeArea.left + 10)-[vckView(\(vckView.frame.width))]"
         } else {
-            vckControllerMinimizeVisualConstraintsHorizontal = "H:[vckView(\(vckView.frame.width))]-\(safeArea.right + 10)-|"
+            vckVCMinimizeVisualConstraintsHorizontal = "H:[vckView(\(vckView.frame.width))]-\(safeArea.right + 10)-|"
         }
         if vckView.frame.origin.y <= window.frame.height / 2 - vckView.frame.height / 2 || keyboardOpenned {
-            vckControllerMinimizeVisualConstraintsVertical = "V:|-\(safeArea.top + 10)-[vckView(\(vckView.frame.height))]"
+            vckVCMinimizeVisualConstraintsVertical = "V:|-\(safeArea.top + 10)-[vckView(\(vckView.frame.height))]"
         } else {
-            vckControllerMinimizeVisualConstraintsVertical = "V:[vckView(\(vckView.frame.height))]-\(safeArea.bottom + 10)-|"
+            vckVCMinimizeVisualConstraintsVertical = "V:[vckView(\(vckView.frame.height))]-\(safeArea.bottom + 10)-|"
         }
         
-        vckControllerConstraintsHorizontal = NSLayoutConstraint.constraints(withVisualFormat: vckControllerMinimizeVisualConstraintsHorizontal, options: [], metrics: nil, views: ["vckView": vckView])
-        vckControllerConstraintsVertical = NSLayoutConstraint.constraints(withVisualFormat: vckControllerMinimizeVisualConstraintsVertical, options: [], metrics: nil, views: ["vckView": vckView])
+        vckVCConstraintsHorizontal = NSLayoutConstraint.constraints(withVisualFormat: vckVCMinimizeVisualConstraintsHorizontal, options: [], metrics: nil, views: ["vckView": vckView])
+        vckVCConstraintsVertical = NSLayoutConstraint.constraints(withVisualFormat: vckVCMinimizeVisualConstraintsVertical, options: [], metrics: nil, views: ["vckView": vckView])
     }
     
     private func safeAreaInsets() -> UIEdgeInsets {
-        guard let window = vckController?.view.window else {
+        guard let window = vckVC?.view.window else {
             return .zero
         }
         
@@ -316,14 +329,20 @@ import VoxeetSDK
         
         return safeAreaInsets
     }
+    
+    private func closeKeyboard() {
+        guard let vckVC = vckVC, let window = vckVC.view.window else { return }
+        let presentedViewController = window.rootViewController?.presentedViewController ?? window.rootViewController
+        presentedViewController?.view.endEditing(true)
+    }
 }
 
 /*
- *  MARK: - Notifications: voxeet's socket
+ *  MARK: - Notifications: Voxeet
  */
 
 extension VoxeetConferenceKit {
-    @objc func participantUpdated(notification: NSNotification) {
+    @objc private func participantUpdated(notification: NSNotification) {
         // Get JSON.
         guard let userInfo = notification.userInfo?.values.first as? Data else {
             return
@@ -332,12 +351,12 @@ extension VoxeetConferenceKit {
         // Debug.
         print("[VoxeetConferenceKit] \(String(describing: VoxeetConferenceKit.self)).\(#function).\(#line)")
         
-        // Stop the conference if the user decline or left the conference.
+        // Stop conference if a user decline or leave.
         if let json = try? JSONSerialization.jsonObject(with: userInfo, options: .mutableContainers) {
             if let jsonDict = json as? [String: Any], let status = jsonDict["status"] as? String, status == "DECLINE" || status == "LEFT" {
-                // Update the conference state label.
+                // Update conference state label.
                 if status == "DECLINE" {
-                    self.vckController?.conferenceStateLabel.text = NSLocalizedString("CONFERENCE_STATE_DECLINED", bundle: Bundle(for: type(of: self)), comment: "")
+                    self.vckVC?.conferenceStateLabel.text = NSLocalizedString("CONFERENCE_STATE_DECLINED", bundle: Bundle(for: type(of: self)), comment: "")
                 }
                 
                 VoxeetSDK.shared.conference.leave()
@@ -355,12 +374,12 @@ extension VoxeetConferenceKit {
 }
 
 /*
- *  MARK: - Notifications: callKit
+ *  MARK: - Notifications: CallKit
  */
 
 extension VoxeetConferenceKit {
-    @objc func callKitSwapped(notification: NSNotification) {
-        // Remove current vckController from UI before reinitializing it with the new conference's users.
+    @objc private func callKitSwapped(notification: NSNotification) {
+        // Remove current vckVC from UI before reinitializing it with the new conference's users.
         DispatchQueue.main.async {
             self.hide(animated: false) {
                 self.show(animated: true)
@@ -381,31 +400,32 @@ extension VoxeetConferenceKit {
         
         switch state {
         case .connecting:
-            // Show the conference.
+            // Show conference.
             show()
             
-            // Update the conference state label.
-            vckController?.conferenceStateLabel.text = NSLocalizedString("CONFERENCE_STATE_CALLING", bundle: Bundle(for: type(of: self)), comment: "")
-            vckController?.conferenceStateLabel.isHidden = false
+            // Update conference state label.
+            vckVC?.conferenceStateLabel.text = NSLocalizedString("CONFERENCE_STATE_CALLING", bundle: Bundle(for: type(of: self)), comment: "")
+            vckVC?.conferenceStateLabel.isHidden = false
         case .connected:
-            break
+            vckVC?.enableButtons(areEnabled: true)
         case .disconnecting:
-            // Update the conference state label.
-            if vckController?.conferenceStateLabel.text == nil {
-                vckController?.conferenceStateLabel.text = NSLocalizedString("CONFERENCE_STATE_ENDED", bundle: Bundle(for: type(of: self)), comment: "")
+            // Update conference state label.
+            if vckVC?.conferenceStateLabel.text == nil {
+                vckVC?.conferenceStateLabel.text = NSLocalizedString("CONFERENCE_STATE_ENDED", bundle: Bundle(for: type(of: self)), comment: "")
             }
-            vckController?.conferenceStateLabel.isHidden = false
+            vckVC?.conferenceStateLabel.isHidden = false
             
-            // Hidding main user.
-            vckController?.activeSpeakerTimer?.invalidate()
-            vckController?.updateMainUser(user: nil)
+            // Hide main user.
+            vckVC?.activeSpeakerTimer?.invalidate()
+            vckVC?.updateMainUser(user: nil)
+            // Hide users collection view.
+            vckVC?.usersCollectionView.isHidden = true
             
-            // Stop outgoing sound if it started and play hang up sound.
-            vckController?.outgoingSound?.stop()
-            vckController?.outgoingSound = nil
-            // try? vckController?.hangUpSound?.play()
+            // Stop outgoing sound if it was started.
+            vckVC?.outgoingSound?.stop()
+            vckVC?.outgoingSound = nil
         case .disconnected:
-            // Hide animation.
+            // Hide conference.
             hide()
         }
     }
@@ -417,19 +437,17 @@ extension VoxeetConferenceKit {
 
 extension VoxeetConferenceKit {
     @objc private func applicationDidBecomeActive() {
-        guard let vckView = vckController?.view else {
-            return
-        }
+        guard let vckView = vckVC?.view else { return }
         
-        if vckView.frame.width == vckControllerMinimizeSize.width {
+        if vckView.frame.width == vckVCMinimizeSize.width {
             reloadMinimizeConstraints()
         } else {
             // Force the vckView to reload all constraints.
             vckView.setNeedsLayout()
             
-            // Reset vertical constraint (wrong position when minimized).
-            if vckControllerMinimizeVisualConstraintsVertical?.range(of: "-|") == nil {
-                vckControllerMinimizeVisualConstraintsVertical = nil
+            // Reset vertical constraint (fix a wrong position when minimized).
+            if vckVCMinimizeVisualConstraintsVertical?.range(of: "-|") == nil {
+                vckVCMinimizeVisualConstraintsVertical = nil
             }
         }
     }
@@ -439,17 +457,14 @@ extension VoxeetConferenceKit {
     }
     
     private func reloadMinimizeConstraints() {
-        guard let vckView = vckController?.view, let window = vckView.window, vckView.frame.width == vckControllerMinimizeSize.width else {
+        guard let vckView = vckVC?.view, let window = vckView.window, vckView.frame.width == vckVCMinimizeSize.width else {
             return
         }
         
         // Update minimized constraints.
-        window.removeConstraints(vckControllerConstraintsHorizontal)
-        window.removeConstraints(vckControllerConstraintsVertical)
+        window.removeConstraints(vckVCConstraintsHorizontal + vckVCConstraintsVertical)
         generateMinimizeConstraints()
-        window.addConstraints(vckControllerConstraintsHorizontal)
-        window.addConstraints(vckControllerConstraintsVertical)
-        
+        window.addConstraints(vckVCConstraintsHorizontal + vckVCConstraintsVertical)
         window.layoutIfNeeded()
     }
 }
@@ -459,14 +474,14 @@ extension VoxeetConferenceKit {
  */
 
 extension VoxeetConferenceKit {
-    @objc func keyboardWillShow(notification: NSNotification) {
-        vckControllerMinimizeVisualConstraintsVertical = nil // Only allow top magnet corners.
+    @objc private func keyboardWillShow(notification: NSNotification) {
+        vckVCMinimizeVisualConstraintsVertical = nil /* Only allow top magnet corners. */
         minimize()
         
         keyboardOpenned = true
     }
     
-    @objc func keyboardWillHide(notification: NSNotification) {
+    @objc private func keyboardWillHide(notification: NSNotification) {
         keyboardOpenned = false
     }
 }

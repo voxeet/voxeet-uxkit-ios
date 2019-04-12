@@ -15,6 +15,7 @@
 		CC5D08251E55EA74007845BA /* VCKViewControllerUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5D08241E55EA74007845BA /* VCKViewControllerUserCell.swift */; };
 		CC5D082C1E56086F007845BA /* VCKViewController+VTConferenceDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5D082B1E56086F007845BA /* VCKViewController+VTConferenceDelegate.swift */; };
 		CC5D082E1E56088B007845BA /* VCKViewController+UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC5D082D1E56088B007845BA /* VCKViewController+UICollectionView.swift */; };
+		CCA1B81B225B70A4006EAB6F /* MPVolumeView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCA1B81A225B70A4006EAB6F /* MPVolumeView+Extension.swift */; };
 		CCB49A932187407A003DD11C /* VCKPermission.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCB49A922187407A003DD11C /* VCKPermission.swift */; };
 		CCC1BF111FE424E600C61343 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CCC1BF131FE424E600C61343 /* Localizable.strings */; };
 		CCCA16B81FE7B40B00C0065A /* CallHangUp.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CCCA16B61FE7B40B00C0065A /* CallHangUp.mp3 */; };
@@ -37,6 +38,7 @@
 		CC5D08241E55EA74007845BA /* VCKViewControllerUserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VCKViewControllerUserCell.swift; sourceTree = "<group>"; };
 		CC5D082B1E56086F007845BA /* VCKViewController+VTConferenceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VCKViewController+VTConferenceDelegate.swift"; sourceTree = "<group>"; };
 		CC5D082D1E56088B007845BA /* VCKViewController+UICollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VCKViewController+UICollectionView.swift"; sourceTree = "<group>"; };
+		CCA1B81A225B70A4006EAB6F /* MPVolumeView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MPVolumeView+Extension.swift"; sourceTree = "<group>"; };
 		CCB49A922187407A003DD11C /* VCKPermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCKPermission.swift; sourceTree = "<group>"; };
 		CCC1BF121FE424E600C61343 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CCCA16B61FE7B40B00C0065A /* CallHangUp.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = CallHangUp.mp3; path = Assets/Sounds/CallHangUp.mp3; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 			children = (
 				CC2B29111E548C2F00E3EB57 /* CALayer+Extension.swift */,
 				CCEEEEF01F0A9C52000F4D61 /* Print+Extension.swift */,
+				CCA1B81A225B70A4006EAB6F /* MPVolumeView+Extension.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -250,6 +253,7 @@
 			files = (
 				CC5D08251E55EA74007845BA /* VCKViewControllerUserCell.swift in Sources */,
 				CCEEEEF11F0A9C52000F4D61 /* Print+Extension.swift in Sources */,
+				CCA1B81B225B70A4006EAB6F /* MPVolumeView+Extension.swift in Sources */,
 				CC5D082C1E56086F007845BA /* VCKViewController+VTConferenceDelegate.swift in Sources */,
 				CCB49A932187407A003DD11C /* VCKPermission.swift in Sources */,
 				CC2B28D21E54522100E3EB57 /* VoxeetConferenceKit.swift in Sources */,

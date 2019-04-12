@@ -2,8 +2,8 @@
 //  ViewController.swift
 //  VoxeetConferenceKitSample
 //
-//  Created by Coco on 31/03/2017.
-//  Copyright © 2017 Corentin Larroque. All rights reserved.
+//  Created by Corentin Larroque on 31/03/2017.
+//  Copyright © 2017 Voxeet. All rights reserved.
 //
 
 import UIKit

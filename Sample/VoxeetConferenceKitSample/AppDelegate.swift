@@ -2,8 +2,8 @@
 //  AppDelegate.swift
 //  VoxeetConferenceKitSample
 //
-//  Created by Coco on 31/03/2017.
-//  Copyright © 2017 Corentin Larroque. All rights reserved.
+//  Created by Corentin Larroque on 31/03/2017.
+//  Copyright © 2017 Voxeet. All rights reserved.
 //
 
 import UIKit
@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Example of public variables to change the conference behavior.
-        VoxeetSDK.shared.callKit = true
+        VoxeetSDK.shared.pushNotification.type = .callKit
         VoxeetSDK.shared.conference.defaultBuiltInSpeaker = true
         VoxeetSDK.shared.conference.defaultVideo = false
         VoxeetSDK.shared.conference.audio3D = true
@@ -38,11 +38,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate {
     /// Useful below iOS 10.
     func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
-        VoxeetSDK.shared.application(application, didReceive: notification)
+        VoxeetSDK.shared.pushNotification.application(application, didReceive: notification)
     }
     
     /// Useful below iOS 10.
     func application(_ application: UIApplication, handleActionWithIdentifier identifier: String?, for notification: UILocalNotification, completionHandler: @escaping () -> Void) {
-        VoxeetSDK.shared.application(application, handleActionWithIdentifier: identifier, for: notification, completionHandler: completionHandler)
+        VoxeetSDK.shared.pushNotification.application(application, handleActionWithIdentifier: identifier, for: notification, completionHandler: completionHandler)
     }
 }

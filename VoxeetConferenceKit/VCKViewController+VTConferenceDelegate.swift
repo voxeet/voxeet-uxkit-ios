@@ -2,7 +2,7 @@
 //  VCKViewController+VTConferenceDelegate.swift
 //  VoxeetConferenceKit
 //
-//  Created by Coco on 16/02/2017.
+//  Created by Corentin Larroque on 16/02/2017.
 //  Copyright © 2017 Voxeet. All rights reserved.
 //
 
@@ -12,7 +12,7 @@ import VoxeetSDK
 extension VCKViewController: VTConferenceDelegate {
     func participantJoined(userID: String, stream: MediaStream) {
         if userID == VoxeetSDK.shared.session.user?.id {
-            // Monkey patch: Wait the WebRTC media to be started.
+            // Monkey patch: Wait WebRTC media to be started.
             conferenceStartTimer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(conferenceStart), userInfo: nil, repeats: false)
         } else {
             // Update user's audio position to listen each users clearly in a 3D environment.
@@ -41,7 +41,7 @@ extension VCKViewController: VTConferenceDelegate {
             }
             
             // Hide / unhide own renderer.
-            UIView.animate(withDuration: 0.20, animations: {
+            UIView.animate(withDuration: 0.125, animations: {
                 self.ownVideoRenderer.alpha = stream.videoTracks.isEmpty ? 0 : 1
                 self.flipImage.alpha = self.ownVideoRenderer.alpha
             })
