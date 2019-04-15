@@ -38,6 +38,9 @@ extension VCKViewController: VTConferenceDelegate {
             // Attach own stream to the own video renderer.
             if !stream.videoTracks.isEmpty {
                 VoxeetSDK.shared.conference.attachMediaStream(stream, renderer: ownVideoRenderer)
+                
+                // Selfie camera mirror.
+                ownVideoRenderer.mirrorEffect = true
             }
             
             // Hide / unhide own renderer.

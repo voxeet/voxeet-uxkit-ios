@@ -144,34 +144,33 @@ class VCKViewController: UIViewController {
     }
     
     private func initUI() {
+        // Main avatar corner radius.
+        mainAvatar.layer.cornerRadius = mainAvatar.frame.width / 2
+        
         // Default behavior to choose between internal or external speakers.
         if !VoxeetSDK.shared.conference.defaultBuiltInSpeaker {
             switchBuiltInSpeakerAction()
-        }
-        
-        // Default behavior to check if video is enabled.
-        if VoxeetSDK.shared.conference.defaultVideo {
-            cameraButton.tag = 1
-            cameraButton.setImage(UIImage(named: "CameraOn", in: Bundle(for: type(of: self)), compatibleWith: nil), for: .normal)
         }
         
         // Hide by default minimized elements.
         mainAvatarContainer.alpha = 0
         alphaTransitionUI(minimized: false)
         
-        // Main avatar corner radius.
-        mainAvatar.layer.cornerRadius = mainAvatar.frame.width / 2
-        
+        // Default behavior to check if video is enabled.
+        if VoxeetSDK.shared.conference.defaultVideo {
+            cameraButton.tag = 1
+            cameraButton.setImage(UIImage(named: "CameraOn", in: Bundle(for: type(of: self)), compatibleWith: nil), for: .normal)
+        }
         // Selfie camera mirror.
         ownVideoRenderer.mirrorEffect = true
-        
-        // Disable automatic screen lock.
-        UIApplication.shared.isIdleTimerDisabled = true
         
         // Hide screen share button for devices below iOS 11.
         if #available(iOS 11.0, *) {} else {
             screenShareButton.isHidden = true
         }
+        
+        // Disable automatic screen lock.
+        UIApplication.shared.isIdleTimerDisabled = true
         
         // Disable buttons until the end of join process.
         enableButtons(areEnabled: false)
@@ -198,6 +197,7 @@ class VCKViewController: UIViewController {
                 self.cameraButton.isHidden = true
                 self.screenShareButton.isHidden = true
             }
+            cameraButton.tag = 0
         }
     }
     
@@ -374,9 +374,10 @@ class VCKViewController: UIViewController {
         conferenceStateLabel.isHidden = true
         conferenceStateLabel.text = nil
         
-        // Stop camera.
+        // Hide own video renderer.
         if cameraButton.tag != 0 {
-            cameraAction()
+            ownVideoRenderer.alpha = 0
+            flipImage.alpha = ownVideoRenderer.alpha
         }
         
         // If the conference is not connected yet, retry the hang up action after few milliseconds to stop the conference.
