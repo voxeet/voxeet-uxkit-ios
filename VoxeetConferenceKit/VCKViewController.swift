@@ -393,23 +393,26 @@ class VCKViewController: UIViewController {
      */
     
     @objc private func flipCamera(recognizer: UITapGestureRecognizer) {
-        VoxeetSDK.shared.conference.flipCamera()
-        
+        let mirrorEffectTransformation = self.ownVideoRenderer.layer.transform.m11 * -1
         flipImage.isHidden = true
         ownVideoRenderer.isUserInteractionEnabled = false
-        
-        // Apply a mirror effect to the own video renderer.
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.38) {
-            let mirrorEffectTransformation = self.ownVideoRenderer.layer.transform.m11 * -1
-            UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseIn, animations: {
-                self.ownVideoRenderer.transform = CGAffineTransform(scaleX: 1.2 * mirrorEffectTransformation, y: 1.2)
+        UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseIn, animations: {
+            self.ownVideoRenderer.transform = CGAffineTransform(scaleX: 1.2 * mirrorEffectTransformation, y: 1.2)
+        }) { _ in
+            UIView.animate(withDuration: 0.10, delay: 0, options: .curveEaseOut, animations: {
+                self.ownVideoRenderer.transform = CGAffineTransform(scaleX: 1 * mirrorEffectTransformation, y: 1)
             }) { _ in
-                UIView.animate(withDuration: 0.10, delay: 0, options: .curveEaseOut, animations: {
-                    self.ownVideoRenderer.transform = CGAffineTransform(scaleX: 1 * mirrorEffectTransformation, y: 1)
-                }) { _ in
-                    self.flipImage.isHidden = false
-                    self.ownVideoRenderer.isUserInteractionEnabled = true
-                }
+                self.flipImage.isHidden = false
+                self.ownVideoRenderer.isUserInteractionEnabled = true
+            }
+        }
+        
+        ownVideoRenderer.subviews.first?.alpha = 0
+        VoxeetSDK.shared.conference.flipCamera {
+            DispatchQueue.main.async {
+                UIView.animate(withDuration: 0.10, animations: {
+                    self.ownVideoRenderer.subviews.first?.alpha = 1
+                })
             }
         }
     }
