@@ -30,8 +30,10 @@ extension VCKViewController: UICollectionViewDataSource {
         let user = users[indexPath.row]
         
         // Cell data.
-        if let avatarURL = user.avatarURL {
-            cell.avatar.kf.setImage(with: URL(string: avatarURL))
+        let avatarURL = user.avatarURL ?? ""
+        let imageURLStr = avatarURL.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        if let imageURL = URL(string: imageURLStr) {
+            cell.avatar.kf.setImage(with: imageURL)
         } else {
             cell.avatar.image = UIImage(named: "UserPlaceholder", in: Bundle(for: type(of: self)), compatibleWith: nil)
         }

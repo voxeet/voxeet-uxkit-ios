@@ -550,8 +550,10 @@ class VCKViewController: UIViewController {
         let previousMainUser = mainUser
         
         mainUser = user
-        if let photoURL = URL(string: user?.avatarURL ?? "") {
-            mainAvatar.kf.setImage(with: photoURL)
+        let avatarURL = user?.avatarURL ?? ""
+        let imageURLStr = avatarURL.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        if let imageURL = URL(string: imageURLStr) {
+            mainAvatar.kf.setImage(with: imageURL)
         } else if user != nil {
             mainAvatar.image = UIImage(named: "UserPlaceholder", in: Bundle(for: type(of: self)), compatibleWith: nil)
         }

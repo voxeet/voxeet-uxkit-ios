@@ -222,7 +222,7 @@ VoxeetConferenceKit.shared.telecom = false
 ### `CallKit sound and image`
 
 If `CallKitSound.mp3` is overridden, the ringing sound will be replaced by your mp3. 
-Same as `IconMask.png` if overridden, it will replace the CallKit default image by yours (40x40px).
+Same as `IconMask.png` if overridden, it will replace the default CallKit image by yours (40x40px).
 
 ## Tech
 
@@ -235,6 +235,6 @@ The Voxeet iOS SDK and ConferenceKit rely on these open source projects:
 
 ## SDK version
 
-1.1.9
+1.2.0
 
 © Voxeet, 2019
