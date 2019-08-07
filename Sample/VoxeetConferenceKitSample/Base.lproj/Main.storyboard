@@ -92,7 +92,7 @@
                                             <action selector="logoutAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SYK-fX-oTS"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qjk-1y-2Fc">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qjk-1y-2Fc" customClass="UIGradientButton" customModule="VoxeetConferenceKitSample" customModuleProvider="target">
                                         <rect key="frame" x="16" y="548.5" width="327" height="50"/>
                                         <color key="backgroundColor" red="0.52156862745098043" green="0.86274509803921573" blue="0.38431372549019605" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
@@ -141,20 +141,6 @@
                                     <constraint firstItem="FBT-lB-kyw" firstAttribute="leading" secondItem="ftv-M5-V0u" secondAttribute="leading" constant="16" id="xcA-Fz-LyC"/>
                                     <constraint firstItem="lU2-l0-PXU" firstAttribute="top" secondItem="ULV-U8-11J" secondAttribute="bottom" id="yUI-vd-FvO"/>
                                 </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="8"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowRadius">
-                                        <integer key="value" value="16"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="size" keyPath="layer.shadowOffset">
-                                        <size key="value" width="0.0" height="0.0"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.shadowOpacity">
-                                        <real key="value" value="0.10000000000000001"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -175,6 +161,7 @@
                     <connections>
                         <outlet property="conferenceNameLabel" destination="8IF-aL-FdX" id="uq3-DZ-3Sg"/>
                         <outlet property="conferenceNameTextField" destination="3MD-zC-871" id="PMl-58-j8U"/>
+                        <outlet property="container" destination="ftv-M5-V0u" id="lVa-S9-12A"/>
                         <outlet property="logoutButton" destination="P3Y-47-3U4" id="HUO-At-uvi"/>
                         <outlet property="participantsListLabel" destination="ULV-U8-11J" id="HdJ-MU-es8"/>
                         <outlet property="participantsPickerView" destination="lU2-l0-PXU" id="Cbm-j2-KnK"/>

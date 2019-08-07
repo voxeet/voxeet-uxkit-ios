@@ -10,12 +10,13 @@ import UIKit
 import VoxeetSDK
 
 class ViewController: UIViewController {
+    @IBOutlet weak private var container: UIView!
     @IBOutlet weak private var conferenceNameLabel: UILabel!
     @IBOutlet weak private var conferenceNameTextField: UITextField!
     @IBOutlet weak private var participantsListLabel: UILabel!
     @IBOutlet weak private var participantsPickerView: UIPickerView!
     @IBOutlet weak private var logoutButton: UIButton!
-    @IBOutlet weak private var startConferenceButton: UIButton!
+    @IBOutlet weak private var startConferenceButton: UIGradientButton!
     
     private var users = [VTUser]()
     
@@ -54,6 +55,20 @@ class ViewController: UIViewController {
             participantsPickerView.selectRow(selectedRow, inComponent: 0, animated: false)
             login(user: users[selectedRow])
         }
+        
+        // Button gradient color.
+        let sColor = UIColor(red: 72/255, green: 213/255, blue: 124/255, alpha: 1)
+        let eColor = UIColor(red: 192/255, green: 226/255, blue: 73/255, alpha: 1)
+        let sPoint = CGPoint(x: 0, y: 1)
+        let ePoint = CGPoint(x: 1, y: 0)
+        startConferenceButton.gradient(colours: [sColor, eColor], startPoint: sPoint, endPoint: ePoint)
+        
+        // Container's shadow and corner radius.
+        container.layer.cornerRadius = 8
+        container.layer.shadowOpacity = 0.1
+        container.layer.shadowRadius = 16
+        container.layer.shadowOffset = CGSize.zero
+        container.layer.shadowPath = UIBezierPath(rect: container.bounds).cgPath
     }
     
     private func login(user: VTUser) {
@@ -222,5 +237,23 @@ extension ViewController: UIPickerViewDelegate {
         } else {
             logout()
         }
+    }
+}
+
+class UIGradientButton: UIButton {
+    override public class var layerClass: Swift.AnyClass {
+        return CAGradientLayer.self
+    }
+}
+
+extension UIView {
+    func gradient(colours: [UIColor], startPoint: CGPoint, endPoint: CGPoint, locations: [NSNumber]? = nil) {
+        guard let gradientLayer = self.layer as? CAGradientLayer else { return }
+        
+        gradientLayer.frame = self.bounds
+        gradientLayer.colors = colours.map { $0.cgColor }
+        gradientLayer.startPoint = startPoint
+        gradientLayer.endPoint = endPoint
+        gradientLayer.locations = locations
     }
 }

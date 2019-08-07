@@ -9,13 +9,14 @@
 
 
 * **Operating systems:** iOS 9.0 and later versions
-* **IDE:** [Xcode 10.2+](https://developer.apple.com/xcode/)
-* **Languages:** Swift 5+, Objective-C, [React Native](https://github.com/voxeet/react-native-voxeet-conferencekit), [Cordova](https://github.com/voxeet/voxeet-cordova-conferencekit)
+* **IDE:** [Xcode 10.3+](https://developer.apple.com/xcode/)
+* **Languages:** Swift 5.0.1+, Objective-C, [React Native](https://github.com/voxeet/react-native-voxeet-conferencekit), [Cordova](https://github.com/voxeet/voxeet-cordova-conferencekit)
 * **Supported architectures:** armv7, arm64, i386, x86_64
 
 ## Sample application
 
-A sample application is available on this [public repository](https://github.com/voxeet/voxeet-ios-conferencekit/tree/master/Sample) on GitHub.
+A sample application is available on this [GitHub repository](https://github.com/voxeet/voxeet-ios-conferencekit/tree/master/Sample).
+**VoxeetConferenceKit** is a framework based on **VoxeetSDK** ([https://github.com/voxeet/voxeet-ios-sdk](https://github.com/voxeet/voxeet-ios-sdk)).
 
 ![CallKit](http://cdn.voxeet.com/images/IncomingCallKit.png "CallKit") ![Conference maximized](http://cdn.voxeet.com/images/OutgoingCall.png "Conference maximized") ![Conference minimized](http://cdn.voxeet.com/images/CallMinimize.png "Conference minimized")
 
@@ -110,7 +111,7 @@ import VoxeetConferenceKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
 
-        // Initialization of the Voxeet conference kit.
+        // Voxeet SDKs initialization.
         VoxeetSDK.shared.initialize(consumerKey: "YOUR_CONSUMER_KEY", consumerSecret: "YOUR_CONSUMER_SECRET")
         VoxeetConferenceKit.shared.initialize()
 
@@ -137,8 +138,7 @@ Connect a session is like a login, however the SDK needs to be initialized with 
 
 ```swift
 let user = VTUser(externalID: "1234", name: "Username", avatarURL: "https://voxeet.com/logo.jpg")
-VoxeetSDK.shared.session.connect(user: user) { error in
-}
+VoxeetSDK.shared.session.connect(user: user) { error in }
 ```
 
 #### References
@@ -157,8 +157,7 @@ Close a session is like a logout, it will stop the socket and stop sending VoIP 
 #### Examples
 
 ```swift
-VoxeetSDK.shared.session.disconnect { error in
-}
+VoxeetSDK.shared.session.disconnect { error in }
 ```
 
 #### References
@@ -197,8 +196,7 @@ Stop the conference UI.
 #### Examples
 
 ```swift
-VoxeetSDK.shared.conference.leave { error in
-}
+VoxeetSDK.shared.conference.leave { error in }
 ```
 
 #### References
@@ -235,6 +233,6 @@ The Voxeet iOS SDK and ConferenceKit rely on these open source projects:
 
 ## SDK version
 
-1.2.0
+1.2.1
 
 © Voxeet, 2019
