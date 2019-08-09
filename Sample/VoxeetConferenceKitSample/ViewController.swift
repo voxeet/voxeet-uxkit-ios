@@ -121,9 +121,7 @@ class ViewController: UIViewController {
             print("[VoxeetConferenceKitSample] \(String(describing: self)).\(#function).\(#line) - Error: Invalid conference ID")
             return
         }
-        guard VoxeetSDK.shared.conference.id == nil else {
-            return
-        }
+        guard VoxeetSDK.shared.conference.id == nil else { return }
         
         // Save conference name.
         UserDefaults.standard.set(conferenceAlias, forKey: kConferenceNameNSUserDefaults)
@@ -137,16 +135,16 @@ class ViewController: UIViewController {
         let users = self.users.filter({ $0.externalID != nil && $0.externalID != self.users[selectedRow].externalID })
         
         // Create a conference (with a custom conference alias).
-        VoxeetSDK.shared.conference.create(parameters: ["conferenceAlias": conferenceAlias], success: { (json) in
+        VoxeetSDK.shared.conference.create(parameters: ["conferenceAlias": conferenceAlias], success: { json in
             guard let conferenceID = json?["conferenceId"] as? String, let isNew = json?["isNew"] as? Bool else {
                 return
             }
             
             // Join the created conference.
-            VoxeetSDK.shared.conference.join(conferenceID: conferenceID, video: false, userInfo: nil, success: { (json) in
+            VoxeetSDK.shared.conference.join(conferenceID: conferenceID, video: false, userInfo: nil, success: { json in
                 // Re-enable startConferenceButton when the request finish.
                 self.startConferenceButton.isEnabled = true
-            }, fail: { (error) in
+            }, fail: { error in
                 // Re-enable startConferenceButton when the request finish.
                 self.startConferenceButton.isEnabled = true
                 self.errorPopUp(error: error)
@@ -156,7 +154,7 @@ class ViewController: UIViewController {
             if isNew {
                 VoxeetSDK.shared.conference.invite(conferenceID: conferenceID, externalIDs: users.map({ $0.externalID ?? "" }), completion: nil)
             }
-        }, fail: { (error) in
+        }, fail: { error in
             // Re-enable startConferenceButton when the request finish.
             self.startConferenceButton.isEnabled = true
             self.errorPopUp(error: error)
@@ -227,7 +225,7 @@ extension ViewController: UIPickerViewDelegate {
         }
         
         if row != 0 {
-            logout { (error) in
+            logout { error in
                 // Save current picker view.
                 UserDefaults.standard.set(row, forKey: self.kPickerViewRowNSUserDefaults)
                 UserDefaults.standard.synchronize()

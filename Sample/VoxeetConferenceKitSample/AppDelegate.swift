@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         VoxeetConferenceKit.shared.telecom = false
         
         // Voxeet SDKs initialization.
-        VoxeetSDK.shared.initialize(consumerKey: "YOUR_CONSUMER_KEY", consumerSecret: "YOUR_CONSUMER_SECRET", connectSession: false)
+        VoxeetSDK.shared.initialize(consumerKey: "YOUR_CONSUMER_KEY", consumerSecret: "YOUR_CONSUMER_SECRET")
         VoxeetConferenceKit.shared.initialize()
         
         return true
