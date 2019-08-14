@@ -36,6 +36,7 @@
 		FAADC93B22F967A800F59938 /* OverlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAADC93A22F967A800F59938 /* OverlayViewController.swift */; };
 		FACCE65F22B8E88500D2B33E /* VTUXUserCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACCE65E22B8E88500D2B33E /* VTUXUserCollectionViewCell.swift */; };
 		FADBB26522B39D7D005806DC /* VTUXActiveSpeakerTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADBB26422B39D7D005806DC /* VTUXActiveSpeakerTimer.swift */; };
+		FAF523822304116B00421A84 /* VTUXLocalized.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF523812304116B00421A84 /* VTUXLocalized.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,9 +68,9 @@
 		CC2B28B41E54501E00E3EB57 /* VoxeetConferenceKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VoxeetConferenceKit.h; path = Other/VoxeetConferenceKit.h; sourceTree = "<group>"; };
 		CC2B28B51E54501E00E3EB57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Other/Info.plist; sourceTree = "<group>"; };
 		CC2B28D11E54522100E3EB57 /* VoxeetUXKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VoxeetUXKit.swift; path = Code/VoxeetUXKit.swift; sourceTree = "<group>"; };
-		CC2B290C1E5469C300E3EB57 /* ConferenceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConferenceViewController.swift; path = Code/Implementation/ConferenceViewController.swift; sourceTree = "<group>"; };
+		CC2B290C1E5469C300E3EB57 /* ConferenceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ConferenceViewController.swift; path = Code/ViewControllers/ConferenceViewController.swift; sourceTree = "<group>"; };
 		CC2B29131E5494D600E3EB57 /* VoxeetConferenceKit.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = VoxeetConferenceKit.xcassets; path = Assets/Images/VoxeetConferenceKit.xcassets; sourceTree = "<group>"; };
-		CC5D082B1E56086F007845BA /* ConferenceViewController+VTConferenceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ConferenceViewController+VTConferenceDelegate.swift"; path = "Code/Implementation/ConferenceViewController+VTConferenceDelegate.swift"; sourceTree = "<group>"; };
+		CC5D082B1E56086F007845BA /* ConferenceViewController+VTConferenceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "ConferenceViewController+VTConferenceDelegate.swift"; path = "Code/ViewControllers/ConferenceViewController+VTConferenceDelegate.swift"; sourceTree = "<group>"; };
 		CC809918207E09EC006C24E3 /* VoxeetSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = VoxeetSDK.xcodeproj; path = "../ios-sdk-rest/VoxeetSDK.xcodeproj"; sourceTree = "<group>"; };
 		CC809923207E09F2006C24E3 /* WebRTC.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = WebRTC.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CCB49A922187407A003DD11C /* Permissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Permissions.swift; path = Code/Utilities/Other/Permissions.swift; sourceTree = "<group>"; };
@@ -79,22 +80,23 @@
 		CCEEEEF01F0A9C52000F4D61 /* Print+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Print+Extension.swift"; path = "Code/Utilities/Extensions/Print+Extension.swift"; sourceTree = "<group>"; };
 		CCFF3DBE21904BF700541075 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/VoxeetUXKit.storyboard; sourceTree = "<group>"; };
 		CCFF3DC021904C4200541075 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = "Assets/Localizable Strings/fr.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		FA1A98AA22F437BF00ECD4E6 /* VTUXActionBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VTUXActionBarViewController.swift; path = "Code/Implementation/UX Modules/Action Bar/VTUXActionBarViewController.swift"; sourceTree = "<group>"; };
+		FA1A98AA22F437BF00ECD4E6 /* VTUXActionBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VTUXActionBarViewController.swift; path = "Code/ViewControllers/UX Modules/Action Bar/VTUXActionBarViewController.swift"; sourceTree = "<group>"; };
 		FA1A98AC22F4666500ECD4E6 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIButton+Extension.swift"; path = "Code/Utilities/Extensions/UIButton+Extension.swift"; sourceTree = "<group>"; };
-		FA234A8722B2759500C3216C /* VTUXSpeakerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VTUXSpeakerViewController.swift; path = "Code/Implementation/UX Modules/Current Speaker/VTUXSpeakerViewController.swift"; sourceTree = "<group>"; };
-		FA3FC2DC22BD18BE007E60E0 /* VTUXSpeakerVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VTUXSpeakerVideoViewController.swift; path = "Code/Implementation/UX Modules/Current Speaker/VTUXSpeakerVideoViewController.swift"; sourceTree = "<group>"; };
-		FA55399922B8DD9800A761DE /* VTUXUsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VTUXUsersViewController.swift; path = "Code/Implementation/UX Modules/Users List/VTUXUsersViewController.swift"; sourceTree = "<group>"; };
-		FA867E9022F9D46300D15DC8 /* VTUXOverlayConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VTUXOverlayConfiguration.swift; path = Code/Configuration/VTUXOverlayConfiguration.swift; sourceTree = "<group>"; };
+		FA234A8722B2759500C3216C /* VTUXSpeakerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VTUXSpeakerViewController.swift; path = "Code/ViewControllers/UX Modules/Current Speaker/VTUXSpeakerViewController.swift"; sourceTree = "<group>"; };
+		FA3FC2DC22BD18BE007E60E0 /* VTUXSpeakerVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VTUXSpeakerVideoViewController.swift; path = "Code/ViewControllers/UX Modules/Current Speaker/VTUXSpeakerVideoViewController.swift"; sourceTree = "<group>"; };
+		FA55399922B8DD9800A761DE /* VTUXUsersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VTUXUsersViewController.swift; path = "Code/ViewControllers/UX Modules/Users List/VTUXUsersViewController.swift"; sourceTree = "<group>"; };
+		FA867E9022F9D46300D15DC8 /* VTUXOverlayConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VTUXOverlayConfiguration.swift; path = Code/Utilities/Configuration/VTUXOverlayConfiguration.swift; sourceTree = "<group>"; };
 		FA89276522E5BAD10048DD46 /* CallJoined.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = CallJoined.mp3; path = Assets/Sounds/CallJoined.mp3; sourceTree = "<group>"; };
 		FA89276922E5DCC30048DD46 /* CallHangUp.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = CallHangUp.mp3; path = Assets/Sounds/CallHangUp.mp3; sourceTree = "<group>"; };
 		FA89276B22E6F3840048DD46 /* UIRoundImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UIRoundImageView.swift; path = Code/Utilities/Other/UIRoundImageView.swift; sourceTree = "<group>"; };
-		FAADC93022F87C6700F59938 /* VTUXConferenceControllerConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VTUXConferenceControllerConfiguration.swift; path = Code/Configuration/VTUXConferenceControllerConfiguration.swift; sourceTree = "<group>"; };
-		FAADC93422F87CAB00F59938 /* VTUXActionBarConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VTUXActionBarConfiguration.swift; path = Code/Configuration/VTUXActionBarConfiguration.swift; sourceTree = "<group>"; };
-		FAADC93622F87CD700F59938 /* VTUXUsersConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VTUXUsersConfiguration.swift; path = Code/Configuration/VTUXUsersConfiguration.swift; sourceTree = "<group>"; };
+		FAADC93022F87C6700F59938 /* VTUXConferenceControllerConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VTUXConferenceControllerConfiguration.swift; path = Code/Utilities/Configuration/VTUXConferenceControllerConfiguration.swift; sourceTree = "<group>"; };
+		FAADC93422F87CAB00F59938 /* VTUXActionBarConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VTUXActionBarConfiguration.swift; path = Code/Utilities/Configuration/VTUXActionBarConfiguration.swift; sourceTree = "<group>"; };
+		FAADC93622F87CD700F59938 /* VTUXUsersConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VTUXUsersConfiguration.swift; path = Code/Utilities/Configuration/VTUXUsersConfiguration.swift; sourceTree = "<group>"; };
 		FAADC93822F8841100F59938 /* VTUXConferenceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VTUXConferenceController.swift; path = Code/Controllers/VTUXConferenceController.swift; sourceTree = "<group>"; };
-		FAADC93A22F967A800F59938 /* OverlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OverlayViewController.swift; path = Code/Implementation/OverlayViewController.swift; sourceTree = "<group>"; };
-		FACCE65E22B8E88500D2B33E /* VTUXUserCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VTUXUserCollectionViewCell.swift; path = "Code/Implementation/UX Modules/Users List/VTUXUserCollectionViewCell.swift"; sourceTree = "<group>"; };
+		FAADC93A22F967A800F59938 /* OverlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OverlayViewController.swift; path = Code/ViewControllers/OverlayViewController.swift; sourceTree = "<group>"; };
+		FACCE65E22B8E88500D2B33E /* VTUXUserCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VTUXUserCollectionViewCell.swift; path = "Code/ViewControllers/UX Modules/Users List/VTUXUserCollectionViewCell.swift"; sourceTree = "<group>"; };
 		FADBB26422B39D7D005806DC /* VTUXActiveSpeakerTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VTUXActiveSpeakerTimer.swift; path = Code/Utilities/VTUXActiveSpeakerTimer.swift; sourceTree = "<group>"; };
+		FAF523812304116B00421A84 /* VTUXLocalized.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VTUXLocalized.swift; path = Code/Utilities/Other/VTUXLocalized.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,7 +157,7 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
-		CC2B28D61E54525A00E3EB57 /* Implementation */ = {
+		CC2B28D61E54525A00E3EB57 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				FAADC93A22F967A800F59938 /* OverlayViewController.swift */,
@@ -163,7 +165,7 @@
 				CC5D082B1E56086F007845BA /* ConferenceViewController+VTConferenceDelegate.swift */,
 				FA5539A122B8DF5E00A761DE /* UX Modules */,
 			);
-			name = Implementation;
+			name = ViewControllers;
 			sourceTree = "<group>";
 		};
 		CC2B290E1E548C0300E3EB57 /* Extensions */ = {
@@ -271,6 +273,7 @@
 			children = (
 				CCB49A922187407A003DD11C /* Permissions.swift */,
 				FA89276B22E6F3840048DD46 /* UIRoundImageView.swift */,
+				FAF523812304116B00421A84 /* VTUXLocalized.swift */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -299,9 +302,8 @@
 			children = (
 				CC2B28D11E54522100E3EB57 /* VoxeetUXKit.swift */,
 				CC2B28D51E54525600E3EB57 /* Views */,
-				FA867E8F22F9D40F00D15DC8 /* Configuration */,
 				FA867E9222F9D64300D15DC8 /* Controllers */,
-				CC2B28D61E54525A00E3EB57 /* Implementation */,
+				CC2B28D61E54525A00E3EB57 /* ViewControllers */,
 				FAADC93D22F9AE8E00F59938 /* Utilities */,
 			);
 			name = Code;
@@ -311,6 +313,7 @@
 			isa = PBXGroup;
 			children = (
 				FADBB26422B39D7D005806DC /* VTUXActiveSpeakerTimer.swift */,
+				FA867E8F22F9D40F00D15DC8 /* Configuration */,
 				CC2B290E1E548C0300E3EB57 /* Extensions */,
 				FA867E8E22F9C24A00D15DC8 /* Other */,
 			);
@@ -442,6 +445,7 @@
 				FA234A8822B2759500C3216C /* VTUXSpeakerViewController.swift in Sources */,
 				FAADC93722F87CD700F59938 /* VTUXUsersConfiguration.swift in Sources */,
 				FA867E9122F9D46300D15DC8 /* VTUXOverlayConfiguration.swift in Sources */,
+				FAF523822304116B00421A84 /* VTUXLocalized.swift in Sources */,
 				FADBB26522B39D7D005806DC /* VTUXActiveSpeakerTimer.swift in Sources */,
 				FA1A98AB22F437BF00ECD4E6 /* VTUXActionBarViewController.swift in Sources */,
 				FAADC93522F87CAB00F59938 /* VTUXActionBarConfiguration.swift in Sources */,

@@ -57,7 +57,7 @@ extension VTUXConferenceController {
             if let jsonDict = json as? [String: Any], let status = jsonDict["status"] as? String, status == "DECLINE" || status == "LEFT" {
                 // Update conference state label.
                 if status == "DECLINE" {
-                    self.viewController?.conferenceStateLabel.text = NSLocalizedString("CONFERENCE_STATE_DECLINED", bundle: Bundle(for: type(of: self)), comment: "")
+                    self.viewController?.conferenceStateLabel.text = VTUXLocalized.string("VTUX_CONFERENCE_STATE_DECLINED")
                 }
                 
                 // Leave current conference.

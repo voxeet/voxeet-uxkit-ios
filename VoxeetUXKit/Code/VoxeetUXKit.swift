@@ -6,7 +6,6 @@
 //  Copyright © 2017 Voxeet. All rights reserved.
 //
 
-import UIKit
 import VoxeetSDK
 
 // Will soon be deprecated.
@@ -22,22 +21,24 @@ import VoxeetSDK
     /// Voxeet UX kit singleton.
     @objc public static let shared = VoxeetUXKit()
     
+    /// Conference controller.
+    @objc public private(set) var conferenceController: VTUXConferenceController?
+    
     /// Conference appear animation default starts maximized. If false, the conference will appear minimized.
-    @objc public var appearMaximized = true {
+    @objc public var appearMaximized = true { /* Will soon be deprecated */
         didSet {
-            conferenceController.appearMaximized = appearMaximized
+            initialize()
+            conferenceController?.appearMaximized = appearMaximized
         }
     }
     
     /// If true, the conference will behave like a cellular call. if a user hangs up or declines a call, the caller will be disconnected.
-    @objc public var telecom = false {
+    @objc public var telecom = false { /* Will soon be deprecated */
         didSet {
-            conferenceController.telecom = telecom
+            initialize()
+            conferenceController?.telecom = telecom
         }
     }
-    
-    /// Conference controller.
-    @objc public var conferenceController = VTUXConferenceController()
     
     /*
      *  MARK: Initialization
@@ -53,5 +54,10 @@ import VoxeetSDK
         }
     }
     
-    @objc public func initialize() {}
+    @objc public func initialize() {
+        // Init controllers.
+        if conferenceController == nil {
+            conferenceController = VTUXConferenceController()
+        }
+    }
 }

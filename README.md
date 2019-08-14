@@ -110,11 +110,18 @@ import VoxeetConferenceKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-
+        
         // Voxeet SDKs initialization.
         VoxeetSDK.shared.initialize(consumerKey: "YOUR_CONSUMER_KEY", consumerSecret: "YOUR_CONSUMER_SECRET")
         VoxeetConferenceKit.shared.initialize()
-
+        
+        // Example of public variables to change the conference behavior.
+        VoxeetSDK.shared.pushNotification.type = .none
+        VoxeetSDK.shared.conference.defaultBuiltInSpeaker = false
+        VoxeetSDK.shared.conference.defaultVideo = false
+        VoxeetConferenceKit.shared.appearMaximized = true
+        VoxeetConferenceKit.shared.telecom = false
+        
         return true
     }
 }
@@ -233,6 +240,6 @@ The Voxeet iOS SDK and ConferenceKit rely on these open source projects:
 
 ## SDK version
 
-1.2.1
+1.2.2
 
 © Voxeet, 2019

@@ -2,7 +2,7 @@
 //  UIButton+Extension.swift
 //  VoxeetUXKit
 //
-//  Created by Larroque, Corentin on 02/08/2019.
+//  Created by Corentin Larroque on 02/08/2019.
 //  Copyright © 2019 Voxeet. All rights reserved.
 //
 

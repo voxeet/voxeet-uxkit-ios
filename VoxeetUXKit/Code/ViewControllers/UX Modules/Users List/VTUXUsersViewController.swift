@@ -21,16 +21,16 @@ import VoxeetSDK
     }
     private var previousInterfaceOrientation: UIInterfaceOrientation!
     
+    @objc public var speakingUserColor: UIColor!
+    @objc public var selectedUserColor: UIColor!
+    private let inactiveAlpha: CGFloat = 0.6
+    
     @objc public weak var delegate: VTUXUsersViewControllerDelegate?
     
     private var activeUsers = [VTUser]()
     private var inactiveUsers = [VTUser]()
     private var selectedUser: VTUser?
     private var lockedUser: VTUser?
-    
-    private var speakingUserColor: UIColor!
-    private var selectedUserColor: UIColor!
-    private let inactiveAlpha: CGFloat = 0.6
     
     private var voiceLevelTimerQueue = DispatchQueue(label: "com.voxeet.uxkit.voiceLevelTimer", qos: .background, attributes: .concurrent)
     private var voiceLevelTimer: Timer?
@@ -51,9 +51,9 @@ import VoxeetSDK
         }
         
         // Users list configuration.
-        let usersConfiguration = VoxeetUXKit.shared.conferenceController.configuration.users
-        speakingUserColor = usersConfiguration.speakingUserColor
-        selectedUserColor = usersConfiguration.selectedUserColor
+        let usersConfiguration = VoxeetUXKit.shared.conferenceController?.configuration.users
+        speakingUserColor = usersConfiguration?.speakingUserColor ?? .black
+        selectedUserColor = usersConfiguration?.selectedUserColor ?? .black
     }
     
     @objc override public func viewDidDisappear(_ animated: Bool) {

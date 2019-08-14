@@ -18,3 +18,17 @@ VT_NOTIFICATION_TITLE = "Appel entrant de _HANDLE_";
 VT_NOTIFICATION_BODY = "Conférence : _CONFERENCE_ALIAS_";
 VT_NOTIFICATION_ANSWER = "Répondre";
 VT_NOTIFICATION_DECLINE = "Décliner";
+
+VTUX_CONFERENCE_STATE_CALLING = "Nous attendons d'autres participants.";
+VTUX_CONFERENCE_STATE_ENDED = "L'appel est terminé.";
+VTUX_CONFERENCE_STATE_DECLINED = "Appel refusé.";
+
+VTUX_MICROPHONE_ALERT_TITLE = "Autorisation du microphone";
+VTUX_MICROPHONE_ALERT_MESSAGE = "La permission du microphone est requise pour communiquer avec d'autres personnes";
+VTUX_MICROPHONE_ALERT_BUTTON_CANCEL = "Annuler";
+VTUX_MICROPHONE_ALERT_BUTTON_SETTINGS = "Réglages";
+
+VTUX_CAMERA_ALERT_TITLE = "Permission de la caméra";
+VTUX_CAMERA_ALERT_MESSAGE = "La permission de la caméra est requise pour activer la vidéo";
+VTUX_CAMERA_ALERT_BUTTON_CANCEL = "Annuler";
+VTUX_CAMERA_ALERT_BUTTON_SETTINGS = "Réglages";

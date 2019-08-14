@@ -2,7 +2,7 @@
 //  VTUXSpeakerVideoViewController.swift
 //  VoxeetUXKit
 //
-//  Created by Larroque, Corentin on 21/06/2019.
+//  Created by Corentin Larroque on 21/06/2019.
 //  Copyright © 2019 Voxeet. All rights reserved.
 //
 

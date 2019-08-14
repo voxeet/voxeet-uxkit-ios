@@ -6,7 +6,6 @@
 //  Copyright © 2017 Voxeet. All rights reserved.
 //
 
-import Foundation
 import VoxeetSDK
 
 extension ConferenceViewController: VTConferenceDelegate {
@@ -43,6 +42,8 @@ extension ConferenceViewController: VTConferenceDelegate {
             // Attach own stream to the own video renderer.
             if !stream.videoTracks.isEmpty {
                 ownVideoRenderer.attach(userID: userID, stream: stream)
+                // Enable camera button (in case of `join` method with `video` true).
+                actionBarVC.cameraButton(state: .on)
             }
         } else {
             // Append / Refresh users' collection view.
@@ -76,8 +77,8 @@ extension ConferenceViewController: VTConferenceDelegate {
         
         if userID != VoxeetSDK.shared.session.user?.id {
             // Reload collection view to update/remove inactive users.
-            let usersConfiguration = VoxeetUXKit.shared.conferenceController.configuration.users
-            if let user = conferenceService.user(userID: userID), usersConfiguration.displayLeftUsers {
+            let usersConfiguration = VoxeetUXKit.shared.conferenceController?.configuration.users
+            if let user = conferenceService.user(userID: userID), (usersConfiguration?.displayLeftUsers ?? false) {
                 usersVC.update(user: user)
             } else {
                 usersVC.remove(userID: userID)
@@ -96,7 +97,7 @@ extension ConferenceViewController: VTConferenceDelegate {
                 
                 // Update conference state label.
                 if conferenceStateLabel.text == nil {
-                    conferenceStateLabel.text = NSLocalizedString("CONFERENCE_STATE_CALLING", bundle: Bundle(for: type(of: self)), comment: "")
+                    conferenceStateLabel.text = VTUXLocalized.string("VTUX_CONFERENCE_STATE_CALLING")
                 }
                 conferenceStateLabel.isHidden = false
             }

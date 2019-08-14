@@ -369,7 +369,7 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3C0-Wb-8Kp">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                        <state key="normal" image="MicrophoneOn"/>
+                                        <state key="normal" image="MuteOff"/>
                                         <connections>
                                             <action selector="muteAction:" destination="Q3B-h3-n53" eventType="touchUpInside" id="gaH-5R-8C1"/>
                                         </connections>
@@ -383,7 +383,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0p0-Ga-Fvj">
                                         <rect key="frame" x="124" y="0.0" width="50" height="50"/>
-                                        <state key="normal" image="BuiltInSpeakerOn"/>
+                                        <state key="normal" image="SpeakerOff"/>
                                         <connections>
                                             <action selector="switchDeviceSpeakerAction:" destination="Q3B-h3-n53" eventType="touchUpInside" id="Taa-xR-Tb1"/>
                                         </connections>
@@ -400,7 +400,7 @@
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="yZ3-uY-PO4" secondAttribute="height" multiplier="1:1" id="BQp-QU-94p"/>
                                         </constraints>
-                                        <state key="normal" image="HangUp"/>
+                                        <state key="normal" image="Leave"/>
                                         <connections>
                                             <action selector="leaveAction:" destination="Q3B-h3-n53" eventType="touchUpInside" id="n3w-zD-mEF"/>
                                         </connections>
@@ -419,6 +419,7 @@
                         <viewLayoutGuide key="safeArea" id="CBM-XT-GGx"/>
                     </view>
                     <connections>
+                        <outlet property="buttonsStackView" destination="6zv-oG-ewf" id="iVi-eq-V8p"/>
                         <outlet property="cameraButton" destination="OaC-bX-LVD" id="JT2-c1-XJo"/>
                         <outlet property="leaveButton" destination="yZ3-uY-PO4" id="kCv-yq-tSE"/>
                         <outlet property="muteButton" destination="3C0-Wb-8Kp" id="idG-s1-k6a"/>
@@ -432,13 +433,13 @@
         </scene>
     </scenes>
     <resources>
-        <image name="BuiltInSpeakerOn" width="60" height="60"/>
         <image name="CameraOff" width="60" height="60"/>
         <image name="Flip" width="27" height="31"/>
-        <image name="HangUp" width="60" height="60"/>
+        <image name="Leave" width="60" height="60"/>
         <image name="LiveIndicator" width="16" height="16"/>
-        <image name="MicrophoneOn" width="60" height="60"/>
         <image name="Minimize" width="50" height="50"/>
+        <image name="MuteOff" width="60" height="60"/>
         <image name="ScreenShareOff" width="60" height="60"/>
+        <image name="SpeakerOff" width="60" height="60"/>
     </resources>
 </document>

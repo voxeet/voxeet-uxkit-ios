@@ -18,7 +18,15 @@ class OverlayViewController: UIViewController {
     private var keyboardOpenned = false
     private var previousInterfaceOrientation: UIInterfaceOrientation!
     
+    private let backgroundMaximizedColor: UIColor
+    private let backgroundMinimizedColor: UIColor
+    
     required init?(coder aDecoder: NSCoder) {
+        // Get background color.
+        let overlayConfiguration = VoxeetUXKit.shared.conferenceController?.configuration.overlay
+        backgroundMaximizedColor = overlayConfiguration?.backgroundMaximizedColor ?? .black
+        backgroundMinimizedColor = overlayConfiguration?.backgroundMinimizedColor ?? .black
+        
         super.init(coder: aDecoder)
         
         // Constraints updates notifications.
@@ -34,8 +42,14 @@ class OverlayViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let overlayConfiguration = VoxeetUXKit.shared.conferenceController.configuration.overlay
-        view.backgroundColor = overlayConfiguration.backgroundMaximizedColor
+        // Background color.
+        view.backgroundColor = backgroundMaximizedColor
+        
+        // Set shadow.
+        view.layer.shadowOpacity = 0
+        view.layer.shadowRadius = 3
+        view.layer.shadowOffset = CGSize(width: 0, height: 2)
+        view.layer.shadowPath = UIBezierPath(rect: CGRect(x: 0, y: 0, width: minimizeSize.width, height: minimizeSize.height)).cgPath
     }
     
     /*
@@ -86,17 +100,14 @@ class OverlayViewController: UIViewController {
             CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(controlPoints: 0.43, 0.91, 0.12, 0.95))
             UIView.animate(withDuration: 0.25, animations: {
                 window.layoutIfNeeded()
-                let overlayConfiguration = VoxeetUXKit.shared.conferenceController.configuration.overlay
-                self.view.backgroundColor = overlayConfiguration.backgroundMaximizedColor
+                self.view.backgroundColor = self.backgroundMaximizedColor
             }, completion: { _ in
                 completion?()
             })
             CATransaction.commit()
         } else {
             window.layoutIfNeeded()
-            let overlayConfiguration = VoxeetUXKit.shared.conferenceController.configuration.overlay
-            view.backgroundColor = overlayConfiguration.backgroundMaximizedColor
-            
+            view.backgroundColor = backgroundMaximizedColor
             completion?()
         }
         
@@ -110,6 +121,9 @@ class OverlayViewController: UIViewController {
     func minimize(animated: Bool = true, completion: (() -> Void)? = nil) {
         guard let window = view.window else { return }
         
+        // Set shadow
+        view.layer.shadowOpacity = 0.3
+        
         // Minimize contraints.
         minimizeConstraints(window: window, view: view)
         
@@ -119,29 +133,14 @@ class OverlayViewController: UIViewController {
             CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(controlPoints: 0.43, 0.91, 0.12, 0.95))
             UIView.animate(withDuration: 0.25, animations: {
                 window.layoutIfNeeded()
-                let overlayConfiguration = VoxeetUXKit.shared.conferenceController.configuration.overlay
-                self.view.backgroundColor = overlayConfiguration.backgroundMinimizedColor
+                self.view.backgroundColor = self.backgroundMinimizedColor
             }, completion: { _ in
-                // Set shadow.
-                self.view.layer.shadowOpacity = 0.3
-                self.view.layer.shadowRadius = 3
-                self.view.layer.shadowOffset = CGSize(width: 0, height: 2)
-                self.view.layer.shadowPath = UIBezierPath(rect: self.view.bounds).cgPath
-                
                 completion?()
             })
             CATransaction.commit()
         } else {
             window.layoutIfNeeded()
-            let overlayConfiguration = VoxeetUXKit.shared.conferenceController.configuration.overlay
-            view.backgroundColor = overlayConfiguration.backgroundMinimizedColor
-            
-            // Set shadow.
-            self.view.layer.shadowOpacity = 0.3
-            self.view.layer.shadowRadius = 3
-            self.view.layer.shadowOffset = CGSize(width: 0, height: 2)
-            self.view.layer.shadowPath = UIBezierPath(rect: self.view.bounds).cgPath
-            
+            view.backgroundColor = backgroundMinimizedColor
             completion?()
         }
         

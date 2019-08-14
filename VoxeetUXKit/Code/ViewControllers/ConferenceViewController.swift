@@ -6,7 +6,6 @@
 //  Copyright © 2017 Voxeet. All rights reserved.
 //
 
-import UIKit
 import VoxeetSDK
 import Kingfisher
 import MediaPlayer
@@ -94,9 +93,6 @@ class ConferenceViewController: OverlayViewController {
         activeSpeaker.delegate = self
         activeSpeaker.refresh()
         
-        // Init users collection view edge insets.
-        usersVC.edgeInsets = UIEdgeInsets(top: 0, left: minimizeButton.frame.width, bottom: 0, right: 0)
-        
         // Save when a user starts the conference.
         conferenceTimerStart = Date()
         // Start the conference timer.
@@ -174,7 +170,7 @@ class ConferenceViewController: OverlayViewController {
         alphaTransitionUI(minimized: false)
         
         // Disable buttons until the end of join process.
-        actionBarVC.enableButtons(false)
+        actionBarVC.buttons(enabled: false)
         minimizeButton.isEnabled(false, animated: true)
         
         // Disable automatic screen lock.
@@ -190,24 +186,33 @@ class ConferenceViewController: OverlayViewController {
         conferenceTimerLabel.layer.shadowOffset = CGSize(width: -2, height: 0)
         conferenceTimerLabel.layer.shadowPath = UIBezierPath(rect: conferenceTimerLabel.bounds).cgPath
         
-        // Minimize button's shadow (not optimized).
-        minimizeButton.layer.shadowOpacity = 0.25
-        minimizeButton.layer.shadowRadius = 2
-        minimizeButton.layer.shadowOffset = CGSize.zero
+        // Minimize button.
+        let overlayConfiguration = VoxeetUXKit.shared.conferenceController?.configuration.overlay
+        if overlayConfiguration?.displayAction ?? false {
+            // Init users collection view edge insets.
+            usersVC.edgeInsets = UIEdgeInsets(top: 0, left: minimizeButton.frame.width, bottom: 0, right: 0)
+            
+            // Minimize button's shadow (not optimized).
+            minimizeButton.layer.shadowOpacity = 0.25
+            minimizeButton.layer.shadowRadius = 2
+            minimizeButton.layer.shadowOffset = CGSize.zero
+        } else {
+            minimizeButton.isHidden = true
+        }
     }
     
     func updateConferenceState(_ state: VTConferenceState) {
         switch state {
         case .connecting:
             // Update conference state label.
-            conferenceStateLabel.text = NSLocalizedString("CONFERENCE_STATE_CALLING", bundle: Bundle(for: type(of: self)), comment: "")
+            conferenceStateLabel.text = VTUXLocalized.string("VTUX_CONFERENCE_STATE_CALLING")
             conferenceStateLabel.alpha = 0
             conferenceStateLabel.isHidden = false
             UIView.animate(withDuration: 0.15) {
                 self.conferenceStateLabel.alpha = 1
             }
         case .connected:
-            actionBarVC.enableButtons(true)
+            actionBarVC.buttons(enabled: true)
             minimizeButton.isEnabled(true, animated: true)
         case .disconnecting:
             // Stop active speaker.
@@ -215,12 +220,12 @@ class ConferenceViewController: OverlayViewController {
             
             // Update conference state label.
             if conferenceStateLabel.text == nil {
-                conferenceStateLabel.text = NSLocalizedString("CONFERENCE_STATE_ENDED", bundle: Bundle(for: type(of: self)), comment: "")
+                conferenceStateLabel.text = VTUXLocalized.string("VTUX_CONFERENCE_STATE_ENDED")
             }
             conferenceStateLabel.isHidden = false
             
             // Disable buttons when leaving.
-            actionBarVC.enableButtons(false)
+            actionBarVC.buttons(enabled: false)
             minimizeButton.isEnabled(false, animated: true)
             
             // Hide main speaker and collection view.
@@ -228,9 +233,11 @@ class ConferenceViewController: OverlayViewController {
             speakerVC.view.isHidden = true
             speakerVideoVC.view.isHidden = true
             
-            // Stop outgoing sound if it was started.
+            // Stop outgoing sounds if they were started.
             outgoingSound?.stop()
             outgoingSound = nil
+            joinedSound?.stop()
+            joinedSound = nil
         case .disconnected:
             break
         }
@@ -426,12 +433,8 @@ class ConferenceViewController: OverlayViewController {
         let json = try? JSONSerialization.jsonObject(with: userInfo, options: .mutableContainers) as? [String: Any]
         
         if let userID = json?["user_id"] as? String, let user = VoxeetSDK.shared.conference.user(userID: userID) {
-            let usersConfiguration = VoxeetUXKit.shared.conferenceController.configuration.users
-            if !usersConfiguration.displayLeftUsers {
-                if user.status == .reserved { /* Only show invited users */
-                    usersVC.append(user: user)
-                }
-            } else {
+            let usersConfiguration = VoxeetUXKit.shared.conferenceController?.configuration.users
+            if user.status == .reserved || (usersConfiguration?.displayLeftUsers ?? false) { /* Only show invited users */
                 usersVC.append(user: user)
             }
         }
