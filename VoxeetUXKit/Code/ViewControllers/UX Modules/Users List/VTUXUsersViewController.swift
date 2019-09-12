@@ -32,7 +32,8 @@ import VoxeetSDK
     private var selectedUser: VTUser?
     private var lockedUser: VTUser?
     
-    private var voiceLevelTimerQueue = DispatchQueue(label: "com.voxeet.uxkit.voiceLevelTimer", qos: .background, attributes: .concurrent)
+    private let voiceLevelTimeInterval: TimeInterval = 0.1
+    private let voiceLevelTimerQueue = DispatchQueue(label: "com.voxeet.uxkit.voiceLevelTimer", qos: .background, attributes: .concurrent)
     private var voiceLevelTimer: Timer?
     
     @objc override public func viewDidLoad() {
@@ -44,7 +45,7 @@ import VoxeetSDK
         
         // Init voice level timer.
         voiceLevelTimerQueue.async { [unowned self] in
-            self.voiceLevelTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.refreshVoiceLevel), userInfo: nil, repeats: true)
+            self.voiceLevelTimer = Timer.scheduledTimer(timeInterval: self.voiceLevelTimeInterval, target: self, selector: #selector(self.refreshVoiceLevel), userInfo: nil, repeats: true)
             let currentRunLoop = RunLoop.current
             currentRunLoop.add(self.voiceLevelTimer!, forMode: .common)
             currentRunLoop.run()
@@ -176,7 +177,7 @@ import VoxeetSDK
                         // Update avatar border width.
                         if voiceLevel >= 0.05 || userID == self.selectedUser?.id {
                             if cell.avatar.layer.borderWidth == 0 {
-                                cell.avatar.layer.borderWidth = 2
+                                cell.avatar.layer.borderWidth = cell.avatar.frame.width * (4/100) /* 4% */
                                 cell.videoRenderer.layer.borderWidth = cell.avatar.layer.borderWidth
                             }
                             isUserTalking = true
@@ -268,7 +269,7 @@ extension VTUXUsersViewController: UICollectionViewDataSource {
         cell.avatar.layer.borderColor = speakingUserColor.cgColor
         if let userID = user.id, userID == selectedUser?.id {
             cell.avatar.layer.borderColor = selectedUserColor.cgColor
-            cell.avatar.layer.borderWidth = 2
+            cell.avatar.layer.borderWidth = cell.avatar.frame.width * (4/100) /* 4% */
         } else {
             cell.avatar.layer.borderWidth = 0
         }

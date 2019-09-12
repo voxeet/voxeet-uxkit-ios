@@ -42,6 +42,18 @@
                                             <segue destination="8Au-2j-3sL" kind="embed" id="wVa-ZQ-HSx"/>
                                         </connections>
                                     </containerView>
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PNg-nY-rrN">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                        <connections>
+                                            <segue destination="d8H-mt-b9e" kind="embed" id="4Fq-fI-VS2"/>
+                                        </connections>
+                                    </containerView>
+                                    <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ofx-Kp-BPy">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                        <connections>
+                                            <segue destination="KU8-WY-T4j" kind="embed" id="4hz-nw-FBV"/>
+                                        </connections>
+                                    </containerView>
                                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="waJ-1t-Np3" customClass="VTVideoView" customModule="VoxeetSDK">
                                         <rect key="frame" x="8" y="603" width="74" height="97"/>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -127,23 +139,31 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="HzJ-Is-idg" secondAttribute="bottom" constant="10" id="2w6-6b-gyf"/>
+                                    <constraint firstItem="ofx-Kp-BPy" firstAttribute="top" secondItem="W21-R7-Fb1" secondAttribute="top" id="5AC-NV-EvP"/>
                                     <constraint firstItem="fPI-7n-Q0u" firstAttribute="top" secondItem="W21-R7-Fb1" secondAttribute="top" id="5Rx-f7-5JT"/>
                                     <constraint firstItem="oyF-Oy-fMh" firstAttribute="top" secondItem="waJ-1t-Np3" secondAttribute="bottom" constant="8" id="63X-WO-Uny"/>
                                     <constraint firstItem="HzJ-Is-idg" firstAttribute="centerY" secondItem="W21-R7-Fb1" secondAttribute="centerY" priority="250" id="7wc-OY-tqR"/>
                                     <constraint firstAttribute="trailing" secondItem="HzJ-Is-idg" secondAttribute="trailing" constant="8" id="8Kt-Wk-3nG"/>
+                                    <constraint firstAttribute="bottom" secondItem="ofx-Kp-BPy" secondAttribute="bottom" id="92D-HJ-aSf"/>
                                     <constraint firstItem="fPI-7n-Q0u" firstAttribute="leading" secondItem="W21-R7-Fb1" secondAttribute="leading" id="ASo-9z-q3b"/>
                                     <constraint firstAttribute="trailing" secondItem="GRz-PV-7pZ" secondAttribute="trailing" id="DdI-XX-7pa"/>
                                     <constraint firstItem="GRz-PV-7pZ" firstAttribute="leading" secondItem="W21-R7-Fb1" secondAttribute="leading" id="EUW-JI-xSc"/>
                                     <constraint firstAttribute="trailing" secondItem="tqV-bw-3TT" secondAttribute="trailing" id="HbV-pM-DD6"/>
                                     <constraint firstItem="HzJ-Is-idg" firstAttribute="top" relation="greaterThanOrEqual" secondItem="tqV-bw-3TT" secondAttribute="bottom" constant="3" id="IsQ-7u-PK0"/>
+                                    <constraint firstAttribute="trailing" secondItem="PNg-nY-rrN" secondAttribute="trailing" id="JIc-7c-33O"/>
+                                    <constraint firstItem="ofx-Kp-BPy" firstAttribute="leading" secondItem="W21-R7-Fb1" secondAttribute="leading" id="LlU-f4-BBc"/>
                                     <constraint firstItem="8eR-7d-qYr" firstAttribute="top" secondItem="waJ-1t-Np3" secondAttribute="top" constant="3" id="Of6-Fa-bpn"/>
                                     <constraint firstItem="zwJ-PR-ChP" firstAttribute="leading" secondItem="W21-R7-Fb1" secondAttribute="leading" constant="16" id="P6x-YJ-PaV"/>
                                     <constraint firstAttribute="trailing" secondItem="fPI-7n-Q0u" secondAttribute="trailing" id="PFj-NE-B82"/>
                                     <constraint firstItem="zwJ-PR-ChP" firstAttribute="centerX" secondItem="W21-R7-Fb1" secondAttribute="centerX" id="PLC-Eo-Z36"/>
                                     <constraint firstItem="tqV-bw-3TT" firstAttribute="top" secondItem="W21-R7-Fb1" secondAttribute="top" id="PXz-4t-HnG"/>
+                                    <constraint firstItem="PNg-nY-rrN" firstAttribute="top" secondItem="W21-R7-Fb1" secondAttribute="top" id="WLV-Ks-0Lh"/>
                                     <constraint firstItem="zwJ-PR-ChP" firstAttribute="centerY" secondItem="W21-R7-Fb1" secondAttribute="centerY" id="YM9-mL-InS"/>
                                     <constraint firstItem="sqb-Oc-h56" firstAttribute="top" secondItem="GRz-PV-7pZ" secondAttribute="top" id="g1T-PK-ylW"/>
+                                    <constraint firstAttribute="bottom" secondItem="PNg-nY-rrN" secondAttribute="bottom" id="gKW-wf-QwS"/>
                                     <constraint firstAttribute="bottom" secondItem="fPI-7n-Q0u" secondAttribute="bottom" id="kDF-yw-me4"/>
+                                    <constraint firstItem="PNg-nY-rrN" firstAttribute="leading" secondItem="W21-R7-Fb1" secondAttribute="leading" id="kpK-Dm-3Gt"/>
+                                    <constraint firstAttribute="trailing" secondItem="ofx-Kp-BPy" secondAttribute="trailing" id="rf0-h0-93n"/>
                                     <constraint firstAttribute="trailing" secondItem="oyF-Oy-fMh" secondAttribute="trailing" id="ri0-lU-lFi"/>
                                     <constraint firstItem="HzJ-Is-idg" firstAttribute="leading" secondItem="W21-R7-Fb1" secondAttribute="leading" constant="8" id="s2a-Xh-KB8"/>
                                     <constraint firstItem="tqV-bw-3TT" firstAttribute="leading" secondItem="W21-R7-Fb1" secondAttribute="leading" id="tfs-3y-jk9"/>
@@ -170,10 +190,12 @@
                         <outlet property="conferenceStateLabelLeadingConstraint" destination="P6x-YJ-PaV" id="goH-U1-Z7e"/>
                         <outlet property="conferenceTimerContainerView" destination="tqV-bw-3TT" id="A9Z-bq-6ZZ"/>
                         <outlet property="conferenceTimerLabel" destination="025-VK-rfT" id="E5O-rE-eDA"/>
+                        <outlet property="filePresentationContainerView" destination="PNg-nY-rrN" id="PlX-4y-oyi"/>
                         <outlet property="flipImage" destination="8eR-7d-qYr" id="s8T-6r-xL9"/>
                         <outlet property="mainContainer" destination="W21-R7-Fb1" id="fgu-B1-wyO"/>
                         <outlet property="minimizeButton" destination="sqb-Oc-h56" id="VbP-RY-SiJ"/>
                         <outlet property="ownVideoRenderer" destination="waJ-1t-Np3" id="CB9-Fe-NqI"/>
+                        <outlet property="videoPresentationContainerView" destination="ofx-Kp-BPy" id="iww-l9-JL3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tzl-qo-uLF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -430,6 +452,64 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q8j-BQ-fAG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-569" y="398"/>
+        </scene>
+        <!--Speaker Video Presentation View Controller-->
+        <scene sceneID="kSh-7c-8jA">
+            <objects>
+                <viewController storyboardIdentifier="VTUXSpeakerVideoPresentationViewController" id="KU8-WY-T4j" customClass="VTUXSpeakerVideoPresentationViewController" customModule="VoxeetConferenceKit" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="up9-b3-uFU">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="NAh-m9-oGW"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GHy-Ff-DVs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3169" y="-157"/>
+        </scene>
+        <!--Speaker File Presentation View Controller-->
+        <scene sceneID="Y2d-1F-vdc">
+            <objects>
+                <viewController storyboardIdentifier="VTUXSpeakerFilePresentationViewController" id="d8H-mt-b9e" customClass="VTUXSpeakerFilePresentationViewController" customModule="VoxeetConferenceKit" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="oOu-kT-T0U">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" maximumZoomScale="10" translatesAutoresizingMaskIntoConstraints="NO" id="g9B-JO-0hn">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="naL-xM-P3Y">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="naL-xM-P3Y" firstAttribute="height" secondItem="g9B-JO-0hn" secondAttribute="height" id="3ZK-Cp-I1e"/>
+                                    <constraint firstItem="naL-xM-P3Y" firstAttribute="width" secondItem="g9B-JO-0hn" secondAttribute="width" id="8gC-lY-hQU"/>
+                                    <constraint firstAttribute="bottom" secondItem="naL-xM-P3Y" secondAttribute="bottom" id="QQt-hW-2KG"/>
+                                    <constraint firstItem="naL-xM-P3Y" firstAttribute="leading" secondItem="g9B-JO-0hn" secondAttribute="leading" id="TmI-rq-C9H"/>
+                                    <constraint firstAttribute="trailing" secondItem="naL-xM-P3Y" secondAttribute="trailing" id="XMZ-es-GVQ"/>
+                                    <constraint firstItem="naL-xM-P3Y" firstAttribute="top" secondItem="g9B-JO-0hn" secondAttribute="top" id="jZI-Sb-y2y"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="g9B-JO-0hn" firstAttribute="trailing" secondItem="qEP-Nq-J7t" secondAttribute="trailing" id="1NL-KQ-Uhn"/>
+                            <constraint firstItem="g9B-JO-0hn" firstAttribute="top" secondItem="oOu-kT-T0U" secondAttribute="top" id="Wkg-qj-cku"/>
+                            <constraint firstAttribute="bottom" secondItem="g9B-JO-0hn" secondAttribute="bottom" id="YAE-xb-v8b"/>
+                            <constraint firstItem="g9B-JO-0hn" firstAttribute="leading" secondItem="qEP-Nq-J7t" secondAttribute="leading" id="qFl-57-Pui"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="qEP-Nq-J7t"/>
+                    </view>
+                    <connections>
+                        <outlet property="fileImageView" destination="naL-xM-P3Y" id="wHe-ZV-QCh"/>
+                        <outlet property="scrollView" destination="g9B-JO-0hn" id="Ylo-nA-WX5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cn5-Lt-W65" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1992.8" y="-157.38916256157637"/>
         </scene>
     </scenes>
     <resources>
