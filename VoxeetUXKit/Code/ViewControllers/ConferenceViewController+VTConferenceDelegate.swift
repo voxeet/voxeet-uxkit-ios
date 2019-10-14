@@ -25,6 +25,9 @@ extension ConferenceViewController: VTConferenceDelegate {
             
             // Stop outgoing sound when a user enters in conference.
             outgoingSound?.stop()
+            
+            // Update user's audio position to listen each users clearly in a 3D environment.
+            updateUserPosition()
         }
         
         // Update streams and UI.
@@ -98,6 +101,9 @@ extension ConferenceViewController: VTConferenceDelegate {
                 }
                 conferenceStateLabel.isHidden = false
             }
+            
+            // Update user's audio position to listen each users clearly in a 3D environment.
+            updateUserPosition()
         }
     }
     
@@ -127,7 +133,7 @@ extension ConferenceViewController: VTConferenceDelegate {
         speakerVideoVC.view.isHidden = true
         
         // Reset active speaker and unlock previous user.
-        stopPresentation()        
+        stopPresentation()
     }
     
     func messageReceived(userID: String, message: String) {}
@@ -137,5 +143,17 @@ extension ConferenceViewController: VTConferenceDelegate {
             self.ownVideoRenderer.alpha = !isHidden && !self.isMinimized ? 1 : 0
             self.flipImage.alpha = self.ownVideoRenderer.alpha
         })
+    }
+    
+    private func updateUserPosition() {
+        let users = VoxeetSDK.shared.conference.users.filter({ $0.hasStream })
+        let sliceAngle = Double.pi / Double(users.count)
+        
+        for (index, user) in users.enumerated() {
+            let angle = ((Double.pi / 2) - (Double.pi - (sliceAngle * Double(index) + sliceAngle / 2))) / (Double.pi / 2)
+            if let userID = user.id {
+                VoxeetSDK.shared.conference.userPosition(userID: userID, angle: angle, distance: 0.2)
+            }
+        }
     }
 }

@@ -55,10 +55,12 @@ import Kingfisher
         // Update avatar and name.
         let avatarURL = user.avatarURL ?? ""
         let imageURLStr = avatarURL.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        if let imageURL = URL(string: imageURLStr) {
-            avatar.kf.setImage(with: imageURL)
-        } else {
-            avatar.image = UIImage(named: "UserPlaceholder", in: Bundle(for: type(of: self)), compatibleWith: nil)
+        avatar.kf.setImage(with: URL(string: imageURLStr)) { result in
+            switch result {
+            case .failure(_):
+                self.avatar.image = UIImage(named: "UserPlaceholder", in: Bundle(for: type(of: self)), compatibleWith: nil)
+            default: break
+            }
         }
         name.text = user.name
         name.alpha = inactiveAlpha

@@ -258,10 +258,12 @@ extension VTUXUsersViewController: UICollectionViewDataSource {
         // Cell data.
         let avatarURL = user.avatarURL ?? ""
         let imageURLStr = avatarURL.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        if let imageURL = URL(string: imageURLStr) {
-            cell.avatar.kf.setImage(with: imageURL)
-        } else {
-            cell.avatar.image = UIImage(named: "UserPlaceholder", in: Bundle(for: type(of: self)), compatibleWith: nil)
+        cell.avatar.kf.setImage(with: URL(string: imageURLStr)) { result in
+            switch result {
+            case .failure(_):
+                cell.avatar.image = UIImage(named: "UserPlaceholder", in: Bundle(for: type(of: self)), compatibleWith: nil)
+            default: break
+            }
         }
         cell.name.text = user.name
         

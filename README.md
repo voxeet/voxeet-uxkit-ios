@@ -9,8 +9,8 @@
 
 
 * **Operating systems:** iOS 9.0 and later versions
-* **IDE:** [Xcode 10.3+](https://developer.apple.com/xcode/)
-* **Languages:** Swift 5.0.1+, Objective-C, [React Native](https://github.com/voxeet/react-native-voxeet-conferencekit), [Cordova](https://github.com/voxeet/voxeet-cordova-conferencekit)
+* **IDE:** [Xcode 11+](https://developer.apple.com/xcode/)
+* **Languages:** Swift 5.1+, Objective-C, [React Native](https://github.com/voxeet/react-native-voxeet-conferencekit), [Cordova](https://github.com/voxeet/voxeet-cordova-conferencekit)
 * **Supported architectures:** armv7, arm64, i386, x86_64
 
 ## Sample application
@@ -240,6 +240,6 @@ The Voxeet iOS SDK and ConferenceKit rely on these open source projects:
 
 ## SDK version
 
-1.2.4
+1.2.5
 
 © Voxeet, 2019

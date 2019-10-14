@@ -210,6 +210,7 @@ extension ViewController: UIPickerViewDelegate {
         let participantName = UILabel(frame: CGRect(x: participantAvatar.frame.origin.x + participantAvatar.frame.width + 8, y: 0, width: pickerView.frame.width, height: 60))
         participantName.text = users[row].name
         participantName.font = UIFont.systemFont(ofSize: 14)
+        participantName.textColor = UIColor.black
         
         customView.addSubview(participantName)
         customView.addSubview(participantAvatar)

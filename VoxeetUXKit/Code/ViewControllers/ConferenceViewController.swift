@@ -489,7 +489,9 @@ class ConferenceViewController: OverlayViewController {
     
     @objc private func willEnterForegroundNotification() {
         // Unpause current camera.
-        if actionBarVC.cameraButton.tag == 1 {
+        if actionBarVC.cameraButton.tag == 1 && ownVideoRenderer.alpha == 0 {
+            ownVideoRenderer.alpha = 1
+            
             let isFrontCamera = VoxeetSDK.shared.conference.isFrontCamera
             actionBarVC.cameraButton.isUserInteractionEnabled = false
             VoxeetSDK.shared.conference.startVideo(isDefaultFrontFacing: isFrontCamera) { _ in
@@ -508,7 +510,9 @@ class ConferenceViewController: OverlayViewController {
     
     @objc private func didEnterBackgroundNotification() {
         // Pause current camera.
-        if actionBarVC.cameraButton.tag == 1 {
+        if actionBarVC.cameraButton.tag == 1 && ownVideoRenderer.alpha == 1 {
+            ownVideoRenderer.alpha = 0
+            
             actionBarVC.cameraButton.isUserInteractionEnabled = false
             VoxeetSDK.shared.conference.stopVideo { _ in
                 self.actionBarVC.cameraButton.isUserInteractionEnabled = true
@@ -612,7 +616,7 @@ extension ConferenceViewController: VTUXActionBarViewControllerDelegate {
     }
     
     func switchDeviceSpeakerAction() {
-        actionBarVC.speakerButton(state: actionBarVC.speakerButton.tag == 0 ? .on : .off)
+        actionBarVC.speakerButton(state: actionBarVC.speakerButton.tag == 0 && actionBarVC.speakerButton.isEnabled ? .on : .off)
         
         // Switch device speaker and set the proximity sensor in line with the current speaker.
         let builtInSpeaker = actionBarVC.speakerButton.tag != 0
