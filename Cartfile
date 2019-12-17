@@ -1,2 +1,2 @@
-github "voxeet/voxeet-ios-sdk" ~> 1.0
+binary "https://voxeet-cdn.s3.amazonaws.com/sdk/ios/release/VoxeetSDK.json" ~> 1.0
 github "onevcat/Kingfisher" "ios9"

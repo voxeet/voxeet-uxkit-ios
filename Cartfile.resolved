@@ -1,2 +1,2 @@
+binary "https://voxeet-cdn.s3.amazonaws.com/sdk/ios/release/VoxeetSDK.json" "1.4.9"
 github "onevcat/Kingfisher" "7452c2efe07716d60d78bcb26bca5ad079d0b186"
-github "voxeet/voxeet-ios-sdk" "1.4.7"
