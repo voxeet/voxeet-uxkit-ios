@@ -1,4 +1,4 @@
-# Voxeet Conference Kit
+# Voxeet UXKit iOS
 
 <p align="center">
 <img src="https://www.voxeet.com/wp-content/themes/wp-theme/assets/images/logo.svg" alt="Voxeet SDK logo" title="Voxeet SDK logo" width="100"/>
@@ -80,8 +80,8 @@ Unzip and drag and drop frameworks into your project, select 'Copy items if need
 
 ### 4. Dependencies
 
-VoxeetConferenceKit is also using some external libraries like Kingfisher for downloading and caching images from the web (users' avatars).
-You can either download this framework at [this link](https://github.com/onevcat/Kingfisher) or install it with Carthage (or CocoaPods).
+VoxeetConferenceKit is also using some external libraries like SDWebImage for downloading and caching images from the web (users' avatars).
+You can either download this framework at [this link](https://github.com/SDWebImage/SDWebImage) or install it with Carthage (or CocoaPods).
 
 At the end 'Embedded Binaries' and 'Linked Frameworks and Libraries' sections should look like this:
 
@@ -89,7 +89,7 @@ At the end 'Embedded Binaries' and 'Linked Frameworks and Libraries' sections sh
 <img src="http://cdn.voxeet.com/images/XCodeFramework.png" alt=“Frameworks” title=“Frameworks” width=“500”/>
 </p>
 
-*(WebRTC.framework missing on this screenshot)*
+*(WebRTC.framework missing on this screenshot and Kingfisher has been replaced by SDWebImage)*
 
 ## Voxeet Conference Kit usage
 
@@ -233,13 +233,13 @@ Same as `IconMask.png` if overridden, it will replace the default CallKit image 
 
 The Voxeet iOS SDK and ConferenceKit rely on these open source projects:
 
-* [Kingfisher](https://github.com/onevcat/Kingfisher), a lightweight, pure-Swift library for downloading and caching images from the web.
+* [SDWebImage](https://github.com/SDWebImage/SDWebImage), provides an async image downloader with cache support.
 * [Starscream](https://github.com/daltoniam/Starscream), a conforming WebSocket (RFC 6455) client library in Swift for iOS and OSX.
 * [Alamofire](https://github.com/Alamofire/Alamofire), an HTTP networking library written in Swift.
 * [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON), a tool for handling JSON data in Swift.
 
 ## SDK version
 
-1.2.5
+1.2.6
 
 © Voxeet, 2019

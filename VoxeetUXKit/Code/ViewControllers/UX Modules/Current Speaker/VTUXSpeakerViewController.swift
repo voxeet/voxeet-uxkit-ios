@@ -7,7 +7,7 @@
 //
 
 import VoxeetSDK
-import Kingfisher
+import SDWebImage
 
 @objc public class VTUXSpeakerViewController: UIViewController {
     @IBOutlet weak private var avatar: UIRoundImageView!
@@ -29,11 +29,13 @@ import Kingfisher
         avatar.layer.borderColor = (speakerConfiguration?.speakingUserColor ?? .clear).cgColor
         
         // Init voice level timer.
-        voiceLevelTimerQueue.async { [unowned self] in
-            self.voiceLevelTimer = Timer.scheduledTimer(timeInterval: self.voiceLevelTimeInterval, target: self, selector: #selector(self.refreshVoiceLevel), userInfo: nil, repeats: true)
-            let currentRunLoop = RunLoop.current
-            currentRunLoop.add(self.voiceLevelTimer!, forMode: .common)
-            currentRunLoop.run()
+        voiceLevelTimerQueue.async { [weak self] in
+            if let strongSelf = self {
+                strongSelf.voiceLevelTimer = Timer.scheduledTimer(timeInterval: strongSelf.voiceLevelTimeInterval, target: strongSelf, selector: #selector(strongSelf.refreshVoiceLevel), userInfo: nil, repeats: true)
+                let currentRunLoop = RunLoop.current
+                currentRunLoop.add(strongSelf.voiceLevelTimer!, forMode: .common)
+                currentRunLoop.run()
+            }
         }
     }
     
@@ -42,9 +44,9 @@ import Kingfisher
         
         // Stop voice level timer.
         if voiceLevelTimer != nil {
-            voiceLevelTimerQueue.sync { [unowned self] in
-                self.voiceLevelTimer?.invalidate()
-                self.voiceLevelTimer = nil
+            voiceLevelTimerQueue.sync { [weak self] in
+                self?.voiceLevelTimer?.invalidate()
+                self?.voiceLevelTimer = nil
             }
         }
     }
@@ -55,13 +57,8 @@ import Kingfisher
         // Update avatar and name.
         let avatarURL = user.avatarURL ?? ""
         let imageURLStr = avatarURL.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        avatar.kf.setImage(with: URL(string: imageURLStr)) { result in
-            switch result {
-            case .failure(_):
-                self.avatar.image = UIImage(named: "UserPlaceholder", in: Bundle(for: type(of: self)), compatibleWith: nil)
-            default: break
-            }
-        }
+        let placeholderImage = UIImage(named: "UserPlaceholder", in: Bundle(for: type(of: self)), compatibleWith: nil)
+        avatar.sd_setImage(with: URL(string: imageURLStr), placeholderImage: placeholderImage)
         name.text = user.name
         name.alpha = inactiveAlpha
         

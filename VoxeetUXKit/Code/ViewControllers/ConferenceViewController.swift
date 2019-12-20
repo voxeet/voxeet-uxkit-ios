@@ -7,7 +7,6 @@
 //
 
 import VoxeetSDK
-import Kingfisher
 import MediaPlayer
 
 /*
@@ -107,12 +106,14 @@ class ConferenceViewController: OverlayViewController {
         // Save when a user starts the conference.
         conferenceTimerStart = Date()
         // Start the conference timer.
-        conferenceTimerQueue.async { [unowned self] in
-            // Start the conference timer.
-            self.conferenceTimer = Timer.scheduledTimer(timeInterval: self.conferenceTimeInterval, target: self, selector: #selector(self.updateConferenceTimer), userInfo: nil, repeats: true)
-            let currentRunLoop = RunLoop.current
-            currentRunLoop.add(self.conferenceTimer!, forMode: .common)
-            currentRunLoop.run()
+        conferenceTimerQueue.async { [weak self] in
+            if let strongSelf = self {
+                // Start the conference timer.
+                strongSelf.conferenceTimer = Timer.scheduledTimer(timeInterval: strongSelf.conferenceTimeInterval, target: strongSelf, selector: #selector(strongSelf.updateConferenceTimer), userInfo: nil, repeats: true)
+                let currentRunLoop = RunLoop.current
+                currentRunLoop.add(strongSelf.conferenceTimer!, forMode: .common)
+                currentRunLoop.run()
+            }
         }
         
         // Own video renderer tap gesture.
@@ -161,9 +162,9 @@ class ConferenceViewController: OverlayViewController {
         
         // Stop timers.
         conferenceStartTimer?.invalidate()
-        conferenceTimerQueue.sync { [unowned self] in
-            self.conferenceTimer?.invalidate()
-            self.conferenceTimer = nil
+        conferenceTimerQueue.sync { [weak self] in
+            self?.conferenceTimer?.invalidate()
+            self?.conferenceTimer = nil
         }
         activeSpeaker.end()
         

@@ -8,6 +8,7 @@
 
 import UIKit
 import VoxeetSDK
+import SDWebImage
 
 class ViewController: UIViewController {
     @IBOutlet weak private var container: UIView!
@@ -202,7 +203,7 @@ extension ViewController: UIPickerViewDelegate {
         
         // Avatar image.
         let participantAvatar = UIImageView(frame: CGRect(x: 8, y: 5, width: 50, height: 50))
-        participantAvatar.kf.setImage(with: URL(string: users[row].avatarURL ?? ""))
+        participantAvatar.sd_setImage(with: URL(string: users[row].avatarURL ?? ""))
         participantAvatar.layer.cornerRadius = participantAvatar.frame.width / 2
         participantAvatar.layer.masksToBounds = true
         

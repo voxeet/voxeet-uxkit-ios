@@ -15,10 +15,10 @@
 		CC8B8B111E8E3C0600AEDD3B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CC8B8B0F1E8E3C0600AEDD3B /* LaunchScreen.storyboard */; };
 		CCADC3CA1EBA0A8200B85516 /* CallKitSound.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CCADC3C91EBA0A8200B85516 /* CallKitSound.mp3 */; };
 		CCB49B122189B076003DD11C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CCB49B142189B076003DD11C /* Localizable.strings */; };
-		CCC908DE21747EB7002FE6D6 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CCD0ED621EAF97DC00612478 /* Kingfisher.framework */; };
-		FAAC23D82354A74D002760FE /* VoxeetSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAAC23D52354A74D002760FE /* VoxeetSDK.framework */; };
-		FAAC23D92354A74D002760FE /* WebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAAC23D62354A74D002760FE /* WebRTC.framework */; };
-		FAAC23DA2354A74D002760FE /* VoxeetConferenceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAAC23D72354A74D002760FE /* VoxeetConferenceKit.framework */; };
+		FAD946FB23ACFF530070A761 /* WebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD946F823ACFF530070A761 /* WebRTC.framework */; };
+		FAD946FD23ACFF530070A761 /* VoxeetConferenceKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD946F923ACFF530070A761 /* VoxeetConferenceKit.framework */; };
+		FAD946FF23ACFF530070A761 /* VoxeetSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAD946FA23ACFF530070A761 /* VoxeetSDK.framework */; };
+		FAFAFFC523A7929300840B17 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFAFFC423A7929300840B17 /* SDWebImage.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,10 +34,10 @@
 		CCADC3C91EBA0A8200B85516 /* CallKitSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CallKitSound.mp3; sourceTree = "<group>"; };
 		CCB49B132189B076003DD11C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CCB49B152189B092003DD11C /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		CCD0ED621EAF97DC00612478 /* Kingfisher.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Kingfisher.framework; path = Carthage/Build/iOS/Kingfisher.framework; sourceTree = SOURCE_ROOT; };
-		FAAC23D52354A74D002760FE /* VoxeetSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VoxeetSDK.framework; path = Carthage/Build/iOS/VoxeetSDK.framework; sourceTree = SOURCE_ROOT; };
-		FAAC23D62354A74D002760FE /* WebRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebRTC.framework; path = Carthage/Build/iOS/WebRTC.framework; sourceTree = SOURCE_ROOT; };
-		FAAC23D72354A74D002760FE /* VoxeetConferenceKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VoxeetConferenceKit.framework; path = Carthage/Build/iOS/VoxeetConferenceKit.framework; sourceTree = SOURCE_ROOT; };
+		FAD946F823ACFF530070A761 /* WebRTC.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebRTC.framework; path = Carthage/Build/iOS/WebRTC.framework; sourceTree = SOURCE_ROOT; };
+		FAD946F923ACFF530070A761 /* VoxeetConferenceKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VoxeetConferenceKit.framework; path = Carthage/Build/iOS/VoxeetConferenceKit.framework; sourceTree = SOURCE_ROOT; };
+		FAD946FA23ACFF530070A761 /* VoxeetSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VoxeetSDK.framework; path = Carthage/Build/iOS/VoxeetSDK.framework; sourceTree = SOURCE_ROOT; };
+		FAFAFFC423A7929300840B17 /* SDWebImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDWebImage.framework; path = Carthage/Build/iOS/SDWebImage.framework; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,10 +45,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAAC23DA2354A74D002760FE /* VoxeetConferenceKit.framework in Frameworks */,
-				FAAC23D82354A74D002760FE /* VoxeetSDK.framework in Frameworks */,
-				CCC908DE21747EB7002FE6D6 /* Kingfisher.framework in Frameworks */,
-				FAAC23D92354A74D002760FE /* WebRTC.framework in Frameworks */,
+				FAD946FF23ACFF530070A761 /* VoxeetSDK.framework in Frameworks */,
+				FAFAFFC523A7929300840B17 /* SDWebImage.framework in Frameworks */,
+				FAD946FB23ACFF530070A761 /* WebRTC.framework in Frameworks */,
+				FAD946FD23ACFF530070A761 /* VoxeetConferenceKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,10 +88,10 @@
 		CC8B8B181E8E3C6A00AEDD3B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				FAAC23D72354A74D002760FE /* VoxeetConferenceKit.framework */,
-				FAAC23D52354A74D002760FE /* VoxeetSDK.framework */,
-				FAAC23D62354A74D002760FE /* WebRTC.framework */,
-				CCD0ED621EAF97DC00612478 /* Kingfisher.framework */,
+				FAD946F923ACFF530070A761 /* VoxeetConferenceKit.framework */,
+				FAD946FA23ACFF530070A761 /* VoxeetSDK.framework */,
+				FAD946F823ACFF530070A761 /* WebRTC.framework */,
+				FAFAFFC423A7929300840B17 /* SDWebImage.framework */,
 			);
 			name = Frameworks;
 			path = VoxeetConferenceKitSample;
@@ -233,14 +233,14 @@
 				"$(SRCROOT)/Carthage/Build/iOS/VoxeetConferenceKit.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/VoxeetSDK.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/WebRTC.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Kingfisher.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SDWebImage.framework",
 			);
 			name = "Carthage Run Script";
 			outputPaths = (
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/VoxeetConferenceKit.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/VoxeetSDK.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/WebRTC.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Kingfisher.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SDWebImage.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -403,7 +403,6 @@
 		CC8B8B161E8E3C0600AEDD3B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = VoxeetConferenceKitSample/VoxeetConferenceKitSample.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -416,7 +415,7 @@
 				);
 				INFOPLIST_FILE = VoxeetConferenceKitSample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.1.8;
+				MARKETING_VERSION = 1.1.9;
 				PRODUCT_BUNDLE_IDENTIFIER = io.voxeet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -427,7 +426,6 @@
 		CC8B8B171E8E3C0600AEDD3B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = VoxeetConferenceKitSample/VoxeetConferenceKitSample.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -440,7 +438,7 @@
 				);
 				INFOPLIST_FILE = VoxeetConferenceKitSample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.1.8;
+				MARKETING_VERSION = 1.1.9;
 				PRODUCT_BUNDLE_IDENTIFIER = io.voxeet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

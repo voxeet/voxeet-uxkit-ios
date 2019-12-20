@@ -7,7 +7,7 @@
 //
 
 import VoxeetSDK
-import Kingfisher
+import SDWebImage
 
 @objc public protocol VTUXSpeakerFilePresentationViewControllerDelegate {
     func filePresentationStarted(user: VTUser?)
@@ -38,7 +38,7 @@ import Kingfisher
             if let json = try JSONSerialization.jsonObject(with: userInfo) as? [String: Any] {
                 if let fileID = json["fileId"] as? String, let page = json["position"] as? Int, let userID = json["userId"] as? String {
                     if let url = VoxeetSDK.shared.filePresentation.getImage(fileID: fileID, page: page) {
-                        fileImageView.kf.setImage(with: url)
+                        fileImageView.sd_setImage(with: url)
                         
                         // Started delegate.
                         let user = VoxeetSDK.shared.conference.user(userID: userID)
@@ -59,7 +59,7 @@ import Kingfisher
             if let json = try JSONSerialization.jsonObject(with: userInfo) as? [String: Any] {
                 if let fileID = json["fileId"] as? String, let page = json["position"] as? Int {
                     if let url = VoxeetSDK.shared.filePresentation.getImage(fileID: fileID, page: page) {
-                        fileImageView.kf.setImage(with: url)
+                        fileImageView.sd_setImage(with: url)
                         
                         // Reset zoom when image change.
                         scrollView.zoomScale = 1
