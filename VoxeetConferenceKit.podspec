@@ -10,7 +10,7 @@ Pod::Spec.new do |spec|
   spec.source = { :git => "https://github.com/voxeet/voxeet-uxkit-ios.git", :tag => spec.version }
   spec.framework = "VoxeetConferenceKit"
   spec.source_files = "VoxeetUXKit/**/*.{h,m,swift}"
-  spec.resources = "VoxeetUXKit/**/*.{mp3,storyboard,xcassets}"
+  spec.resources = "VoxeetUXKit/**/*.{mp3,storyboard,xcassets,lproj}"
   spec.framework = "UIKit"
   spec.dependency "VoxeetSDK", "~> 1.0"
   spec.dependency "SDWebImage", "~> 5.0"
