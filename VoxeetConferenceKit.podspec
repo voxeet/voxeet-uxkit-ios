@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name = "VoxeetConferenceKit"
-  spec.version = "1.2.6"
+  spec.version = "1.2.7"
   spec.summary = "The Voxeet UXKit is a quick way of adding premium audio, video chats, and other supported options."
   spec.license = "MIT"
   spec.author = "Voxeet"
