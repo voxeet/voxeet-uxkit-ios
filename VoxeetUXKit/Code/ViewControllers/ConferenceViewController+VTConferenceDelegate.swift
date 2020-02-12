@@ -9,61 +9,85 @@
 import VoxeetSDK
 
 extension ConferenceViewController: VTConferenceDelegate {
-    func participantJoined(userID: String, stream: MediaStream) {
+    func participantAdded(participant: VTParticipant) {}
+    func participantUpdated(participant: VTParticipant) {}
+    func statusUpdated(status: VTConferenceStatus) {}
+    
+    func streamAdded(participant: VTParticipant, stream: MediaStream) {
         // Monkey patch: Wait WebRTC media to be started (avoids sound button to blink).
         if conferenceStartTimer == nil {
-            conferenceStartTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(conferenceStarted), userInfo: nil, repeats: false)
+            conferenceStartTimer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(conferenceStarted), userInfo: nil, repeats: false)
         }
         
-        if userID != VoxeetSDK.shared.session.user?.id {
+        if participant.id != VoxeetSDK.shared.session.participant?.id {
             // Begin active speaker timer.
             activeSpeaker.begin()
             
-            // Hide conference state when a user joins the conference.
+            // Hide conference state when a participant joins the conference.
             conferenceStateLabel.isHidden = true
             conferenceStateLabel.text = nil
             
-            // Stop outgoing sound when a user enters in conference.
+            // Stop outgoing sound when a participant enters in conference.
             outgoingSound?.stop()
             
-            // Update user's audio position to listen each users clearly in a 3D environment.
-            updateUserPosition()
+            // Update participant's audio position to listen each people clearly in a 3D environment.
+            updateParticipantPosition()
         }
         
-        // Update streams and UI.
-        participantUpdated(userID: userID, stream: stream)
+        streamUpdated(participant: participant, stream: stream)
     }
     
-    func participantUpdated(userID: String, stream: MediaStream) {
-        let sessionService = VoxeetSDK.shared.session
+    func streamUpdated(participant: VTParticipant, stream: MediaStream) {
+        switch stream.type {
+        case .Camera:
+            cameraStreamUpdated(participant: participant, stream: stream)
+        case .ScreenShare:
+            screenShareStreamUpdated(participant: participant, stream: stream)
+        default: break
+        }
+    }
+    
+    func streamRemoved(participant: VTParticipant, stream: MediaStream) {
+        switch stream.type {
+        case .Camera:
+            cameraStreamRemoved(participant: participant, stream: stream)
+        case .ScreenShare:
+            screenShareStreamRemoved(participant: participant, stream: stream)
+        default: break
+        }
+    }
+    
+    private func cameraStreamUpdated(participant: VTParticipant, stream: MediaStream) {
         let conferenceService = VoxeetSDK.shared.conference
+        let sessionService = VoxeetSDK.shared.session
         
-        if userID == sessionService.user?.id {
+        if participant.id == sessionService.participant?.id {
             // Attach own stream to the own video renderer.
             if !stream.videoTracks.isEmpty {
-                ownVideoRenderer.attach(userID: userID, stream: stream)
+                ownVideoRenderer.attach(participant: participant, stream: stream)
                 // Enable camera button (in case of `join` method with `video` true).
                 actionBarVC.cameraButton(state: .on)
             }
         } else {
-            // Append / Refresh users' collection view.
-            if let user = conferenceService.user(userID: userID) {
-                usersVC.append(user: user)
-            }
+            // Append / Refresh participants' collection view.
+            participantsVC.append(participant: participant)
+            
             // Refresh active speaker.
             activeSpeaker.refresh()
         }
         
         // Show / Hide own video renderer or refresh active speaker.
-        if let sessionUserID = sessionService.user?.id {
-            if !(conferenceService.mediaStream(userID: sessionUserID)?.videoTracks.isEmpty ?? true) {
-                if !conferenceService.users.filter({ $0.hasStream }).isEmpty {
+        if sessionService.participant != nil {
+            let sessionParticipant = conferenceService.current?.participants.first(where: { $0.id == sessionService.participant?.id })
+            
+            if !(sessionParticipant?.streams.first(where: { $0.type == .Camera })?.videoTracks.isEmpty ?? true) {
+                if !activeParticipants().isEmpty {
                     isOwnVideoRendererHidden(false)
                 } else {
                     activeSpeaker.refresh()
                 }
             } else {
-                if !conferenceService.users.filter({ $0.hasStream }).isEmpty {
+                if !activeParticipants().isEmpty {
                     isOwnVideoRendererHidden(true)
                 } else {
                     activeSpeaker.refresh()
@@ -72,27 +96,19 @@ extension ConferenceViewController: VTConferenceDelegate {
         }
     }
     
-    func participantLeft(userID: String) {
-        let conferenceService = VoxeetSDK.shared.conference
-        
-        if userID != VoxeetSDK.shared.session.user?.id {
-            // Reload collection view to update/remove inactive users.
-            let usersConfiguration = VoxeetUXKit.shared.conferenceController?.configuration.users
-            if let user = conferenceService.user(userID: userID), (usersConfiguration?.displayLeftUsers ?? false) {
-                usersVC.update(user: user)
+    private func cameraStreamRemoved(participant: VTParticipant, stream: MediaStream) {
+        if participant.id != VoxeetSDK.shared.session.participant?.id {
+            // Reload collection view to update/remove inactive participants.
+            let conferenceConfig = VoxeetUXKit.shared.conferenceController?.configuration
+            let participantsConfig = conferenceConfig?.participants
+            if participantsConfig?.displayLeftParticipants ?? false {
+                participantsVC.update(participant: participant)
             } else {
-                usersVC.remove(userID: userID)
+                participantsVC.remove(participant: participant)
             }
             
-            // Refresh / End active speaker timer.
-            if conferenceService.users.isEmpty {
-                activeSpeaker.end()
-            } else {
-                activeSpeaker.refresh()
-            }
-            
-            // Hide / Unhide own renderer.
-            if conferenceService.users.filter({ $0.hasStream }).isEmpty {
+            if activeParticipants().isEmpty {
+                // Show own renderer.
                 isOwnVideoRendererHidden(true)
                 
                 // Update conference state label.
@@ -100,43 +116,45 @@ extension ConferenceViewController: VTConferenceDelegate {
                     conferenceStateLabel.text = VTUXLocalized.string("VTUX_CONFERENCE_STATE_CALLING")
                 }
                 conferenceStateLabel.isHidden = false
+                
+                // End active speaker timer.
+                activeSpeaker.end()
+            } else {
+                activeSpeaker.refresh()
             }
             
-            // Update user's audio position to listen each users clearly in a 3D environment.
-            updateUserPosition()
+            // Update participants's audio position to listen each people clearly in a 3D environment.
+            updateParticipantPosition()
         }
     }
     
-    func screenShareStarted(userID: String, stream: MediaStream) {
-        if userID == VoxeetSDK.shared.session.user?.id { return }
-        let user = VoxeetSDK.shared.conference.user(userID: userID)
+    private func screenShareStreamUpdated(participant: VTParticipant, stream: MediaStream) {
+        if participant.id == VoxeetSDK.shared.session.participant?.id { return }
         
         if !stream.videoTracks.isEmpty {
-            // Stop active speaker and lock current user.
-            startPresentation(user: user)
+            // Stop active speaker and lock current participant.
+            startPresentation(participant: participant)
             
             // Attach screen share stream.
             speakerVideoContentFill = speakerVideoVC.videoRenderer.contentFill
             speakerVideoVC.unattach()
-            speakerVideoVC.attach(userID: userID, stream: stream)
+            speakerVideoVC.attach(participant: participant, stream: stream)
             speakerVideoVC.contentFill(false, animated: false)
             speakerVideoVC.view.isHidden = false
         }
     }
     
-    func screenShareStopped(userID: String) {
-        if userID == VoxeetSDK.shared.session.user?.id { return }
+    private func screenShareStreamRemoved(participant: VTParticipant, stream: MediaStream) {
+        if participant.id == VoxeetSDK.shared.session.participant?.id { return }
         
         // Unattach screen share stream.
         speakerVideoVC.unattach()
         speakerVideoVC.contentFill(speakerVideoContentFill, animated: false)
         speakerVideoVC.view.isHidden = true
         
-        // Reset active speaker and unlock previous user.
+        // Reset active speaker and unlock previous participant.
         stopPresentation()
     }
-    
-    func messageReceived(userID: String, message: String) {}
     
     private func isOwnVideoRendererHidden(_ isHidden: Bool) {
         UIView.animate(withDuration: 0.125, animations: {
@@ -145,15 +163,13 @@ extension ConferenceViewController: VTConferenceDelegate {
         })
     }
     
-    private func updateUserPosition() {
-        let users = VoxeetSDK.shared.conference.users.filter({ $0.hasStream })
-        let sliceAngle = Double.pi / Double(users.count)
+    private func updateParticipantPosition() {
+        let participants = activeParticipants()
+        let sliceAngle = Double.pi / Double(participants.count)
         
-        for (index, user) in users.enumerated() {
+        for (index, participant) in participants.enumerated() {
             let angle = ((Double.pi / 2) - (Double.pi - (sliceAngle * Double(index) + sliceAngle / 2))) / (Double.pi / 2)
-            if let userID = user.id {
-                VoxeetSDK.shared.conference.userPosition(userID: userID, angle: angle, distance: 0.2)
-            }
+            VoxeetSDK.shared.conference.position(participant: participant, angle: angle, distance: 0.2)
         }
     }
 }

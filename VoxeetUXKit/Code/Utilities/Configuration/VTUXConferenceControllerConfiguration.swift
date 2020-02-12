@@ -8,7 +8,10 @@
 
 @objc public class VTUXConferenceControllerConfiguration: NSObject {
     @objc public var overlay = VTUXOverlayConfiguration()
-    @objc public var users = VTUXUsersConfiguration()
+    @objc public var participants = VTUXParticipantsConfiguration()
     @objc public var speaker = VTUXSpeakerConfiguration()
     @objc public var actionBar = VTUXActionBarConfiguration()
+    
+    @available(iOS, obsoleted: 1, renamed: "participants") // Deprecated: 1.2.7.
+    @objc public var users = VTUXParticipantsConfiguration()
 }

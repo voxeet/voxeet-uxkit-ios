@@ -10,7 +10,7 @@ import VoxeetSDK
 import MediaPlayer
 
 @objc public protocol VTUXSpeakerVideoPresentationViewControllerDelegate {
-    func videoPresentationStarted(user: VTUser?)
+    func videoPresentationStarted(participant: VTParticipant?)
     func videoPresentationStopped()
 }
 
@@ -25,12 +25,7 @@ import MediaPlayer
     override public func viewDidLoad() {
         super.viewDidLoad()
         
-        // Video presentation observers.
-        NotificationCenter.default.addObserver(self, selector: #selector(videoPresentationStarted), name: .VTVideoPresentationStarted, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(videoPresentationStopped), name: .VTVideoPresentationStopped, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(videoPresentationPlay), name: .VTVideoPresentationPlay, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(videoPresentationPause), name: .VTVideoPresentationPause, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(videoPresentationSeek), name: .VTVideoPresentationSeek, object: nil)
+        VoxeetSDK.shared.videoPresentation.delegate = self
     }
     
     public override func viewDidLayoutSubviews() {
@@ -38,30 +33,23 @@ import MediaPlayer
         
         playerLayer?.frame = view.bounds
     }
-    
-    @objc private func videoPresentationStarted(notification: Notification) {
-        guard let userInfo = notification.userInfo?.values.first as? Data else { return }
+}
+
+extension VTUXSpeakerVideoPresentationViewController: VTVideoPresentationDelegate {
+    public func started(videoPresentation: VTVideoPresentation) {
+        player = AVPlayer(url: videoPresentation.url)
+        playerLayer = AVPlayerLayer(player: player)
+        playerLayer!.frame = view.bounds
+        playerLayer!.backgroundColor = UIColor.black.cgColor
+        view.layer.addSublayer(playerLayer!)
         
-        do {
-            if let json = try JSONSerialization.jsonObject(with: userInfo) as? [String: Any] {
-                if let url = URL(string: json["url"] as? String ?? ""), let timestamp = json["timestamp"] as? Int, let userID = json["userId"] as? String {
-                    player = AVPlayer(url: url)
-                    playerLayer = AVPlayerLayer(player: player)
-                    playerLayer!.frame = view.bounds
-                    playerLayer!.backgroundColor = UIColor.black.cgColor
-                    view.layer.addSublayer(playerLayer!)
-                    
-                    player?.play()
-                    player?.seek(to: CMTimeMakeWithSeconds(Double(timestamp) / 1000, preferredTimescale: 1000))
-                    
-                    let user = VoxeetSDK.shared.conference.user(userID: userID)
-                    delegate?.videoPresentationStarted(user: user)
-                }
-            }
-        } catch {}
+        player?.play()
+        player?.seek(to: CMTimeMakeWithSeconds(Double(videoPresentation.timestamp) / 1000, preferredTimescale: 1000))
+        
+        delegate?.videoPresentationStarted(participant: videoPresentation.participant)
     }
     
-    @objc private func videoPresentationStopped(notification: Notification) {
+    public func stopped(videoPresentation: VTVideoPresentation) {
         player?.pause()
         playerLayer = nil
         player = nil
@@ -69,32 +57,16 @@ import MediaPlayer
         delegate?.videoPresentationStopped()
     }
     
-    @objc private func videoPresentationPlay(notification: Notification) {
-        guard let userInfo = notification.userInfo?.values.first as? Data else { return }
-        
-        do {
-            if let json = try JSONSerialization.jsonObject(with: userInfo) as? [String: Any] {
-                if let timestamp = json["timestamp"] as? Int {
-                    player?.play()
-                    player?.seek(to: CMTimeMakeWithSeconds(Double(timestamp) / 1000, preferredTimescale: 1000))
-                }
-            }
-        } catch {}
+    public func played(videoPresentation: VTVideoPresentation) {
+        player?.play()
+        player?.seek(to: CMTimeMakeWithSeconds(Double(videoPresentation.timestamp) / 1000, preferredTimescale: 1000))
     }
     
-    @objc private func videoPresentationPause(notification: Notification) {
+    public func paused(videoPresentation: VTVideoPresentation) {
         player?.pause()
     }
     
-    @objc private func videoPresentationSeek(notification: Notification) {
-        guard let userInfo = notification.userInfo?.values.first as? Data else { return }
-        
-        do {
-            if let json = try JSONSerialization.jsonObject(with: userInfo) as? [String: Any] {
-                if let timestamp = json["timestamp"] as? Int {
-                    player?.seek(to: CMTimeMakeWithSeconds(Double(timestamp) / 1000, preferredTimescale: 1000))
-                }
-            }
-        } catch {}
+    public func sought(videoPresentation: VTVideoPresentation) {
+        player?.seek(to: CMTimeMakeWithSeconds(Double(videoPresentation.timestamp) / 1000, preferredTimescale: 1000))
     }
 }

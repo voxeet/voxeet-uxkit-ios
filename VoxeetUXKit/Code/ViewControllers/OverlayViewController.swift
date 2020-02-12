@@ -23,14 +23,14 @@ class OverlayViewController: UIViewController {
     
     required init?(coder aDecoder: NSCoder) {
         // Get background color.
-        let overlayConfiguration = VoxeetUXKit.shared.conferenceController?.configuration.overlay
-        backgroundMaximizedColor = overlayConfiguration?.backgroundMaximizedColor ?? .black
-        backgroundMinimizedColor = overlayConfiguration?.backgroundMinimizedColor ?? .black
+        let overlayConfig = VoxeetUXKit.shared.conferenceController?.configuration.overlay
+        backgroundMaximizedColor = overlayConfig?.backgroundMaximizedColor ?? .black
+        backgroundMinimizedColor = overlayConfig?.backgroundMinimizedColor ?? .black
         
         super.init(coder: aDecoder)
         
         // Constraints updates notifications.
-        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         previousInterfaceOrientation = UIApplication.shared.statusBarOrientation
         NotificationCenter.default.addObserver(self, selector: #selector(deviceOrientationDidChange), name: UIDevice.orientationDidChangeNotification, object: nil)
         
@@ -312,7 +312,7 @@ class OverlayViewController: UIViewController {
  */
 
 extension OverlayViewController {
-    @objc private func applicationDidBecomeActive() {
+    @objc private func applicationWillEnterForeground() {        
         if view.frame.width == minimizeSize.width {
             reloadMinimizeConstraints()
         } else {
@@ -355,9 +355,9 @@ extension OverlayViewController {
         keyboardOpenned = true
         
         minimizeVisualConstraintsVertical = nil /* Only allow top magnet corners. */
-        DispatchQueue.main.async {
-            self.minimize()
-        }
+        UIView.animate(withDuration: 0.25, animations: {
+            self.reloadMinimizeConstraints()
+        })
     }
     
     @objc private func keyboardWillHide(notification: NSNotification) {

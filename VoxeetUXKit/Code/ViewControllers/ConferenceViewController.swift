@@ -35,7 +35,7 @@ class ConferenceViewController: OverlayViewController {
     // MARK: Stored properties
     
     // UX controllers components.
-    var usersVC: VTUXUsersViewController!
+    var participantsVC: VTUXParticipantsViewController!
     private var speakerVC: VTUXSpeakerViewController!
     var speakerVideoVC: VTUXSpeakerVideoViewController!
     private var speakerFilePresentationVC: VTUXSpeakerFilePresentationViewController!
@@ -46,7 +46,7 @@ class ConferenceViewController: OverlayViewController {
     var activeSpeaker: VTUXActiveSpeakerTimer!
     
     // Conference states.
-    private var presenterUserID: String?
+    private var presenterID: String?
     var speakerVideoContentFill = false
     var isMinimized = false
     
@@ -55,7 +55,6 @@ class ConferenceViewController: OverlayViewController {
     private var conferenceTimer: Timer?
     private var conferenceTimerStart: Date!
     private let conferenceTimeInterval: TimeInterval = 1
-    private let conferenceTimerQueue = DispatchQueue(label: "com.voxeet.uxkit.conferenceTimer", qos: .background, attributes: .concurrent)
     
     // Hang up timeout timer.
     private var hangUpTimerCount: Int = 0
@@ -70,9 +69,9 @@ class ConferenceViewController: OverlayViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.destination {
-        case is VTUXUsersViewController:
-            usersVC = segue.destination as? VTUXUsersViewController
-            usersVC.delegate = self
+        case is VTUXParticipantsViewController:
+            participantsVC = segue.destination as? VTUXParticipantsViewController
+            participantsVC.delegate = self
         case is VTUXSpeakerViewController:
             speakerVC = segue.destination as? VTUXSpeakerViewController
         case is VTUXSpeakerVideoViewController:
@@ -103,18 +102,11 @@ class ConferenceViewController: OverlayViewController {
         activeSpeaker.delegate = self
         activeSpeaker.refresh()
         
-        // Save when a user starts the conference.
+        // Save date when a participant starts the conference.
         conferenceTimerStart = Date()
         // Start the conference timer.
-        conferenceTimerQueue.async { [weak self] in
-            if let strongSelf = self {
-                // Start the conference timer.
-                strongSelf.conferenceTimer = Timer.scheduledTimer(timeInterval: strongSelf.conferenceTimeInterval, target: strongSelf, selector: #selector(strongSelf.updateConferenceTimer), userInfo: nil, repeats: true)
-                let currentRunLoop = RunLoop.current
-                currentRunLoop.add(strongSelf.conferenceTimer!, forMode: .common)
-                currentRunLoop.run()
-            }
-        }
+        conferenceTimer = Timer(timeInterval: conferenceTimeInterval, target: self, selector: #selector(updateConferenceTimer), userInfo: nil, repeats: true)
+        RunLoop.current.add(conferenceTimer!, forMode: .common)
         
         // Own video renderer tap gesture.
         let tap = UITapGestureRecognizer(target: self, action: #selector(switchCamera(recognizer:)))
@@ -141,7 +133,7 @@ class ConferenceViewController: OverlayViewController {
             hangUpSound?.prepareToPlay()
         }
         
-        // Refresh users list to handle waiting room observer.
+        // Refresh participants list to handle waiting room observer.
         NotificationCenter.default.addObserver(self, selector: #selector(participantAddedNotification), name: .VTParticipantAdded, object: nil)
         // CallKit mute behaviour to update UI observer.
         NotificationCenter.default.addObserver(self, selector: #selector(callKitMuteToggled), name: .VTCallKitMuteToggled, object: nil)
@@ -162,10 +154,7 @@ class ConferenceViewController: OverlayViewController {
         
         // Stop timers.
         conferenceStartTimer?.invalidate()
-        conferenceTimerQueue.sync { [weak self] in
-            self?.conferenceTimer?.invalidate()
-            self?.conferenceTimer = nil
-        }
+        conferenceTimer?.invalidate()
         activeSpeaker.end()
         
         // Reset: Force the device screen to never going to sleep mode.
@@ -199,10 +188,10 @@ class ConferenceViewController: OverlayViewController {
         conferenceTimerLabel.layer.shadowPath = UIBezierPath(rect: conferenceTimerLabel.bounds).cgPath
         
         // Minimize button.
-        let overlayConfiguration = VoxeetUXKit.shared.conferenceController?.configuration.overlay
-        if overlayConfiguration?.displayAction ?? false {
-            // Init users collection view edge insets.
-            usersVC.edgeInsets = UIEdgeInsets(top: 0, left: minimizeButton.frame.width, bottom: 0, right: 0)
+        let overlayConfig = VoxeetUXKit.shared.conferenceController?.configuration.overlay
+        if overlayConfig?.displayAction ?? false {
+            // Init participants collection view edge insets.
+            participantsVC.edgeInsets = UIEdgeInsets(top: 0, left: minimizeButton.frame.width, bottom: 0, right: 0)
             
             // Minimize button's shadow (not optimized).
             minimizeButton.layer.shadowOpacity = 0.25
@@ -219,9 +208,9 @@ class ConferenceViewController: OverlayViewController {
         videoPresentationContainerView.isHidden = true
     }
     
-    func updateConferenceState(_ state: VTConferenceState) {
-        switch state {
-        case .connecting:
+    func updateConferenceStatus(_ status: VTConferenceStatus) {
+        switch status {
+        case .creating:
             // Update conference state label.
             conferenceStateLabel.text = VTUXLocalized.string("VTUX_CONFERENCE_STATE_CALLING")
             conferenceStateLabel.alpha = 0
@@ -229,10 +218,10 @@ class ConferenceViewController: OverlayViewController {
             UIView.animate(withDuration: 0.15) {
                 self.conferenceStateLabel.alpha = 1
             }
-        case .connected:
+        case .joined:
             actionBarVC.buttons(enabled: true)
             minimizeButton.isEnabled(true, animated: true)
-        case .disconnecting:
+        case .leaving:
             // Stop active speaker.
             activeSpeaker.end()
             
@@ -247,7 +236,7 @@ class ConferenceViewController: OverlayViewController {
             minimizeButton.isEnabled(false, animated: true)
             
             // Hide main speaker and collection view.
-            usersVC.view.isHidden = true
+            participantsVC.view.isHidden = true
             speakerVC.view.isHidden = true
             speakerVideoVC.view.isHidden = true
             filePresentationContainerView.isHidden = true
@@ -258,15 +247,21 @@ class ConferenceViewController: OverlayViewController {
             outgoingSound = nil
             joinedSound?.stop()
             joinedSound = nil
-        case .disconnected:
-            break
+        default: break
         }
     }
     
-    func startPresentation(user: VTUser?) {
-        // Stop active speaker and lock current user.
-        presenterUserID = user?.id
-        usersVC.lock(user: user)
+    func activeParticipants() -> [VTParticipant] {
+        let participants = VoxeetSDK.shared.conference.current?.participants
+            .filter({ $0.id != VoxeetSDK.shared.session.participant?.id })
+            .filter({ !$0.streams.isEmpty })
+        return participants ?? [VTParticipant]()
+    }
+    
+    func startPresentation(participant: VTParticipant?) {
+        // Stop active speaker and lock current participant.
+        presenterID = participant?.id
+        participantsVC.lock(participant: participant)
         activeSpeaker.end()
         
         // Disable screen share button.
@@ -275,9 +270,9 @@ class ConferenceViewController: OverlayViewController {
     }
     
     func stopPresentation() {
-        // Reset active speaker and unlock previous user.
-        presenterUserID = nil
-        usersVC.lock(user: nil)
+        // Reset active speaker and unlock previous participant.
+        presenterID = nil
+        participantsVC.lock(participant: nil)
         activeSpeaker.begin()
         activeSpeaker.refresh()
         
@@ -303,7 +298,7 @@ class ConferenceViewController: OverlayViewController {
         mainContainer.layer.cornerRadius = view.layer.cornerRadius
         
         // Reload collection view layout.
-        usersVC.reload()
+        participantsVC.reload()
     }
     
     @objc private func switchCamera(recognizer: UITapGestureRecognizer) {
@@ -322,7 +317,7 @@ class ConferenceViewController: OverlayViewController {
         }
         
         ownVideoRenderer.subviews.first?.alpha = 0
-        VoxeetSDK.shared.conference.switchCamera {
+        VoxeetSDK.shared.mediaDevice.switchCamera {
             DispatchQueue.main.async {
                 UIView.animate(withDuration: 0.10, animations: {
                     self.ownVideoRenderer.subviews.first?.alpha = 1
@@ -365,11 +360,10 @@ class ConferenceViewController: OverlayViewController {
     private func alphaTransitionUI(minimized: Bool) {
         conferenceTimerContainerView.alpha = minimized ? 1 : 0
         minimizeButton.alpha = minimized ? 0 : 1
-        usersVC.view.alpha = minimized ? 0 : 1
+        participantsVC.view.alpha = minimized ? 0 : 1
         actionBarVC.view.alpha = minimized ? 0 : 1
         
-        let conferenceService = VoxeetSDK.shared.conference
-        if actionBarVC.cameraButton.tag != 0 && !conferenceService.users.filter({ $0.hasStream }).isEmpty {
+        if actionBarVC.cameraButton.tag != 0 && !activeParticipants().isEmpty {
             ownVideoRenderer.alpha = minimized ? 0 : 1
             flipImage.alpha = minimized ? 0 : 1
         } else {
@@ -392,7 +386,7 @@ class ConferenceViewController: OverlayViewController {
         }
         
         // Play joined/outgoing sound only if the caller didn't join the conference yet.
-        if VoxeetSDK.shared.conference.users.filter({ $0.hasStream }).isEmpty {
+        if activeParticipants().isEmpty {
             if VoxeetSDK.shared.conference.defaultBuiltInSpeaker {
                 joinedSound?.play()
             } else {
@@ -424,13 +418,14 @@ class ConferenceViewController: OverlayViewController {
             
             // Force leave.
             VoxeetSDK.shared.conference.leave { _ in
-                super.hide()
+                // Close conference UI.
+                NotificationCenter.default.post(name: .VTConferenceStatusUpdated, object: nil, userInfo: ["status": VTConferenceStatus.error])
             }
             
             return
         }
         
-        if VoxeetSDK.shared.conference.state == .connected {
+        if VoxeetSDK.shared.conference.current?.status == .joined {
             hangUpTimer?.invalidate()
             hangUpTimer = nil
             hangUpTimerCount = 0
@@ -472,13 +467,11 @@ class ConferenceViewController: OverlayViewController {
     }
     
     @objc private func participantAddedNotification(notification: Notification) {
-        guard let userInfo = notification.userInfo?.values.first as? Data else { return }
-        let json = try? JSONSerialization.jsonObject(with: userInfo, options: .mutableContainers) as? [String: Any]
-        
-        if let userID = json?["user_id"] as? String, let user = VoxeetSDK.shared.conference.user(userID: userID) {
-            let usersConfiguration = VoxeetUXKit.shared.conferenceController?.configuration.users
-            if user.status == .reserved || (usersConfiguration?.displayLeftUsers ?? false) { /* Only show invited users */
-                usersVC.append(user: user)
+        if let participant = notification.userInfo?["participant"] as? VTParticipant {
+            let conferenceConfig = VoxeetUXKit.shared.conferenceController?.configuration
+            let participantsConfig = conferenceConfig?.participants
+            if participant.status == .reserved || (participantsConfig?.displayLeftParticipants ?? false) { /* Only show invited participants */
+                participantsVC.append(participant: participant)
             }
         }
     }
@@ -490,43 +483,53 @@ class ConferenceViewController: OverlayViewController {
     
     @objc private func willEnterForegroundNotification() {
         // Unpause current camera.
-        if actionBarVC.cameraButton.tag == 1 && ownVideoRenderer.alpha == 0 {
-            ownVideoRenderer.alpha = 1
-            
-            let isFrontCamera = VoxeetSDK.shared.conference.isFrontCamera
-            actionBarVC.cameraButton.isUserInteractionEnabled = false
+        if actionBarVC.cameraButton.tag == 2 {
+            let isFrontCamera = VoxeetSDK.shared.mediaDevice.isFrontCamera
             VoxeetSDK.shared.conference.startVideo(isDefaultFrontFacing: isFrontCamera) { _ in
                 self.actionBarVC.cameraButton.isUserInteractionEnabled = true
             }
+        } else {
+            actionBarVC.cameraButton.isUserInteractionEnabled = true
         }
         
-        //        // Unpause current screen share.
-        //        if #available(iOS 11.0, *), actionBarVC.screenShareButton.tag == 1 {
-        //            actionBarVC.screenShareButton.isUserInteractionEnabled = false
-        //            VoxeetSDK.shared.conference.startScreenShare { _ in
-        //                self.actionBarVC.screenShareButton.isUserInteractionEnabled = true
-        //            }
-        //        }
+        // Unpause current screen share.
+        if #available(iOS 11.0, *) {
+            if actionBarVC.screenShareButton.tag == 2 {
+                actionBarVC.screenShareButton.tag = 1
+                VoxeetSDK.shared.conference.startScreenShare { err in
+                    self.actionBarVC.screenShareButton.isUserInteractionEnabled = true
+                }
+            } else {
+                actionBarVC.screenShareButton.isUserInteractionEnabled = true
+            }
+        }
     }
     
     @objc private func didEnterBackgroundNotification() {
         // Pause current camera.
-        if actionBarVC.cameraButton.tag == 1 && ownVideoRenderer.alpha == 1 {
-            ownVideoRenderer.alpha = 0
-            
+        let sessionParticipant = VoxeetSDK.shared.conference.current?.participants.first(where: { $0.id == VoxeetSDK.shared.session.participant?.id })
+        let cameraStream = sessionParticipant?.streams.first(where: { $0.type == .Camera })
+        if !(cameraStream?.videoTracks.isEmpty ?? true) {
+            actionBarVC.cameraButton.tag = 2
             actionBarVC.cameraButton.isUserInteractionEnabled = false
-            VoxeetSDK.shared.conference.stopVideo { _ in
-                self.actionBarVC.cameraButton.isUserInteractionEnabled = true
+            VoxeetSDK.shared.conference.stopVideo { err in
+                if err != nil {
+                    self.actionBarVC.cameraButton.isUserInteractionEnabled = true
+                }
             }
         }
         
-        //        // Pause current screen share.
-        //        if #available(iOS 11.0, *), actionBarVC.screenShareButton.tag == 1 {
-        //            actionBarVC.screenShareButton.isUserInteractionEnabled = false
-        //            VoxeetSDK.shared.conference.stopScreenShare { _ in
-        //                self.actionBarVC.screenShareButton.isUserInteractionEnabled = true
-        //            }
-        //        }
+        // Pause current screen share.
+        let screenShareStream = sessionParticipant?.streams.first(where: { $0.type == .ScreenShare })
+        if #available(iOS 11.0, *), !(screenShareStream?.videoTracks.isEmpty ?? true) {
+            actionBarVC.screenShareButton.tag = 2
+            actionBarVC.screenShareButton.isUserInteractionEnabled = false
+            VoxeetSDK.shared.conference.stopScreenShare { err in
+                if err != nil {
+                    self.actionBarVC.screenShareButton.isUserInteractionEnabled = true
+                }
+            }
+        }
     }
 }
 
@@ -535,15 +538,17 @@ class ConferenceViewController: OverlayViewController {
  */
 
 extension ConferenceViewController: VTUXActiveSpeakerTimerDelegate {
-    func activeSpeakerUpdated(user: VTUser?) {
-        guard presenterUserID == nil else { return }
-        guard let user = user, let userID = user.id else {
+    func activeSpeakerUpdated(participant: VTParticipant?) {
+        guard presenterID == nil else { return }
+        guard let participant = participant else {
             speakerVideoVC.view.isHidden = true
             speakerVC.view.isHidden = true
             
             // Own video full screen.
-            if let sessionUserID = VoxeetSDK.shared.session.user?.id, let stream = VoxeetSDK.shared.conference.mediaStream(userID: sessionUserID), !stream.videoTracks.isEmpty {
-                speakerVideoVC.attach(userID: sessionUserID, stream: stream)
+            let participant = VoxeetSDK.shared.conference.current?.participants.first(where: { $0.id == VoxeetSDK.shared.session.participant?.id })
+            let stream = participant?.streams.first(where: { $0.type == .Camera })
+            if let participant = participant, let stream = stream, !stream.videoTracks.isEmpty {
+                speakerVideoVC.attach(participant: participant, stream: stream)
                 speakerVideoVC.view.isHidden = false
             } else {
                 speakerVideoVC.view.isHidden = true
@@ -552,15 +557,16 @@ extension ConferenceViewController: VTUXActiveSpeakerTimerDelegate {
             return
         }
         
-        let stream = VoxeetSDK.shared.conference.mediaStream(userID: userID)
+        // Attach / Unattach video stream.
+        let stream = participant.streams.first(where: { $0.type == .Camera })
         if let stream = stream, !stream.videoTracks.isEmpty {
-            speakerVideoVC.attach(userID: userID, stream: stream)
+            speakerVideoVC.attach(participant: participant, stream: stream)
             
             speakerVideoVC.view.isHidden = false
             speakerVC.view.isHidden = true
         } else {
             speakerVideoVC.unattach()
-            speakerVC.updateSpeaker(user: user)
+            speakerVC.updateSpeaker(participant: participant)
             
             speakerVideoVC.view.isHidden = true
             speakerVC.view.isHidden = false
@@ -569,13 +575,13 @@ extension ConferenceViewController: VTUXActiveSpeakerTimerDelegate {
 }
 
 /*
- *  MARK: - VTUXUsersViewControllerDelegate
+ *  MARK: - VTUXParticipantsViewControllerDelegate
  */
 
-extension ConferenceViewController: VTUXUsersViewControllerDelegate {
-    func selectedUserUpdated(user: VTUser?) {
-        guard presenterUserID == nil else { return }
-        activeSpeaker.lock(user: user)
+extension ConferenceViewController: VTUXParticipantsViewControllerDelegate {
+    func updated(participant: VTParticipant?) {
+        guard presenterID == nil else { return }
+        activeSpeaker.lock(participant: participant)
     }
 }
 
@@ -585,8 +591,9 @@ extension ConferenceViewController: VTUXUsersViewControllerDelegate {
 
 extension ConferenceViewController: VTUXActionBarViewControllerDelegate {
     func muteAction() {
-        if let userID = VoxeetSDK.shared.session.user?.id {
-            let isMuted = VoxeetSDK.shared.conference.toggleMute(userID: userID)
+        if let participant = VoxeetSDK.shared.session.participant {
+            let isMuted = actionBarVC.muteButton.tag == 0
+            VoxeetSDK.shared.conference.mute(participant: participant, isMuted: isMuted)
             actionBarVC.muteButton(state: isMuted ? .on : .off)
         }
     }
@@ -623,13 +630,13 @@ extension ConferenceViewController: VTUXActionBarViewControllerDelegate {
         let builtInSpeaker = actionBarVC.speakerButton.tag != 0
         UIDevice.current.isProximityMonitoringEnabled = !builtInSpeaker
         actionBarVC.speakerButton.isUserInteractionEnabled = false
-        VoxeetSDK.shared.conference.switchDeviceSpeaker(forceBuiltInSpeaker: builtInSpeaker) {
+        VoxeetSDK.shared.mediaDevice.switchDeviceSpeaker(forceBuiltInSpeaker: builtInSpeaker) {
             self.actionBarVC.speakerButton.isUserInteractionEnabled = true
         }
     }
     
     func screenShareAction() {
-        guard presenterUserID == nil || presenterUserID == VoxeetSDK.shared.session.user?.id else {
+        guard presenterID == nil || presenterID == VoxeetSDK.shared.session.participant?.id else {
             return
         }
         
@@ -667,7 +674,7 @@ extension ConferenceViewController: VTUXActionBarViewControllerDelegate {
         
         // Reset conference state to `disconnecting` and update UI.
         conferenceStateLabel.text = nil
-        updateConferenceState(.disconnecting)
+        updateConferenceStatus(.leaving)
         // Hide own video renderer.
         if actionBarVC.cameraButton.tag != 0 {
             ownVideoRenderer.alpha = 0
@@ -675,15 +682,15 @@ extension ConferenceViewController: VTUXActionBarViewControllerDelegate {
         }
         
         // If the conference isn't connected yet, retry the hang up action after few milliseconds to stop the conference.
-        guard VoxeetSDK.shared.conference.state == .connected else {
+        guard VoxeetSDK.shared.conference.current?.status == .joined else {
             hangUpTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(hangUpRetry), userInfo: nil, repeats: true)
             return
         }
         
         // Leave conference (monkey patch to play sound on the same audio route).
-        if let userID = VoxeetSDK.shared.session.user?.id {
+        if let participant = VoxeetSDK.shared.session.participant {
             NotificationCenter.default.removeObserver(self, name: .VTCallKitMuteToggled, object: nil)
-            VoxeetSDK.shared.conference.mute(userID: userID, isMuted: true)
+            VoxeetSDK.shared.conference.mute(participant: participant, isMuted: true)
         }
         VoxeetSDK.shared.conference.stopVideo()
         let leaveTimeout = hangUpSound?.duration ?? 0
@@ -698,9 +705,9 @@ extension ConferenceViewController: VTUXActionBarViewControllerDelegate {
  */
 
 extension ConferenceViewController: VTUXSpeakerFilePresentationViewControllerDelegate {
-    func filePresentationStarted(user: VTUser?) {
+    func filePresentationStarted(participant: VTParticipant?) {
         filePresentationContainerView.isHidden = false
-        startPresentation(user: user)
+        startPresentation(participant: participant)
     }
     
     func filePresentationStopped() {
@@ -714,9 +721,9 @@ extension ConferenceViewController: VTUXSpeakerFilePresentationViewControllerDel
  */
 
 extension ConferenceViewController: VTUXSpeakerVideoPresentationViewControllerDelegate {
-    func videoPresentationStarted(user: VTUser?) {
+    func videoPresentationStarted(participant: VTParticipant?) {
         videoPresentationContainerView.isHidden = false
-        startPresentation(user: user)
+        startPresentation(participant: participant)
     }
     
     func videoPresentationStopped() {

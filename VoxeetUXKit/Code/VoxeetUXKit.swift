@@ -8,11 +8,6 @@
 
 import VoxeetSDK
 
-// Will soon be deprecated.
-@objc public class VoxeetConferenceKit: NSObject {
-    @objc public static let shared = VoxeetUXKit.shared
-}
-
 /*
  *  MARK: - VoxeetUXKit
  */
@@ -32,7 +27,7 @@ import VoxeetSDK
         }
     }
     
-    /// If true, the conference will behave like a cellular call. if a user hangs up or declines a call, the caller will be disconnected.
+    /// If true, the conference will behave like a cellular call. if a participant hangs up or declines a call, the caller will be disconnected.
     @objc public var telecom = false { /* Will soon be deprecated */
         didSet {
             initialize()
@@ -60,4 +55,9 @@ import VoxeetSDK
             conferenceController = VTUXConferenceController()
         }
     }
+}
+
+@available(*, deprecated, renamed: "VoxeetUXKit") // Deprecated: 1.2.7.
+@objc public class VoxeetConferenceKit: NSObject {
+    @objc public static let shared = VoxeetUXKit.shared
 }

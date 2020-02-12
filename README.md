@@ -1,7 +1,7 @@
 # Voxeet UXKit iOS
 
 <p align="center">
-<img src="https://www.voxeet.com/wp-content/themes/wp-theme/assets/images/logo.svg" alt="Voxeet SDK logo" title="Voxeet SDK logo" width="100"/>
+<img src="https://www.voxeet.com/images/VoxeetDolbyLogo.svg" alt="Voxeet SDK logo" title="Voxeet SDK logo" width="100"/>
 </p>
 
 
@@ -10,13 +10,13 @@
 
 * **Operating systems:** iOS 9.0 and later versions
 * **IDE:** [Xcode 11+](https://developer.apple.com/xcode/)
-* **Languages:** Swift 5+, Objective-C, [React Native](https://github.com/voxeet/react-native-voxeet-conferencekit), [Cordova](https://github.com/voxeet/voxeet-cordova-conferencekit)
+* **Languages:** Swift 5+, Objective-C, [React Native](https://github.com/voxeet/voxeet-uxkit-reactnative), [Cordova](https://github.com/voxeet/voxeet-uxkit-cordova)
 * **Supported architectures:** armv7, arm64, i386, x86_64
 
 ## Sample application
 
-A sample application is available on this [GitHub repository](https://github.com/voxeet/voxeet-ios-conferencekit/tree/master/Sample).
-**VoxeetConferenceKit** is a framework based on **VoxeetSDK** ([https://github.com/voxeet/voxeet-ios-sdk](https://github.com/voxeet/voxeet-ios-sdk)).
+A sample application is available on this [GitHub repository](https://github.com/voxeet/voxeet-uxkit-ios/tree/master/Sample).
+**VoxeetUXKit** is a framework based on **VoxeetSDK** ([https://github.com/voxeet/voxeet-sdk-ios](https://github.com/voxeet/voxeet-sdk-ios)).
 
 ![CallKit](http://cdn.voxeet.com/images/IncomingCallKit.png "CallKit") ![Conference maximized](http://cdn.voxeet.com/images/OutgoingCall.png "Conference maximized") ![Conference minimized](http://cdn.voxeet.com/images/CallMinimize.png "Conference minimized")
 
@@ -59,29 +59,47 @@ $ brew update
 $ brew install carthage
 ```
 
-To integrate [VoxeetConferenceKit](https://github.com/voxeet/voxeet-ios-conferencekit) into your Xcode project using Carthage, specify it in your `Cartfile`:
+To integrate [VoxeetUXKit](https://github.com/voxeet/voxeet-uxkit-ios) into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```ogdl
-github "voxeet/voxeet-ios-conferencekit" ~> 1.0
+github "voxeet/voxeet-uxkit-ios" ~> 1.0
 ```
 
-Run `carthage update` to build the frameworks and drag `VoxeetConferenceKit.framework`, `VoxeetSDK.framework` and `WebRTC.framework` into your Xcode project *(needs to be dropped in 'Embedded Binaries')*.
+Run `carthage update` to build the frameworks and drag `VoxeetUXKit.framework`, `VoxeetSDK.framework` and `WebRTC.framework` into your Xcode project *(needs to be dropped in 'Embedded Binaries')*.
 More information at [https://github.com/Carthage/Carthage#if-youre-building-for-ios-tvos-or-watchos](https://github.com/Carthage/Carthage#if-youre-building-for-ios-tvos-or-watchos).
+
+#### CocoaPods
+
+[CocoaPods](https://cocoapods.org) is a dependency manager for Swift and Objective-C Cocoa projects. It has over 70 thousand libraries and is used in over 3 million apps. CocoaPods can help you scale your projects elegantly.
+
+You can install CocoaPods with the following command:
+
+```bash
+$ sudo gem install cocoapods
+```
+
+To integrate [VoxeetUXKit](https://github.com/voxeet/voxeet-uxkit-ios) into your Xcode project using CocoaPods, specify it in your `Podfile`:
+
+```ogdl
+pod 'VoxeetUXKit', '~> 1.0'
+```
+
+Run `pod install` to build dependencies.
 
 ### Manually
 
 Download the lastest release zip:
 
-**VoxeetConferenceKit:** https://github.com/voxeet/voxeet-ios-conferencekit/releases
+**VoxeetUXKit:** https://github.com/voxeet/voxeet-uxkit-ios/releases
 *and*
-**VoxeetSDK:** https://github.com/voxeet/voxeet-ios-sdk/releases
+**VoxeetSDK:** https://github.com/voxeet/voxeet-sdk-ios/releases
 
-Unzip and drag and drop frameworks into your project, select 'Copy items if needed' with the right target. Then in the general tab of your target, add the `VoxeetConferenceKit.framework`, `VoxeetSDK.framework` and `WebRTC.framework` into **'Embedded Binaries'**.
+Unzip and drag and drop frameworks into your project, select 'Copy items if needed' with the right target. Then in the general tab of your target, add the `VoxeetUXKit.framework`, `VoxeetSDK.framework` and `WebRTC.framework` into **'Embedded Binaries'**.
 
 ### 4. Dependencies
 
-VoxeetConferenceKit is also using some external libraries like SDWebImage for downloading and caching images from the web (users' avatars).
-You can either download this framework at [this link](https://github.com/SDWebImage/SDWebImage) or install it with Carthage (or CocoaPods).
+VoxeetUXKit is also using some external libraries like SDWebImage for downloading and caching images from the web (users' avatars).
+You can either download this framework at [this link](https://github.com/SDWebImage/SDWebImage) or install it with Carthage / CocoaPods.
 
 At the end 'Embedded Binaries' and 'Linked Frameworks and Libraries' sections should look like this:
 
@@ -91,7 +109,7 @@ At the end 'Embedded Binaries' and 'Linked Frameworks and Libraries' sections sh
 
 *(WebRTC.framework missing on this screenshot and Kingfisher has been replaced by SDWebImage)*
 
-## Voxeet Conference Kit usage
+## Voxeet UXKit usage
 
 ### `initialize`
 
@@ -105,7 +123,7 @@ Use these methods to initialize the Voxeet frameworks.
 
 ```swift
 import VoxeetSDK
-import VoxeetConferenceKit
+import VoxeetUXKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -113,14 +131,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Voxeet SDKs initialization.
         VoxeetSDK.shared.initialize(consumerKey: "YOUR_CONSUMER_KEY", consumerSecret: "YOUR_CONSUMER_SECRET")
-        VoxeetConferenceKit.shared.initialize()
+        VoxeetUXKit.shared.initialize()
         
         // Example of public variables to change the conference behavior.
-        VoxeetSDK.shared.pushNotification.type = .none
-        VoxeetSDK.shared.conference.defaultBuiltInSpeaker = false
+        VoxeetSDK.shared.notification.type = .none
+        VoxeetSDK.shared.conference.defaultBuiltInSpeaker = true
         VoxeetSDK.shared.conference.defaultVideo = false
-        VoxeetConferenceKit.shared.appearMaximized = true
-        VoxeetConferenceKit.shared.telecom = false
+        VoxeetUXKit.shared.appearMaximized = true
+        VoxeetUXKit.shared.telecom = false
         
         return true
     }
@@ -129,47 +147,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 #### References
 
-https://github.com/voxeet/voxeet-ios-sdk#initialize-the-voxeet-sdk
+https://voxeet.com/documentation/sdk/reference/ios/voxeetsdk#initialize
 
-### `connect`
+### `open`
 
-*This method is optional.*
-Connect a session is like a login, however the SDK needs to be initialized with `connectSession` sets to `false`. This method can be useful if CallKit is implemented (VoIP push notifications) because once the session is openned, notifications can be received if there is an invitation.
+Opens a new session.
 
 #### Parameters
 
--   `user` **VTUser?** - A user to be linked to our server.
+-   `options` **VTParticipantInfo?** - Information about the current participant (optional)
+-   `completion` **((_ error: NSError?) -> Void)?** - A block object to be executed when the server connection sequence ends. This block has no return value and takes a single `NSError` argument that indicates whether or not the connection to the server succeeded
+
+#### Examples
+
+```swift
+let participantInfo = VTParticipantInfo(externalID: "1234", name: "Username", avatarURL: "https://voxeet.com/logo.jpg")
+VoxeetSDK.shared.session.open(info: participantInfo) { error in }
+```
+
+#### References
+
+https://voxeet.com/documentation/sdk/reference/ios/session#open
+
+### `close`
+
+Closes the current session (it will stop the socket and stop receiving VoIP push notification).
+
+#### Parameters
+
 -   `completion` **((_ error: NSError?) -> Void)?** - A block object to be executed when the server connection sequence ends. This block has no return value and takes a single `NSError` argument that indicates whether or not the connection to the server succeeded.
 
 #### Examples
 
 ```swift
-let user = VTUser(externalID: "1234", name: "Username", avatarURL: "https://voxeet.com/logo.jpg")
-VoxeetSDK.shared.session.connect(user: user) { error in }
+VoxeetSDK.shared.session.close { error in }
 ```
 
 #### References
 
-https://github.com/voxeet/voxeet-ios-sdk#connect
-
-### `disconnect`
-
-*This method is optional.*
-Close a session is like a logout, it will stop the socket and stop sending VoIP push notification.
-
-#### Parameters
-
--   `completion` **((_ error: NSError?) -> Void)?** - A block object to be executed when the server connection sequence ends. This block has no return value and takes a single `NSError` argument that indicates whether or not the connection to the server succeeded.
-
-#### Examples
-
-```swift
-VoxeetSDK.shared.session.disconnect { error in }
-```
-
-#### References
-
-https://github.com/voxeet/voxeet-ios-sdk#disconnect
+https://voxeet.com/documentation/sdk/reference/ios/session#close
 
 ### `start conference`
 
@@ -178,23 +194,22 @@ Start the conference UI.
 #### Examples
 
 ```swift
-// Create a conference.
-VoxeetSDK.shared.conference.create(success: { json in
-    guard let confID = json?["conferenceId"] as? String else { return }
-    
+// Create a conference (with a custom conference alias).
+let options = VTConferenceOptions()
+options.alias = conferenceAlias
+VoxeetSDK.shared.conference.create(options: options, success: { conference in
     // Join the created conference.
-    VoxeetSDK.shared.conference.join(conferenceID: confID, video: false, userInfo: nil, success: { json in
+    VoxeetSDK.shared.conference.join(conference: conference, success: { conference in
     }, fail: { error in
     })
-    
 }, fail: { error in
 })
 ```
 
 #### References
 
-https://github.com/voxeet/voxeet-ios-sdk#create
-https://github.com/voxeet/voxeet-ios-sdk#join
+https://voxeet.com/documentation/sdk/reference/ios/conference#create
+https://voxeet.com/documentation/sdk/reference/ios/conference#join
 
 ### `stop conference`
 
@@ -208,20 +223,20 @@ VoxeetSDK.shared.conference.leave { error in }
 
 #### References
 
-[https://github.com/voxeet/voxeet-ios-sdk#leave](https://github.com/voxeet/voxeet-ios-sdk#leave)
+https://voxeet.com/documentation/sdk/reference/ios/conference#leave
 
 ### `useful variables`
 
 By default, conference appears maximized. If false, the conference will appear minimized.
 
 ```swift
-VoxeetConferenceKit.shared.appearMaximized = true
+VoxeetUXKit.shared.appearMaximized = true
 ```
 
 If someone hangs up, everybody is kicked out of the conference.
 
 ```swift
-VoxeetConferenceKit.shared.telecom = false
+VoxeetUXKit.shared.telecom = false
 ```
 
 ### `CallKit sound and image`
@@ -231,7 +246,7 @@ Same as `IconMask.png` if overridden, it will replace the default CallKit image 
 
 ## Tech
 
-The Voxeet iOS SDK and ConferenceKit rely on these open source projects:
+The Voxeet iOS SDK and UXKit rely on these open source projects:
 
 * [SDWebImage](https://github.com/SDWebImage/SDWebImage), provides an async image downloader with cache support.
 * [Starscream](https://github.com/daltoniam/Starscream), a conforming WebSocket (RFC 6455) client library in Swift for iOS and OSX.
@@ -240,6 +255,6 @@ The Voxeet iOS SDK and ConferenceKit rely on these open source projects:
 
 ## SDK version
 
-1.2.7
+1.3.0
 
 © Voxeet, 2020

@@ -10,7 +10,7 @@ import VoxeetSDK
 import SDWebImage
 
 @objc public protocol VTUXSpeakerFilePresentationViewControllerDelegate {
-    func filePresentationStarted(user: VTUser?)
+    func filePresentationStarted(participant: VTParticipant?)
     func filePresentationStopped()
 }
 
@@ -23,53 +23,36 @@ import SDWebImage
     override public func viewDidLoad() {
         super.viewDidLoad()
         
+        VoxeetSDK.shared.filePresentation.delegate = self
         scrollView.delegate = self
-        
-        // File presentation observers.
-        NotificationCenter.default.addObserver(self, selector: #selector(filePresentationStarted), name: .VTFilePresentationStarted, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(filePresentationUpdated), name: .VTFilePresentationUpdated, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(filePresentationStopped), name: .VTFilePresentationStopped, object: nil)
+    }
+}
+
+extension VTUXSpeakerFilePresentationViewController: VTFilePresentationDelegate {
+    public func converted(fileConverted: VTFileConverted) {}
+    
+    public func started(filePresentation: VTFilePresentation) {
+        if let url = VoxeetSDK.shared.filePresentation.image(page: filePresentation.position) {
+            fileImageView.sd_setImage(with: url)
+            
+            // Started delegate.
+            delegate?.filePresentationStarted(participant: filePresentation.owner)
+            
+            // Reset zoom when image change.
+            scrollView.zoomScale = 1
+        }
     }
     
-    @objc private func filePresentationStarted(notification: Notification) {
-        guard let userInfo = notification.userInfo?.values.first as? Data else { return }
-        
-        do {
-            if let json = try JSONSerialization.jsonObject(with: userInfo) as? [String: Any] {
-                if let fileID = json["fileId"] as? String, let page = json["position"] as? Int, let userID = json["userId"] as? String {
-                    if let url = VoxeetSDK.shared.filePresentation.getImage(fileID: fileID, page: page) {
-                        fileImageView.sd_setImage(with: url)
-                        
-                        // Started delegate.
-                        let user = VoxeetSDK.shared.conference.user(userID: userID)
-                        delegate?.filePresentationStarted(user: user)
-                        
-                        // Reset zoom when image change.
-                        scrollView.zoomScale = 1
-                    }
-                }
-            }
-        } catch {}
+    public func updated(filePresentation: VTFilePresentation) {
+        if let url = VoxeetSDK.shared.filePresentation.image(page: filePresentation.position) {
+            fileImageView.sd_setImage(with: url)
+            
+            // Reset zoom when image change.
+            scrollView.zoomScale = 1
+        }
     }
     
-    @objc private func filePresentationUpdated(notification: Notification) {
-        guard let userInfo = notification.userInfo?.values.first as? Data else { return }
-        
-        do {
-            if let json = try JSONSerialization.jsonObject(with: userInfo) as? [String: Any] {
-                if let fileID = json["fileId"] as? String, let page = json["position"] as? Int {
-                    if let url = VoxeetSDK.shared.filePresentation.getImage(fileID: fileID, page: page) {
-                        fileImageView.sd_setImage(with: url)
-                        
-                        // Reset zoom when image change.
-                        scrollView.zoomScale = 1
-                    }
-                }
-            }
-        } catch {}
-    }
-    
-    @objc private func filePresentationStopped(notification: Notification) {
+    public func stopped(filePresentation: VTFilePresentation) {
         fileImageView.image = nil
         
         // Stopped delegate.

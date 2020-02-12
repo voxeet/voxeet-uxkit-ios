@@ -9,20 +9,20 @@
 import VoxeetSDK
 
 @objc public protocol VTUXActiveSpeakerTimerDelegate {
-    func activeSpeakerUpdated(user: VTUser?)
+    func activeSpeakerUpdated(participant: VTParticipant?)
 }
 
 @objc public class VTUXActiveSpeakerTimer: NSObject {
     @objc public weak var delegate: VTUXActiveSpeakerTimerDelegate?
     
-    private var speaker: VTUser?
-    private var selectedUser: VTUser?
+    private var speaker: VTParticipant?
+    private var selectedParticipant: VTParticipant?
     
     private var activeSpeakerTimer: Timer?
     private let activeSpeakerDelay: TimeInterval = 1
     
     @objc public func begin() {
-        guard selectedUser == nil else { return }
+        guard selectedParticipant == nil else { return }
         
         activeSpeakerTimer?.invalidate()
         activeSpeakerTimer = Timer.scheduledTimer(timeInterval: activeSpeakerDelay,
@@ -30,13 +30,14 @@ import VoxeetSDK
                                                   selector: #selector(activeSpeakerRefresh),
                                                   userInfo: nil,
                                                   repeats: true)
+        activeSpeakerTimer?.tolerance = 0.5
         activeSpeakerTimer?.fire()
     }
     
     @objc public func refresh() {
-        // Check if there is a selected user.
-        if let user = selectedUser, user.hasStream {
-            delegate?.activeSpeakerUpdated(user: user)
+        // Check if there is a selected participant.
+        if let participant = selectedParticipant, !participant.streams.isEmpty {
+            delegate?.activeSpeakerUpdated(participant: participant)
             return
         }
         
@@ -46,45 +47,45 @@ import VoxeetSDK
         
         // If the speaker is still nil after refreshing, call the delegate to update UI.
         if speaker == nil {
-            delegate?.activeSpeakerUpdated(user: nil)
+            delegate?.activeSpeakerUpdated(participant: nil)
         }
     }
     
     @objc public func end() {
         speaker = nil
-        selectedUser = nil
+        selectedParticipant = nil
         activeSpeakerTimer?.invalidate()
         
         // Call the delegate to update UI.
-        delegate?.activeSpeakerUpdated(user: nil)
+        delegate?.activeSpeakerUpdated(participant: nil)
     }
     
-    @objc public func lock(user: VTUser?) {
+    @objc public func lock(participant: VTParticipant?) {
         speaker = nil
-        selectedUser = user
+        selectedParticipant = participant
         
-        if let user = user {
+        if let participant = participant {
             activeSpeakerTimer?.invalidate()
-            delegate?.activeSpeakerUpdated(user: user)
+            delegate?.activeSpeakerUpdated(participant: participant)
         } else {
             begin()
         }
     }
     
     @objc private func activeSpeakerRefresh() {
-        var loudestSpeaker: VTUser?
+        var loudestSpeaker: VTParticipant?
         var loudestVoiceLevel: Double = 0
         
         // Get the loudest speaker.
-        let users = VoxeetSDK.shared.conference.users.filter({ $0.hasStream })
-        if !users.isEmpty {
-            for user in users {
-                if let userID = user.id {
-                    let voiceLevel = VoxeetSDK.shared.conference.voiceLevel(userID: userID)
-                    if voiceLevel >= loudestVoiceLevel {
-                        loudestSpeaker = user
-                        loudestVoiceLevel = voiceLevel
-                    }
+        let participants = VoxeetSDK.shared.conference.current?.participants
+            .filter({ $0.id != VoxeetSDK.shared.session.participant?.id })
+            .filter({ !$0.streams.isEmpty })
+        if let participants = participants, !participants.isEmpty {
+            for participant in participants {
+                let audioLevel = VoxeetSDK.shared.conference.audioLevel(participant: participant)
+                if audioLevel >= loudestVoiceLevel {
+                    loudestSpeaker = participant
+                    loudestVoiceLevel = audioLevel
                 }
             }
         }
@@ -93,7 +94,7 @@ import VoxeetSDK
         if let loudestSpeaker = loudestSpeaker {
             if (loudestVoiceLevel >= 0.01 || speaker == nil) && loudestSpeaker.id != speaker?.id {
                 speaker = loudestSpeaker
-                delegate?.activeSpeakerUpdated(user: speaker)
+                delegate?.activeSpeakerUpdated(participant: speaker)
             }
         }
     }

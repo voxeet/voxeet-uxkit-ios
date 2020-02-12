@@ -33,8 +33,8 @@ import VoxeetSDK
         videoRenderer.addGestureRecognizer(pinch)
     }
     
-    @objc public func attach(userID: String, stream: MediaStream) {
-        videoRenderer.attach(userID: userID, stream: stream)
+    @objc public func attach(participant: VTParticipant, stream: MediaStream) {
+        videoRenderer.attach(participant: participant, stream: stream)
     }
     
     @objc public func unattach() {
@@ -47,11 +47,11 @@ import VoxeetSDK
     }
     
     @objc private func tapGesture(recognizer: UIPinchGestureRecognizer) {
-        let sessionUserID = VoxeetSDK.shared.session.user?.id
-        if let userID = sessionUserID, userID == videoRenderer.userID {
+        let sessionParticipantID = VoxeetSDK.shared.session.participant?.id
+        if let participantID = sessionParticipantID, participantID == videoRenderer.userID {
             videoRenderer.isUserInteractionEnabled = false
             videoRenderer.subviews.first?.alpha = 0
-            VoxeetSDK.shared.conference.switchCamera {
+            VoxeetSDK.shared.mediaDevice.switchCamera {
                 DispatchQueue.main.async {
                     self.videoRenderer.mirrorEffect.toggle()
                     self.videoRenderer.isUserInteractionEnabled = true

@@ -17,7 +17,7 @@ import VoxeetSDK
     /// Conference appear animation default starts maximized. If false, the conference will appear minimized.
     @objc public var appearMaximized = true
     
-    /// If true, the conference will behave like a cellular call. if a user hangs up or declines a call, the caller will be disconnected.
+    /// If true, the conference will behave like a cellular call. if a participant hangs up or declines a call, the caller will be disconnected.
     @objc public var telecom = false {
         didSet {
             if telecom {
@@ -35,8 +35,8 @@ import VoxeetSDK
         NotificationCenter.default.addObserver(self, selector: #selector(ownParticipantSwitched), name: .VTOwnParticipantSwitched, object: nil)
         // CallKit notifications.
         NotificationCenter.default.addObserver(self, selector: #selector(callKitSwapped), name: .VTCallKitSwapped, object: nil)
-        // Conference state notifications.
-        NotificationCenter.default.addObserver(self, selector: #selector(conferenceStateUpdated), name: .VTConferenceStateUpdated, object: nil)
+        // Conference status notifications.
+        NotificationCenter.default.addObserver(self, selector: #selector(conferenceStatusUpdated), name: .VTConferenceStatusUpdated, object: nil)
     }
 }
 
@@ -52,7 +52,7 @@ extension VTUXConferenceController {
         // Debug.
         print("[VoxeetUXKit] \(String(describing: VoxeetUXKit.self)).\(#function).\(#line)")
         
-        // Stop conference if a user decline or leave.
+        // Stop conference if a participant declines or leaves it.
         if let json = try? JSONSerialization.jsonObject(with: userInfo, options: .mutableContainers) {
             if let jsonDict = json as? [String: Any], let status = jsonDict["status"] as? String, status == "DECLINE" || status == "LEFT" {
                 // Update conference state label.
@@ -81,7 +81,7 @@ extension VTUXConferenceController {
 
 extension VTUXConferenceController {
     @objc private func callKitSwapped(notification: NSNotification) {
-        // Remove current conference view from UI before reinitializing it with the new conference's users.
+        // Remove current conference view from UI before reinitializing it with new conference's participants.
         DispatchQueue.main.async {
             self.viewController?.hide(animated: false) {
                 self.viewController?.show(animated: true)
@@ -91,20 +91,17 @@ extension VTUXConferenceController {
 }
 
 /*
- *  MARK: - Notifications: conference state
+ *  MARK: - Notifications: conference status
  */
 
 extension VTUXConferenceController {
-    @objc private func conferenceStateUpdated(notification: NSNotification) {
-        guard let stateInteger = notification.userInfo?["state"] as? Int, let state = VTConferenceState(rawValue: stateInteger) else {
+    @objc private func conferenceStatusUpdated(notification: NSNotification) {
+        guard let status = notification.userInfo?["status"] as? VTConferenceStatus else {
             return
         }
         
-        // Update conference UI.
-        viewController?.updateConferenceState(state)
-        
-        switch state {
-        case .connecting:
+        switch status {
+        case .creating, .joining:
             if viewController == nil {
                 // Create conference UI and adds it to the window.
                 let storyboard = UIStoryboard(name: "VoxeetUXKit", bundle: Bundle(for: type(of: self)))
@@ -126,15 +123,17 @@ extension VTUXConferenceController {
                     }
                 }
             }
-        case .disconnected:
+        case .left, .destroyed, .error:
             // Hide conference.
             viewController?.hide {
                 // Remove conference view from superview.
                 self.viewController?.view.removeFromSuperview()
                 self.viewController = nil
             }
-        default:
-            break
+        default: break
         }
+        
+        // Update conference UI.
+        viewController?.updateConferenceStatus(status)
     }
 }
