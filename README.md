@@ -255,6 +255,6 @@ The Voxeet iOS SDK and UXKit rely on these open source projects:
 
 ## SDK version
 
-1.3.0
+1.3.1
 
 © Voxeet, 2020

@@ -429,7 +429,7 @@
 				);
 				INFOPLIST_FILE = VoxeetUXKitSample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = io.voxeet;
 				PRODUCT_NAME = "Voxeet (UXKit)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -452,7 +452,7 @@
 				);
 				INFOPLIST_FILE = VoxeetUXKitSample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = io.voxeet;
 				PRODUCT_NAME = "Voxeet (UXKit)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

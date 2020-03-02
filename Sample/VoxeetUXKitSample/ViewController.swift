@@ -149,7 +149,7 @@ class ViewController: UIViewController {
             
             // Invite other participants if the conference is just created.
             if conference.isNew {
-                VoxeetSDK.shared.notification.invite(conference: conference, externalIDs: participants.map({ $0.externalID ?? "" }), completion: nil)
+                VoxeetSDK.shared.notification.invite(conference: conference, participantInfos: participants, completion: nil)
             }
         }, fail: { error in
             // Re-enable startConferenceButton when the request finish.
