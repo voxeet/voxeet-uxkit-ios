@@ -138,7 +138,9 @@ class ViewController: UIViewController {
         options.alias = conferenceAlias
         VoxeetSDK.shared.conference.create(options: options, success: { conference in
             // Join the created conference.
-            VoxeetSDK.shared.conference.join(conference: conference, success: { conference in
+            let joinOptions = VTJoinOptions()
+            joinOptions.constraints.video = false
+            VoxeetSDK.shared.conference.join(conference: conference, options: joinOptions, success: { conference in
                 // Re-enable startConferenceButton when the request finish.
                 self.startConferenceButton.isEnabled = true
             }, fail: { error in

@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         VoxeetUXKit.shared.initialize()
         
         // Example of public variables to change the conference behavior.
-        VoxeetSDK.shared.notification.type = .callKit
+        VoxeetSDK.shared.notification.push.type = .callKit
         VoxeetSDK.shared.conference.defaultBuiltInSpeaker = true
         VoxeetSDK.shared.conference.defaultVideo = false
         VoxeetUXKit.shared.appearMaximized = true
@@ -37,11 +37,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate {
     /// Useful below iOS 10.
     func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
-        VoxeetSDK.shared.notification.application(application, didReceive: notification)
+        VoxeetSDK.shared.notification.push.application(application, didReceive: notification)
     }
     
     /// Useful below iOS 10.
     func application(_ application: UIApplication, handleActionWithIdentifier identifier: String?, for notification: UILocalNotification, completionHandler: @escaping () -> Void) {
-        VoxeetSDK.shared.notification.application(application, handleActionWithIdentifier: identifier, for: notification, completionHandler: completionHandler)
+        VoxeetSDK.shared.notification.push.application(application, handleActionWithIdentifier: identifier, for: notification, completionHandler: completionHandler)
     }
 }

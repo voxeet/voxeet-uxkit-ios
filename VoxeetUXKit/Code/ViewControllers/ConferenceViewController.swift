@@ -507,7 +507,7 @@ class ConferenceViewController: OverlayViewController {
     
     @objc private func didEnterBackgroundNotification() {
         // Pause current camera.
-        let sessionParticipant = VoxeetSDK.shared.conference.current?.participants.first(where: { $0.id == VoxeetSDK.shared.session.participant?.id })
+        let sessionParticipant = VoxeetSDK.shared.session.participant
         let cameraStream = sessionParticipant?.streams.first(where: { $0.type == .Camera })
         if !(cameraStream?.videoTracks.isEmpty ?? true) {
             actionBarVC.cameraButton.tag = 2
@@ -545,7 +545,7 @@ extension ConferenceViewController: VTUXActiveSpeakerTimerDelegate {
             speakerVC.view.isHidden = true
             
             // Own video full screen.
-            let participant = VoxeetSDK.shared.conference.current?.participants.first(where: { $0.id == VoxeetSDK.shared.session.participant?.id })
+            let participant = VoxeetSDK.shared.session.participant
             let stream = participant?.streams.first(where: { $0.type == .Camera })
             if let participant = participant, let stream = stream, !stream.videoTracks.isEmpty {
                 speakerVideoVC.attach(participant: participant, stream: stream)

@@ -1,2 +1,2 @@
-binary "https://voxeet-cdn.s3.amazonaws.com/sdk/ios/release/VoxeetSDK.json" "2.1.0"
-github "SDWebImage/SDWebImage" "5.5.2"
+binary "https://raw.githubusercontent.com/voxeet/voxeet-sdk-ios/master/VoxeetSDK.json" "2.2.0"
+github "SDWebImage/SDWebImage" "5.6.1"

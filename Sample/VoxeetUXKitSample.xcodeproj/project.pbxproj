@@ -421,6 +421,7 @@
 				CODE_SIGN_ENTITLEMENTS = VoxeetUXKitSample/VoxeetUXKitSample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B55NRA8BRW;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -429,7 +430,7 @@
 				);
 				INFOPLIST_FILE = VoxeetUXKitSample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = io.voxeet;
 				PRODUCT_NAME = "Voxeet (UXKit)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -444,6 +445,7 @@
 				CODE_SIGN_ENTITLEMENTS = VoxeetUXKitSample/VoxeetUXKitSample.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B55NRA8BRW;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -452,7 +454,7 @@
 				);
 				INFOPLIST_FILE = VoxeetUXKitSample/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.2.1;
+				MARKETING_VERSION = 1.2.2;
 				PRODUCT_BUNDLE_IDENTIFIER = io.voxeet;
 				PRODUCT_NAME = "Voxeet (UXKit)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

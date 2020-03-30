@@ -58,7 +58,6 @@ extension ConferenceViewController: VTConferenceDelegate {
     }
     
     private func cameraStreamUpdated(participant: VTParticipant, stream: MediaStream) {
-        let conferenceService = VoxeetSDK.shared.conference
         let sessionService = VoxeetSDK.shared.session
         
         if participant.id == sessionService.participant?.id {
@@ -77,10 +76,8 @@ extension ConferenceViewController: VTConferenceDelegate {
         }
         
         // Show / Hide own video renderer or refresh active speaker.
-        if sessionService.participant != nil {
-            let sessionParticipant = conferenceService.current?.participants.first(where: { $0.id == sessionService.participant?.id })
-            
-            if !(sessionParticipant?.streams.first(where: { $0.type == .Camera })?.videoTracks.isEmpty ?? true) {
+        if let participant = sessionService.participant {
+            if !(participant.streams.first(where: { $0.type == .Camera })?.videoTracks.isEmpty ?? true) {
                 if !activeParticipants().isEmpty {
                     isOwnVideoRendererHidden(false)
                 } else {
