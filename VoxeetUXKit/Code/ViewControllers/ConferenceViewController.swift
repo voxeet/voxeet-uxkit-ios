@@ -133,9 +133,7 @@ class ConferenceViewController: OverlayViewController {
             hangUpSound?.prepareToPlay()
         }
         
-        // Refresh participants list to handle waiting room observer.
-        NotificationCenter.default.addObserver(self, selector: #selector(participantAddedNotification), name: .VTParticipantAdded, object: nil)
-        // CallKit mute behaviour to update UI observer.
+        // Observer CallKit mute behaviour to update UI.
         NotificationCenter.default.addObserver(self, selector: #selector(callKitMuteToggled), name: .VTCallKitMuteToggled, object: nil)
         // Start / Stop video when application is on foreground/background.
         NotificationCenter.default.addObserver(self, selector: #selector(willEnterForegroundNotification), name: UIApplication.willEnterForegroundNotification, object: nil)
@@ -219,6 +217,10 @@ class ConferenceViewController: OverlayViewController {
                 self.conferenceStateLabel.alpha = 1
             }
         case .joined:
+            // Update conference state label.
+            conferenceStateLabel.text = VTUXLocalized.string("VTUX_CONFERENCE_STATE_CALLING")
+            
+            // Enable conference buttons.
             actionBarVC.buttons(enabled: true)
             minimizeButton.isEnabled(true, animated: true)
         case .leaving:
@@ -231,7 +233,7 @@ class ConferenceViewController: OverlayViewController {
             }
             conferenceStateLabel.isHidden = false
             
-            // Disable buttons when leaving.
+            // Disable conference buttons.
             actionBarVC.buttons(enabled: false)
             minimizeButton.isEnabled(false, animated: true)
             
@@ -466,16 +468,6 @@ class ConferenceViewController: OverlayViewController {
         }
     }
     
-    @objc private func participantAddedNotification(notification: Notification) {
-        if let participant = notification.userInfo?["participant"] as? VTParticipant {
-            let conferenceConfig = VoxeetUXKit.shared.conferenceController?.configuration
-            let participantsConfig = conferenceConfig?.participants
-            if participant.status == .reserved || (participantsConfig?.displayLeftParticipants ?? false) { /* Only show invited participants */
-                participantsVC.append(participant: participant)
-            }
-        }
-    }
-    
     @objc private func callKitMuteToggled(notification: NSNotification) {
         guard let isMuted = notification.userInfo?["mute"] as? Bool else { return }
         actionBarVC.muteButton(state: isMuted ? .on : .off)
@@ -493,7 +485,8 @@ class ConferenceViewController: OverlayViewController {
         }
         
         // Unpause current screen share.
-        if #available(iOS 11.0, *) {
+        let broadcast = VoxeetSDK.shared.appGroup != nil
+        if #available(iOS 11.0, *), !broadcast {
             if actionBarVC.screenShareButton.tag == 2 {
                 actionBarVC.screenShareButton.tag = 1
                 VoxeetSDK.shared.conference.startScreenShare { err in
@@ -519,9 +512,10 @@ class ConferenceViewController: OverlayViewController {
             }
         }
         
-        // Pause current screen share.
+        // Pause current screen share if broadcast is false (app group not set).
+        let broadcast = VoxeetSDK.shared.appGroup != nil
         let screenShareStream = sessionParticipant?.streams.first(where: { $0.type == .ScreenShare })
-        if #available(iOS 11.0, *), !(screenShareStream?.videoTracks.isEmpty ?? true) {
+        if #available(iOS 11.0, *), !(screenShareStream?.videoTracks.isEmpty ?? true) && !broadcast {
             actionBarVC.screenShareButton.tag = 2
             actionBarVC.screenShareButton.isUserInteractionEnabled = false
             VoxeetSDK.shared.conference.stopScreenShare { err in
@@ -591,11 +585,9 @@ extension ConferenceViewController: VTUXParticipantsViewControllerDelegate {
 
 extension ConferenceViewController: VTUXActionBarViewControllerDelegate {
     func muteAction() {
-        if let participant = VoxeetSDK.shared.session.participant {
-            let isMuted = actionBarVC.muteButton.tag == 0
-            VoxeetSDK.shared.conference.mute(participant: participant, isMuted: isMuted)
-            actionBarVC.muteButton(state: isMuted ? .on : .off)
-        }
+        let isMuted = actionBarVC.muteButton.tag == 0
+        VoxeetSDK.shared.conference.mute(isMuted)
+        actionBarVC.muteButton(state: isMuted ? .on : .off)
     }
     
     func cameraAction() {
@@ -642,21 +634,19 @@ extension ConferenceViewController: VTUXActionBarViewControllerDelegate {
         
         if #available(iOS 11.0, *) {
             if actionBarVC.screenShareButton.tag == 0 {
-                actionBarVC.screenShareButton(state: .on)
+                let broadcast = VoxeetSDK.shared.appGroup != nil
                 
-                VoxeetSDK.shared.conference.startScreenShare { error in
-                    if let _ = error {
+                // Start screen share.
+                actionBarVC.screenShareButton(state: .on)
+                VoxeetSDK.shared.conference.startScreenShare(broadcast: broadcast) { error in
+                    if error != nil {
                         self.actionBarVC.screenShareButton(state: .off)
-                        return
                     }
                 }
             } else {
+                // Stop screen share.
                 actionBarVC.screenShareButton(state: .off)
-                VoxeetSDK.shared.conference.stopScreenShare { error in
-                    if let _ = error {
-                        return
-                    }
-                }
+                VoxeetSDK.shared.conference.stopScreenShare { _ in }
             }
         }
     }
@@ -688,10 +678,8 @@ extension ConferenceViewController: VTUXActionBarViewControllerDelegate {
         }
         
         // Leave conference (monkey patch to play sound on the same audio route).
-        if let participant = VoxeetSDK.shared.session.participant {
-            NotificationCenter.default.removeObserver(self, name: .VTCallKitMuteToggled, object: nil)
-            VoxeetSDK.shared.conference.mute(participant: participant, isMuted: true)
-        }
+        NotificationCenter.default.removeObserver(self, name: .VTCallKitMuteToggled, object: nil)
+        VoxeetSDK.shared.conference.mute(true)
         VoxeetSDK.shared.conference.stopVideo()
         let leaveTimeout = hangUpSound?.duration ?? 0
         DispatchQueue.main.asyncAfter(deadline: .now() + (leaveTimeout < 1 ? leaveTimeout : 1)) {

@@ -9,9 +9,22 @@
 import VoxeetSDK
 
 extension ConferenceViewController: VTConferenceDelegate {
-    func participantAdded(participant: VTParticipant) {}
-    func participantUpdated(participant: VTParticipant) {}
     func statusUpdated(status: VTConferenceStatus) {}
+    
+    func participantAdded(participant: VTParticipant) {
+        let conferenceConfig = VoxeetUXKit.shared.conferenceController?.configuration
+        let participantsConfig = conferenceConfig?.participants
+        let displayLeftParticipants = participantsConfig?.displayLeftParticipants ?? false
+        
+        let isSessionParticipant = participant.id == VoxeetSDK.shared.session.participant?.id
+        
+        // Show invited and left participants.
+        if (participant.status == .reserved || displayLeftParticipants) && !isSessionParticipant {
+            participantsVC.append(participant: participant)
+        }
+    }
+    
+    func participantUpdated(participant: VTParticipant) {}
     
     func streamAdded(participant: VTParticipant, stream: MediaStream) {
         // Monkey patch: Wait WebRTC media to be started (avoids sound button to blink).
@@ -126,9 +139,13 @@ extension ConferenceViewController: VTConferenceDelegate {
     }
     
     private func screenShareStreamUpdated(participant: VTParticipant, stream: MediaStream) {
-        if participant.id == VoxeetSDK.shared.session.participant?.id { return }
-        
-        if !stream.videoTracks.isEmpty {
+        if participant.id == VoxeetSDK.shared.session.participant?.id {
+            // Enable screen share button when broadcast mode is enabled.
+            let broadcast = VoxeetSDK.shared.appGroup != nil
+            if broadcast {
+                actionBarVC.screenShareButton(state: .on)
+            }
+        } else if !stream.videoTracks.isEmpty {
             // Stop active speaker and lock current participant.
             startPresentation(participant: participant)
             
@@ -142,15 +159,21 @@ extension ConferenceViewController: VTConferenceDelegate {
     }
     
     private func screenShareStreamRemoved(participant: VTParticipant, stream: MediaStream) {
-        if participant.id == VoxeetSDK.shared.session.participant?.id { return }
-        
-        // Unattach screen share stream.
-        speakerVideoVC.unattach()
-        speakerVideoVC.contentFill(speakerVideoContentFill, animated: false)
-        speakerVideoVC.view.isHidden = true
-        
-        // Reset active speaker and unlock previous participant.
-        stopPresentation()
+        if participant.id == VoxeetSDK.shared.session.participant?.id {
+            // Disable screen share button when broadcast mode is enabled.
+            let broadcast = VoxeetSDK.shared.appGroup != nil
+            if broadcast {
+                actionBarVC.screenShareButton(state: .off)
+            }
+        } else {
+            // Unattach screen share stream.
+            speakerVideoVC.unattach()
+            speakerVideoVC.contentFill(speakerVideoContentFill, animated: false)
+            speakerVideoVC.view.isHidden = true
+            
+            // Reset active speaker and unlock previous participant.
+            stopPresentation()
+        }
     }
     
     private func isOwnVideoRendererHidden(_ isHidden: Bool) {

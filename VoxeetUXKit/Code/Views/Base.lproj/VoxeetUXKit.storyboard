@@ -385,7 +385,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="6zv-oG-ewf">
-                                <rect key="frame" x="69.666666666666686" y="0.0" width="236" height="50"/>
+                                <rect key="frame" x="38.666666666666657" y="0.0" width="298" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3C0-Wb-8Kp">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -395,7 +395,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OaC-bX-LVD">
-                                        <rect key="frame" x="61.999999999999986" y="0.0" width="50" height="50"/>
+                                        <rect key="frame" x="62" y="0.0" width="50" height="50"/>
                                         <state key="normal" image="CameraOff"/>
                                         <connections>
                                             <action selector="cameraAction:" destination="Q3B-h3-n53" eventType="touchUpInside" id="top-8f-Dx6"/>
@@ -408,15 +408,15 @@
                                             <action selector="switchDeviceSpeakerAction:" destination="Q3B-h3-n53" eventType="touchUpInside" id="Taa-xR-Tb1"/>
                                         </connections>
                                     </button>
-                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tPC-GK-JjB">
-                                        <rect key="frame" x="180" y="0.0" width="0.0" height="50"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tPC-GK-JjB">
+                                        <rect key="frame" x="186" y="0.0" width="50" height="50"/>
                                         <state key="normal" image="ScreenShareOff"/>
                                         <connections>
                                             <action selector="screenShareAction:" destination="Q3B-h3-n53" eventType="touchUpInside" id="wYT-Vc-EPw"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yZ3-uY-PO4">
-                                        <rect key="frame" x="186" y="0.0" width="50" height="50"/>
+                                        <rect key="frame" x="248" y="0.0" width="50" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="yZ3-uY-PO4" secondAttribute="height" multiplier="1:1" id="BQp-QU-94p"/>
                                         </constraints>

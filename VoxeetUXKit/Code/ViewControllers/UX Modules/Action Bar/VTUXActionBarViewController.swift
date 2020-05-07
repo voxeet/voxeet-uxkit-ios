@@ -83,9 +83,11 @@ import VoxeetSDK
         leaveButton.isEnabled(enabled, animated: true)
         
         if mode != .standard {
-            muteButton.isHidden = true
-            cameraButton.isHidden = true
-            screenShareButton.isHidden = true
+            UIView.animate(withDuration: 0.25, animations: {
+                self.muteButton.isHidden = true
+                self.cameraButton.isHidden = true
+                self.screenShareButton.isHidden = true
+            })
             
             cameraButton.tag = 0
         }

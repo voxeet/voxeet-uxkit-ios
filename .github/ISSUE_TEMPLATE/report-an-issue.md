@@ -3,7 +3,7 @@ name: Report an issue
 about: Use this template to report an issue to Voxeet.
 title: ''
 labels: bug
-assignees: VTCoco
+assignees: VTCoco, vjard
 
 ---
 
@@ -33,8 +33,8 @@ assignees: VTCoco
   - Subsystem: [e.g. n.a., CyanogenMod, ...]
   - Version:
     - _for each libraries : name -> version_
-    - [e.g. voxeet-ios-sdk 1.2.9]
-    - [e.g. voxeet-ios-conferencekit 1.1.4]
+    - [e.g. voxeet-sdk-ios 1.2.9]
+    - [e.g. voxeet-uxkit-ios 1.1.4]
     - [e.g. kingfisher 5.1.0]
     - [...]
   - Hardware:
