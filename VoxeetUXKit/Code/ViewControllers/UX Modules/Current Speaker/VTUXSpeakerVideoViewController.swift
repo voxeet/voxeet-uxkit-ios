@@ -31,6 +31,10 @@ import VoxeetSDK
         let pinch = UIPinchGestureRecognizer(target: self,
                                              action: #selector(pinchGesture))
         videoRenderer.addGestureRecognizer(pinch)
+        
+        // Speaker configuration.
+        let speakerConfig = VoxeetUXKit.shared.conferenceController?.configuration.speaker
+        videoRenderer.contentFill = speakerConfig?.videoAspect == .fill ? true : false
     }
     
     @objc public func attach(participant: VTParticipant, stream: MediaStream) {

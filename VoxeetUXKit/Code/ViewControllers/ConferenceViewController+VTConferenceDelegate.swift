@@ -14,37 +14,52 @@ extension ConferenceViewController: VTConferenceDelegate {
     func participantAdded(participant: VTParticipant) {
         let conferenceConfig = VoxeetUXKit.shared.conferenceController?.configuration
         let participantsConfig = conferenceConfig?.participants
-        let displayLeftParticipants = participantsConfig?.displayLeftParticipants ?? false
-        
+        let isLeftParticipantsDisplayed = participantsConfig?.displayLeftParticipants ?? false
         let isSessionParticipant = participant.id == VoxeetSDK.shared.session.participant?.id
         
-        // Show invited and left participants.
-        if (participant.status == .reserved || displayLeftParticipants) && !isSessionParticipant {
+        // Show invited and/or left participants.
+        if (participant.status == .reserved || isLeftParticipantsDisplayed) && !isSessionParticipant {
             participantsVC.append(participant: participant)
         }
     }
     
-    func participantUpdated(participant: VTParticipant) {}
+    func participantUpdated(participant: VTParticipant) {
+        let sessionService = VoxeetSDK.shared.session
+        
+        // Show / Hide own video renderer.
+        let videoTracks = sessionService.participant?.streams.first(where: { $0.type == .Camera })?.videoTracks
+        hideOwnVideoRenderer((videoTracks?.isEmpty ?? true) || activeParticipants().isEmpty)
+        
+        // Update conference state label and active speaker.
+        if activeParticipants().isEmpty {
+            // Update conference state label.
+            if conferenceStateLabel.text == nil {
+                conferenceStateLabel.text = VTUXLocalized.string("VTUX_CONFERENCE_STATE_CALLING")
+            }
+            conferenceStateLabel.isHidden = false
+            
+            // End active speaker timer.
+            activeSpeaker.end()
+        } else {
+            // Hide conference state when a participant joins the conference.
+            conferenceStateLabel.text = nil
+            conferenceStateLabel.isHidden = true
+            
+            // Reset active speaker.
+            activeSpeaker.begin()
+            activeSpeaker.refresh()
+            
+            // Stop outgoing sound when a participant enters in conference.
+            if participant.id != sessionService.participant?.id {
+                outgoingSound?.stop()
+            }
+        }
+    }
     
     func streamAdded(participant: VTParticipant, stream: MediaStream) {
         // Monkey patch: Wait WebRTC media to be started (avoids sound button to blink).
         if conferenceStartTimer == nil {
             conferenceStartTimer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(conferenceStarted), userInfo: nil, repeats: false)
-        }
-        
-        if participant.id != VoxeetSDK.shared.session.participant?.id {
-            // Begin active speaker timer.
-            activeSpeaker.begin()
-            
-            // Hide conference state when a participant joins the conference.
-            conferenceStateLabel.isHidden = true
-            conferenceStateLabel.text = nil
-            
-            // Stop outgoing sound when a participant enters in conference.
-            outgoingSound?.stop()
-            
-            // Update participant's audio position to listen each people clearly in a 3D environment.
-            updateParticipantPosition()
         }
         
         streamUpdated(participant: participant, stream: stream)
@@ -74,40 +89,29 @@ extension ConferenceViewController: VTConferenceDelegate {
         let sessionService = VoxeetSDK.shared.session
         
         if participant.id == sessionService.participant?.id {
-            // Attach own stream to the own video renderer.
+            // Attach stream to the own video renderer.
             if !stream.videoTracks.isEmpty {
                 ownVideoRenderer.attach(participant: participant, stream: stream)
+                
                 // Enable camera button (in case of `join` method with `video` true).
                 actionBarVC.cameraButton(state: .on)
             }
+            
+            // Show / Hide own video renderer.
+            hideOwnVideoRenderer(stream.videoTracks.isEmpty || activeParticipants().isEmpty)
         } else {
             // Append / Refresh participants' collection view.
             participantsVC.append(participant: participant)
-            
-            // Refresh active speaker.
-            activeSpeaker.refresh()
         }
         
-        // Show / Hide own video renderer or refresh active speaker.
-        if let participant = sessionService.participant {
-            if !(participant.streams.first(where: { $0.type == .Camera })?.videoTracks.isEmpty ?? true) {
-                if !activeParticipants().isEmpty {
-                    isOwnVideoRendererHidden(false)
-                } else {
-                    activeSpeaker.refresh()
-                }
-            } else {
-                if !activeParticipants().isEmpty {
-                    isOwnVideoRendererHidden(true)
-                } else {
-                    activeSpeaker.refresh()
-                }
-            }
-        }
+        // Refresh active speaker.
+        activeSpeaker.refresh()
     }
     
     private func cameraStreamRemoved(participant: VTParticipant, stream: MediaStream) {
-        if participant.id != VoxeetSDK.shared.session.participant?.id {
+        let sessionService = VoxeetSDK.shared.session
+        
+        if participant.id != sessionService.participant?.id {
             // Reload collection view to update/remove inactive participants.
             let conferenceConfig = VoxeetUXKit.shared.conferenceController?.configuration
             let participantsConfig = conferenceConfig?.participants
@@ -116,25 +120,6 @@ extension ConferenceViewController: VTConferenceDelegate {
             } else {
                 participantsVC.remove(participant: participant)
             }
-            
-            if activeParticipants().isEmpty {
-                // Show own renderer.
-                isOwnVideoRendererHidden(true)
-                
-                // Update conference state label.
-                if conferenceStateLabel.text == nil {
-                    conferenceStateLabel.text = VTUXLocalized.string("VTUX_CONFERENCE_STATE_CALLING")
-                }
-                conferenceStateLabel.isHidden = false
-                
-                // End active speaker timer.
-                activeSpeaker.end()
-            } else {
-                activeSpeaker.refresh()
-            }
-            
-            // Update participants's audio position to listen each people clearly in a 3D environment.
-            updateParticipantPosition()
         }
     }
     
@@ -146,7 +131,7 @@ extension ConferenceViewController: VTConferenceDelegate {
                 actionBarVC.screenShareButton(state: .on)
             }
         } else if !stream.videoTracks.isEmpty {
-            // Stop active speaker and lock current participant.
+            // Stop active speaker and lock the current participant.
             startPresentation(participant: participant)
             
             // Attach screen share stream.
@@ -176,20 +161,10 @@ extension ConferenceViewController: VTConferenceDelegate {
         }
     }
     
-    private func isOwnVideoRendererHidden(_ isHidden: Bool) {
+    private func hideOwnVideoRenderer(_ isHidden: Bool) {
         UIView.animate(withDuration: 0.125, animations: {
             self.ownVideoRenderer.alpha = !isHidden && !self.isMinimized ? 1 : 0
             self.flipImage.alpha = self.ownVideoRenderer.alpha
         })
-    }
-    
-    private func updateParticipantPosition() {
-        let participants = activeParticipants()
-        let sliceAngle = Double.pi / Double(participants.count)
-        
-        for (index, participant) in participants.enumerated() {
-            let angle = ((Double.pi / 2) - (Double.pi - (sliceAngle * Double(index) + sliceAngle / 2))) / (Double.pi / 2)
-            VoxeetSDK.shared.conference.position(participant: participant, angle: angle, distance: 0.2)
-        }
     }
 }

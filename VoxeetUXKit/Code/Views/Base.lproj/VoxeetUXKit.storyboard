@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vX9-VW-Q3b">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vX9-VW-Q3b">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -101,7 +101,7 @@
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
-                                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.50382598458904104" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </stackView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -170,6 +170,7 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="rGe-A8-VGO"/>
                         <color key="backgroundColor" red="0.19215686274509802" green="0.24705882352941178" blue="0.28235294117647058" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="W21-R7-Fb1" firstAttribute="leading" secondItem="0gX-6N-twr" secondAttribute="leading" id="Bwq-lG-lYY"/>
@@ -181,7 +182,6 @@
                             <constraint firstAttribute="bottom" secondItem="W21-R7-Fb1" secondAttribute="bottom" id="kAS-Aw-gtX"/>
                             <constraint firstItem="GRz-PV-7pZ" firstAttribute="top" secondItem="rGe-A8-VGO" secondAttribute="top" constant="2" id="tPw-Gm-mQW"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="rGe-A8-VGO"/>
                     </view>
                     <connections>
                         <outlet property="conferenceStateLabel" destination="zwJ-PR-ChP" id="jGt-qG-vvk"/>
@@ -277,6 +277,7 @@
                                 </connections>
                             </collectionView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="edd-Lw-iUo"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="rYz-xu-hjl" firstAttribute="top" secondItem="ebQ-04-RVo" secondAttribute="top" id="YDd-VI-bbj"/>
@@ -284,7 +285,6 @@
                             <constraint firstAttribute="bottom" secondItem="rYz-xu-hjl" secondAttribute="bottom" id="lKf-sR-Yt4"/>
                             <constraint firstAttribute="trailing" secondItem="rYz-xu-hjl" secondAttribute="trailing" id="qzw-1p-W0K"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="edd-Lw-iUo"/>
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="rYz-xu-hjl" id="g7y-FP-jYR"/>
@@ -325,6 +325,7 @@
                                 </subviews>
                             </stackView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="aql-P2-eGj"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="YfC-Tf-i4P" firstAttribute="top" relation="greaterThanOrEqual" secondItem="G1w-wr-so6" secondAttribute="top" id="GFC-vc-dH4"/>
@@ -332,7 +333,6 @@
                             <constraint firstItem="YfC-Tf-i4P" firstAttribute="centerY" secondItem="G1w-wr-so6" secondAttribute="centerY" id="Ucf-gc-Nvd"/>
                             <constraint firstItem="YfC-Tf-i4P" firstAttribute="centerX" secondItem="G1w-wr-so6" secondAttribute="centerX" id="Z5Z-Et-Zmv"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="aql-P2-eGj"/>
                     </view>
                     <connections>
                         <outlet property="avatar" destination="2iK-9i-XAE" id="6of-nn-Ncs"/>
@@ -359,6 +359,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="uAE-Ns-eDX"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Xs9-bp-sbt" firstAttribute="leading" secondItem="pVH-yW-yZy" secondAttribute="leading" id="1rs-44-5BF"/>
@@ -366,7 +367,6 @@
                             <constraint firstAttribute="bottom" secondItem="Xs9-bp-sbt" secondAttribute="bottom" id="iXz-j6-elq"/>
                             <constraint firstAttribute="trailing" secondItem="Xs9-bp-sbt" secondAttribute="trailing" id="lah-Jc-6Mf"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="uAE-Ns-eDX"/>
                     </view>
                     <connections>
                         <outlet property="videoRenderer" destination="Xs9-bp-sbt" id="Kmh-9O-3Ka"/>
@@ -431,12 +431,12 @@
                                 </constraints>
                             </stackView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="CBM-XT-GGx"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="6zv-oG-ewf" firstAttribute="centerX" secondItem="ij3-dB-RZh" secondAttribute="centerX" id="92h-99-Vhz"/>
                             <constraint firstItem="6zv-oG-ewf" firstAttribute="centerY" secondItem="ij3-dB-RZh" secondAttribute="centerY" id="vTX-Sn-Kmu"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="CBM-XT-GGx"/>
                     </view>
                     <connections>
                         <outlet property="buttonsStackView" destination="6zv-oG-ewf" id="iVi-eq-V8p"/>
@@ -458,8 +458,8 @@
                     <view key="view" contentMode="scaleToFill" id="up9-b3-uFU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="NAh-m9-oGW"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GHy-Ff-DVs" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -491,6 +491,7 @@
                                 </constraints>
                             </scrollView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="qEP-Nq-J7t"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="g9B-JO-0hn" firstAttribute="trailing" secondItem="qEP-Nq-J7t" secondAttribute="trailing" id="1NL-KQ-Uhn"/>
@@ -498,7 +499,6 @@
                             <constraint firstAttribute="bottom" secondItem="g9B-JO-0hn" secondAttribute="bottom" id="YAE-xb-v8b"/>
                             <constraint firstItem="g9B-JO-0hn" firstAttribute="leading" secondItem="qEP-Nq-J7t" secondAttribute="leading" id="qFl-57-Pui"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="qEP-Nq-J7t"/>
                     </view>
                     <connections>
                         <outlet property="fileImageView" destination="naL-xM-P3Y" id="wHe-ZV-QCh"/>

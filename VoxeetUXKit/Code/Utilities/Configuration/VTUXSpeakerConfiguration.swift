@@ -6,11 +6,11 @@
 //  Copyright © 2019 Voxeet. All rights reserved.
 //
 
-import Foundation
-
-@objc public class VTUXSpeakerConfiguration: NSObject {
-    @objc public var speakingColor = UIColor.clear
+@objcMembers public class VTUXSpeakerConfiguration: NSObject {
+    public var speakingColor = UIColor.clear
+    
+    public var videoAspect: VTUXVideoAspect = .fill
     
     @available(iOS, obsoleted: 1, renamed: "speakingColor") // Deprecated: 1.2.7.
-    @objc public var speakingUserColor = UIColor.clear
+    public var speakingUserColor = UIColor.clear
 }

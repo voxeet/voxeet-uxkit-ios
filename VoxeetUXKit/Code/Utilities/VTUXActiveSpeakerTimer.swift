@@ -19,7 +19,7 @@ import VoxeetSDK
     private var selectedParticipant: VTParticipant?
     
     private var activeSpeakerTimer: Timer?
-    private let activeSpeakerDelay: TimeInterval = 1
+    private let activeSpeakerDelay: TimeInterval = 3
     
     @objc public func begin() {
         guard selectedParticipant == nil else { return }
@@ -27,11 +27,11 @@ import VoxeetSDK
         activeSpeakerTimer?.invalidate()
         activeSpeakerTimer = Timer.scheduledTimer(timeInterval: activeSpeakerDelay,
                                                   target: self,
-                                                  selector: #selector(activeSpeakerRefresh),
+                                                  selector: #selector(refreshActiveSpeaker),
                                                   userInfo: nil,
                                                   repeats: true)
-        activeSpeakerTimer?.tolerance = 0.5
-        activeSpeakerTimer?.fire()
+        activeSpeakerTimer?.tolerance = activeSpeakerDelay / 2
+        RunLoop.current.add(activeSpeakerTimer!, forMode: .common)
     }
     
     @objc public func refresh() {
@@ -43,7 +43,7 @@ import VoxeetSDK
         
         // Refresh active speaker.
         speaker = nil
-        activeSpeakerRefresh()
+        refreshActiveSpeaker()
         
         // If the speaker is still nil after refreshing, call the delegate to update UI.
         if speaker == nil {
@@ -72,14 +72,14 @@ import VoxeetSDK
         }
     }
     
-    @objc private func activeSpeakerRefresh() {
+    @objc private func refreshActiveSpeaker() {
         var loudestSpeaker: VTParticipant?
-        var loudestVoiceLevel: Double = 0
+        var loudestVoiceLevel: Float = 0
         
         // Get the loudest speaker.
         let participants = VoxeetSDK.shared.conference.current?.participants
             .filter({ $0.id != VoxeetSDK.shared.session.participant?.id })
-            .filter({ !$0.streams.isEmpty })
+            .filter({ $0.type == .user && $0.status == .connected })
         if let participants = participants, !participants.isEmpty {
             for participant in participants {
                 let audioLevel = VoxeetSDK.shared.conference.audioLevel(participant: participant)

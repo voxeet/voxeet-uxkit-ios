@@ -6,24 +6,24 @@
 //  Copyright © 2019 Voxeet. All rights reserved.
 //
 
-@objc public class VTUXActionBarConfiguration: NSObject {
-    @objc public var displayMute = true
-    @objc public var displayCamera = true
-    @objc public var displaySpeaker = true
-    @objc public var displayScreenShare = false
-    @objc public var displayLeave = true
+@objcMembers public class VTUXActionBarConfiguration: NSObject {
+    public var displayMute = true
+    public var displayCamera = true
+    public var displaySpeaker = true
+    public var displayScreenShare = false
+    public var displayLeave = true
     
-    @objc public var overrideMuteOn: UIImage?
-    @objc public var overrideMuteOff: UIImage?
+    public var overrideMuteOn: UIImage?
+    public var overrideMuteOff: UIImage?
 
-    @objc public var overrideCameraOn: UIImage?
-    @objc public var overrideCameraOff: UIImage?
+    public var overrideCameraOn: UIImage?
+    public var overrideCameraOff: UIImage?
 
-    @objc public var overrideSpeakerOn: UIImage?
-    @objc public var overrideSpeakerOff: UIImage?
+    public var overrideSpeakerOn: UIImage?
+    public var overrideSpeakerOff: UIImage?
     
-    @objc public var overrideScreenShareOn: UIImage?
-    @objc public var overrideScreenShareOff: UIImage?
+    public var overrideScreenShareOn: UIImage?
+    public var overrideScreenShareOff: UIImage?
     
-    @objc public var overrideLeave: UIImage?
+    public var overrideLeave: UIImage?
 }

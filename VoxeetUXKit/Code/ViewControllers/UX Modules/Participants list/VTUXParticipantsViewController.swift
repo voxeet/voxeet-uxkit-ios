@@ -44,6 +44,7 @@ import VoxeetSDK
         
         // Init voice level timer.
         voiceLevelTimer = Timer(timeInterval: voiceLevelTimeInterval, target: self, selector: #selector(refreshVoiceLevel), userInfo: nil, repeats: true)
+        voiceLevelTimer?.tolerance = voiceLevelTimeInterval / 2
         RunLoop.current.add(voiceLevelTimer!, forMode: .common)
         
         // Participants list configuration.
@@ -65,8 +66,9 @@ import VoxeetSDK
         if activeParticipants.filter({ $0.id == participant.id }).isEmpty && inactiveParticipants.filter({ $0.id == participant.id }).isEmpty {
             let index: Int
             let section: Int
+            let previousCount = activeParticipants.count
             
-            if !participant.streams.isEmpty {
+            if participant.type == .user && !participant.streams.isEmpty {
                 activeParticipants.append(participant)
                 section = 0
             } else {
@@ -78,6 +80,13 @@ import VoxeetSDK
             let indexPath = IndexPath(row: index, section: section)
             collectionView.insertItems(at: [indexPath])
             collectionView.flashScrollIndicators()
+            
+            // Reset one-one call optimization.
+            if previousCount == 1 && previousCount < activeParticipants.count {
+                // Reload the first participant in order to properly attach the video stream.
+                let indexPath = IndexPath(row: 0, section: 0)
+                collectionView.reloadItems(at: [indexPath])
+            }
         } else {
             update(participant: participant)
         }
@@ -92,7 +101,7 @@ import VoxeetSDK
                 let indexPath = IndexPath(row: index, section: 0)
                 if let cell = collectionView.cellForItem(at: indexPath) as? VTUXParticipantCollectionViewCell {
                     if let stream = participant.streams.first(where: { $0.type == .Camera }), !stream.videoTracks.isEmpty {
-                        if collectionView.alpha != 0 {
+                        if collectionView.alpha != 0 { /* One-one call optimization */
                             cell.avatar.isHidden = true
                             cell.videoRenderer.isHidden = false
                             
@@ -180,10 +189,10 @@ import VoxeetSDK
                     var isParticipantTalking = false
                     
                     if !participant.streams.isEmpty {
-                        let audioLevel = VoxeetSDK.shared.conference.audioLevel(participant: participant)
+                        let isSpeaking = VoxeetSDK.shared.conference.isSpeaking(participant: participant)
                         
                         // Update avatar border width.
-                        if audioLevel >= 0.05 || participant.id == self.selectedParticipant?.id {
+                        if isSpeaking || participant.id == self.selectedParticipant?.id {
                             if cell.avatar.layer.borderWidth == 0 {
                                 cell.avatar.layer.borderWidth = cell.avatar.frame.width * (4/100) /* 4% */
                                 cell.videoRenderer.layer.borderWidth = cell.avatar.layer.borderWidth
@@ -192,9 +201,9 @@ import VoxeetSDK
                         }
                         
                         // Update name alpha.
-                        if audioLevel >= 0.05 && cell.name.alpha != 1 {
+                        if isSpeaking && cell.name.alpha != 1 {
                             cell.name.alpha = 1
-                        } else if audioLevel < 0.05 && cell.name.alpha == 1 {
+                        } else if !isSpeaking && cell.name.alpha == 1 {
                             cell.name.alpha = self.inactiveAlpha
                         }
                     }
@@ -233,7 +242,7 @@ extension VTUXParticipantsViewController: UICollectionViewDataSource {
     @objc public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let participants = activeParticipants + inactiveParticipants
         
-        // Hide collection view if there is just one participant live.
+        // Hide collection view if there is just one participant live (one-one call).
         var collectionViewAlpha: CGFloat = 1
         if let participant = participants.first, !participant.streams.isEmpty && participants.count == 1 {
             let mediaStream = participant.streams.first(where: { $0.type == .Camera })

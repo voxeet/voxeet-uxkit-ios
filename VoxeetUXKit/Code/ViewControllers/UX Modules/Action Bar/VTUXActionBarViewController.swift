@@ -35,13 +35,13 @@ import VoxeetSDK
         super.viewDidLoad()
         
         // Action bar configuration.
-        if let actionBarConfiguration = VoxeetUXKit.shared.conferenceController?.configuration.actionBar {
-            muteButton.isHidden = !actionBarConfiguration.displayMute
-            cameraButton.isHidden = !actionBarConfiguration.displayCamera
-            speakerButton.isHidden = !actionBarConfiguration.displaySpeaker
-            screenShareButton.isHidden = !actionBarConfiguration.displayScreenShare
-            leaveButton.isHidden = !actionBarConfiguration.displayLeave
-            leaveButton.setImage(actionBarConfiguration.overrideLeave ?? UIImage(named: "Leave", in: Bundle(for: type(of: self)), compatibleWith: nil), for: .normal)
+        if let actionBarConfig = VoxeetUXKit.shared.conferenceController?.configuration.actionBar {
+            muteButton.isHidden = !actionBarConfig.displayMute
+            cameraButton.isHidden = !actionBarConfig.displayCamera
+            speakerButton.isHidden = !actionBarConfig.displaySpeaker
+            screenShareButton.isHidden = !actionBarConfig.displayScreenShare
+            leaveButton.isHidden = !actionBarConfig.displayLeave
+            leaveButton.setImage(actionBarConfig.overrideLeave ?? UIImage(named: "Leave", in: Bundle(for: type(of: self)), compatibleWith: nil), for: .normal)
         }
         muteButton(state: .off)
         cameraButton(state: .off)
@@ -95,8 +95,8 @@ import VoxeetSDK
     
     public func muteButton(state: ButtonState) {
         var customImage: UIImage?
-        if let actionBarConfiguration = VoxeetUXKit.shared.conferenceController?.configuration.actionBar {
-            customImage = state == .off ? actionBarConfiguration.overrideMuteOff : actionBarConfiguration.overrideMuteOn
+        if let actionBarConfig = VoxeetUXKit.shared.conferenceController?.configuration.actionBar {
+            customImage = state == .off ? actionBarConfig.overrideMuteOff : actionBarConfig.overrideMuteOn
         }
         
         toggle(button: muteButton, state: state, defaultImageName: "Mute", customImage: customImage)
@@ -104,8 +104,8 @@ import VoxeetSDK
     
     public func cameraButton(state: ButtonState) {
         var customImage: UIImage?
-        if let actionBarConfiguration = VoxeetUXKit.shared.conferenceController?.configuration.actionBar {
-            customImage = state == .off ? actionBarConfiguration.overrideCameraOff : actionBarConfiguration.overrideCameraOn
+        if let actionBarConfig = VoxeetUXKit.shared.conferenceController?.configuration.actionBar {
+            customImage = state == .off ? actionBarConfig.overrideCameraOff : actionBarConfig.overrideCameraOn
         }
         
         toggle(button: cameraButton, state: state, defaultImageName: "Camera", customImage: customImage)
@@ -113,8 +113,8 @@ import VoxeetSDK
     
     public func speakerButton(state: ButtonState) {
         var customImage: UIImage?
-        if let actionBarConfiguration = VoxeetUXKit.shared.conferenceController?.configuration.actionBar {
-            customImage = state == .off ? actionBarConfiguration.overrideSpeakerOff : actionBarConfiguration.overrideSpeakerOn
+        if let actionBarConfig = VoxeetUXKit.shared.conferenceController?.configuration.actionBar {
+            customImage = state == .off ? actionBarConfig.overrideSpeakerOff : actionBarConfig.overrideSpeakerOn
         }
         
         toggle(button: speakerButton, state: state, defaultImageName: "Speaker", customImage: customImage)
@@ -122,8 +122,8 @@ import VoxeetSDK
     
     public func screenShareButton(state: ButtonState) {
         var customImage: UIImage?
-        if let actionBarConfiguration = VoxeetUXKit.shared.conferenceController?.configuration.actionBar {
-            customImage = state == .off ? actionBarConfiguration.overrideScreenShareOff : actionBarConfiguration.overrideScreenShareOn
+        if let actionBarConfig = VoxeetUXKit.shared.conferenceController?.configuration.actionBar {
+            customImage = state == .off ? actionBarConfig.overrideScreenShareOff : actionBarConfig.overrideScreenShareOn
         }
         
         toggle(button: screenShareButton, state: state, defaultImageName: "ScreenShare", customImage: customImage)

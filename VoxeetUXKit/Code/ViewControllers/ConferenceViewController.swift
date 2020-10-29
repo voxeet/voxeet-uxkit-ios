@@ -165,6 +165,8 @@ class ConferenceViewController: OverlayViewController {
     }
     
     private func initUI() {
+        let overlayConfig = VoxeetUXKit.shared.conferenceController?.configuration.overlay
+        
         // Hide by default minimized elements.
         alphaTransitionUI(minimized: false)
         
@@ -179,14 +181,16 @@ class ConferenceViewController: OverlayViewController {
             UIDevice.current.isProximityMonitoringEnabled = true
         }
         
-        // Conference timer's shadow.
+        // Conference timer background color.
+        let backgroundMinimizedColor = overlayConfig?.backgroundMinimizedColor ?? .black
+        conferenceTimerContainerView.backgroundColor = backgroundMinimizedColor.withAlphaComponent(0.5)
+        // Shadow of conference timer.
         conferenceTimerLabel.layer.shadowOpacity = 0.1
         conferenceTimerLabel.layer.shadowRadius = 3
         conferenceTimerLabel.layer.shadowOffset = CGSize(width: -2, height: 0)
         conferenceTimerLabel.layer.shadowPath = UIBezierPath(rect: conferenceTimerLabel.bounds).cgPath
         
         // Minimize button.
-        let overlayConfig = VoxeetUXKit.shared.conferenceController?.configuration.overlay
         if overlayConfig?.displayAction ?? false {
             // Init participants collection view edge insets.
             participantsVC.edgeInsets = UIEdgeInsets(top: 0, left: minimizeButton.frame.width, bottom: 0, right: 0)
@@ -256,7 +260,7 @@ class ConferenceViewController: OverlayViewController {
     func activeParticipants() -> [VTParticipant] {
         let participants = VoxeetSDK.shared.conference.current?.participants
             .filter({ $0.id != VoxeetSDK.shared.session.participant?.id })
-            .filter({ !$0.streams.isEmpty })
+            .filter({ $0.type == .user && $0.status == .connected })
         return participants ?? [VTParticipant]()
     }
     
@@ -586,8 +590,12 @@ extension ConferenceViewController: VTUXParticipantsViewControllerDelegate {
 extension ConferenceViewController: VTUXActionBarViewControllerDelegate {
     func muteAction() {
         let isMuted = actionBarVC.muteButton.tag == 0
-        VoxeetSDK.shared.conference.mute(isMuted)
         actionBarVC.muteButton(state: isMuted ? .on : .off)
+        VoxeetSDK.shared.conference.mute(isMuted) { error in
+            if error != nil {
+                self.actionBarVC.muteButton(state: .off)
+            }
+        }
     }
     
     func cameraAction() {
@@ -599,11 +607,9 @@ extension ConferenceViewController: VTUXActionBarViewControllerDelegate {
                 self.actionBarVC.cameraButton.isUserInteractionEnabled = false
                 VoxeetSDK.shared.conference.startVideo { error in
                     self.actionBarVC.cameraButton.isUserInteractionEnabled = true
-                }
-                
-                // Switch to the built in speaker when video starts.
-                if self.actionBarVC.speakerButton.tag == 0 {
-                    self.switchDeviceSpeakerAction()
+                    if error != nil {
+                        self.actionBarVC.cameraButton(state: .off)
+                    }
                 }
             } else {
                 self.actionBarVC.cameraButton(state: .off)
@@ -662,6 +668,9 @@ extension ConferenceViewController: VTUXActionBarViewControllerDelegate {
         conferenceStartTimer?.invalidate()
         NotificationCenter.default.removeObserver(self, name: AVAudioSession.routeChangeNotification, object: nil)
         
+        // Remove mute observer to desactivate muteButton behaviour.
+        NotificationCenter.default.removeObserver(self, name: .VTCallKitMuteToggled, object: nil)
+        
         // Reset conference state to `disconnecting` and update UI.
         conferenceStateLabel.text = nil
         updateConferenceStatus(.leaving)
@@ -671,20 +680,20 @@ extension ConferenceViewController: VTUXActionBarViewControllerDelegate {
             flipImage.alpha = ownVideoRenderer.alpha
         }
         
+        // Reset action bar.
+        actionBarVC.muteButton(state: .off)
+        actionBarVC.cameraButton(state: .off)
+        actionBarVC.speakerButton(state: .off)
+        actionBarVC.screenShareButton(state: .off)
+        
         // If the conference isn't connected yet, retry the hang up action after few milliseconds to stop the conference.
         guard VoxeetSDK.shared.conference.current?.status == .joined else {
             hangUpTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(hangUpRetry), userInfo: nil, repeats: true)
             return
         }
         
-        // Leave conference (monkey patch to play sound on the same audio route).
-        NotificationCenter.default.removeObserver(self, name: .VTCallKitMuteToggled, object: nil)
-        VoxeetSDK.shared.conference.mute(true)
-        VoxeetSDK.shared.conference.stopVideo()
-        let leaveTimeout = hangUpSound?.duration ?? 0
-        DispatchQueue.main.asyncAfter(deadline: .now() + (leaveTimeout < 1 ? leaveTimeout : 1)) {
-            VoxeetSDK.shared.conference.leave()
-        }
+        // Leave conference.
+        VoxeetSDK.shared.conference.leave()
     }
 }
 
