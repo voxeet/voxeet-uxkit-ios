@@ -29,19 +29,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 }
-
-/*
- *  MARK: - Voxeet VoIP push notifications
- */
-
-extension AppDelegate {
-    /// Useful below iOS 10.
-    func application(_ application: UIApplication, didReceive notification: UILocalNotification) {
-        VoxeetSDK.shared.notification.push.application(application, didReceive: notification)
-    }
-    
-    /// Useful below iOS 10.
-    func application(_ application: UIApplication, handleActionWithIdentifier identifier: String?, for notification: UILocalNotification, completionHandler: @escaping () -> Void) {
-        VoxeetSDK.shared.notification.push.application(application, handleActionWithIdentifier: identifier, for: notification, completionHandler: completionHandler)
-    }
-}
