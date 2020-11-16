@@ -8,17 +8,6 @@
 
 LANGUAGE = "English";
 
-CONFERENCE_NAME_LABEL = "Conference name";
-CONFERENCE_NAME_PLACEHOLDER = "Conference name";
-PARTICIPANTS_LIST_LABEL = "Select a user";
-LOGOUT_BUTTON_TITLE = "Logout";
-START_BUTTON_TITLE = "Join call";
-
-VT_NOTIFICATION_TITLE = "Incoming call from _HANDLE_";
-VT_NOTIFICATION_BODY = "Conference: _CONFERENCE_ALIAS_";
-VT_NOTIFICATION_ANSWER = "Answer";
-VT_NOTIFICATION_DECLINE = "Decline";
-
 VTUX_CONFERENCE_STATE_CALLING = "We're waiting for other callers to arrive.";
 VTUX_CONFERENCE_STATE_ENDED = "Call has ended.";
 VTUX_CONFERENCE_STATE_DECLINED = "Declined call.";

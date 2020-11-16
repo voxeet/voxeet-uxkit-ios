@@ -167,7 +167,7 @@ class OverlayViewController: UIViewController {
                 // Disappear constraints.
                 disappearConstraints(window: window, view: view)
                 
-                view.tag = 1 /* Tag locks hide animation. */
+                view.tag = 1 /* Tag locks hide animation */
                 CATransaction.begin()
                 CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(controlPoints: 0.43, 0.91, 0.12, 0.95))
                 UIView.animate(withDuration: 0.5, animations: {

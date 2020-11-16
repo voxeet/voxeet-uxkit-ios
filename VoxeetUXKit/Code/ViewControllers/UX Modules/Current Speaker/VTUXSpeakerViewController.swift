@@ -61,7 +61,7 @@ import SDWebImage
                 let isSpeaking = VoxeetSDK.shared.conference.isSpeaking(participant: speaker)
                 
                 if isSpeaking && self.name.alpha != 1 {
-                    self.avatar.layer.borderWidth = self.avatar.frame.width * (3/100) /* 3% */
+                    self.avatar.layer.borderWidth = self.avatar.frame.width * (3/100) /* Instead of using 4% like VTUXParticipantsViewController cells, 3% looks better in this case */
                     self.name.alpha = 1
                 } else if !isSpeaking && self.name.alpha == 1 {
                     self.avatar.layer.borderWidth = 0

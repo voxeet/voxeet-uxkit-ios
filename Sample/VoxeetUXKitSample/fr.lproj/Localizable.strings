@@ -8,17 +8,6 @@
 
 LANGUAGE = "Français";
 
-CONFERENCE_NAME_LABEL = "Nom de la conférence";
-CONFERENCE_NAME_PLACEHOLDER = "Nom de la conférence";
-PARTICIPANTS_LIST_LABEL = "Sélection";
-LOGOUT_BUTTON_TITLE = "Déconnexion";
-START_BUTTON_TITLE = "Rejoindre la conférence";
-
-VT_NOTIFICATION_TITLE = "Appel entrant de _HANDLE_";
-VT_NOTIFICATION_BODY = "Conférence : _CONFERENCE_ALIAS_";
-VT_NOTIFICATION_ANSWER = "Répondre";
-VT_NOTIFICATION_DECLINE = "Décliner";
-
 VTUX_CONFERENCE_STATE_CALLING = "Nous attendons d'autres participants.";
 VTUX_CONFERENCE_STATE_ENDED = "L'appel est terminé.";
 VTUX_CONFERENCE_STATE_DECLINED = "Appel refusé.";

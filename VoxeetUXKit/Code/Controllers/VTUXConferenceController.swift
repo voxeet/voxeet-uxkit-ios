@@ -11,6 +11,9 @@ import VoxeetSDK
 @objc public class VTUXConferenceController: NSObject {
     private var viewController: ConferenceViewController?
     
+    private var currentStatus: VTConferenceStatus?
+    private var previousStatus: VTConferenceStatus?
+    
     /// Conference configuration.
     @objc public var configuration = VTUXConferenceControllerConfiguration()
     
@@ -33,8 +36,6 @@ import VoxeetSDK
         
         // Voxeet's socket notifications.
         NotificationCenter.default.addObserver(self, selector: #selector(ownParticipantSwitched), name: .VTOwnParticipantSwitched, object: nil)
-        // CallKit notifications.
-        NotificationCenter.default.addObserver(self, selector: #selector(callKitSwapped), name: .VTCallKitSwapped, object: nil)
         // Conference status notifications.
         NotificationCenter.default.addObserver(self, selector: #selector(conferenceStatusUpdated), name: .VTConferenceStatusUpdated, object: nil)
     }
@@ -76,21 +77,6 @@ extension VTUXConferenceController {
 }
 
 /*
- *  MARK: - Notifications: CallKit
- */
-
-extension VTUXConferenceController {
-    @objc private func callKitSwapped(notification: NSNotification) {
-        // Remove current conference view from UI before reinitializing it with new conference's participants.
-        DispatchQueue.main.async {
-            self.viewController?.hide(animated: false) {
-                self.viewController?.show(animated: true)
-            }
-        }
-    }
-}
-
-/*
  *  MARK: - Notifications: conference status
  */
 
@@ -99,9 +85,19 @@ extension VTUXConferenceController {
         guard let status = notification.userInfo?["status"] as? VTConferenceStatus else {
             return
         }
+        // Save current conference status.
+        currentStatus = status
         
         switch status {
         case .creating, .joining:
+            // Properly remove the viewController from superview when joining if the previous conference status wasn't the one expected (`created`).
+            if status == .joining && previousStatus != .created {
+                // Remove conference view from superview.
+                self.viewController?.view.removeFromSuperview()
+                self.viewController = nil
+            }
+            
+            // Create and show conference view.
             if viewController == nil {
                 // Create conference UI and adds it to the window.
                 let storyboard = UIStoryboard(name: "VoxeetUXKit", bundle: Bundle(for: type(of: self)))
@@ -126,14 +122,20 @@ extension VTUXConferenceController {
         case .left, .destroyed, .error:
             // Hide conference.
             viewController?.hide {
-                // Remove conference view from superview.
-                self.viewController?.view.removeFromSuperview()
-                self.viewController = nil
+                // Only remove the viewController from superview if the initial operation was intended for (during the hidding animation, another conference could be joined and we shouldn't call the code below in that case).
+                if self.currentStatus == .left || self.currentStatus == .destroyed || self.currentStatus == .error {
+                    // Remove conference view from superview.
+                    self.viewController?.view.removeFromSuperview()
+                    self.viewController = nil
+                }
             }
         default: break
         }
         
         // Update conference UI.
         viewController?.updateConferenceStatus(status)
+        
+        // Save previous conference status.
+        previousStatus = status
     }
 }
