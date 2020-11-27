@@ -12,28 +12,35 @@ import VoxeetSDK
     func updated(participant: VTParticipant?)
 }
 
-@objc public class VTUXParticipantsViewController: UIViewController {
+@objcMembers public class VTUXParticipantsViewController: UIViewController {
     @IBOutlet private weak var collectionView: UICollectionView!
-    @objc public var edgeInsets = UIEdgeInsets.zero {
+    public var edgeInsets = UIEdgeInsets.zero {
         didSet {
             collectionView.scrollIndicatorInsets = edgeInsets
         }
     }
     private var previousInterfaceOrientation: UIInterfaceOrientation!
     
-    @objc public var speakingColor: UIColor!
-    @objc public var selectedColor: UIColor!
+    public var speakingColor: UIColor!
+    public var selectedColor: UIColor!
     private let inactiveAlpha: CGFloat = 0.6
     
-    @objc public weak var delegate: VTUXParticipantsViewControllerDelegate?
+    public weak var delegate: VTUXParticipantsViewControllerDelegate?
     
     private var activeParticipants = [VTParticipant]()
-    private var inactiveParticipants = [VTParticipant]()
+    private var listenerParticipants = [VTParticipant]()
+    private var leftParticipants = [VTParticipant]()
     private var selectedParticipant: VTParticipant?
     private var lockedParticipant: VTParticipant?
     
     private let voiceLevelTimeInterval: TimeInterval = 0.1
     private var voiceLevelTimer: Timer?
+    
+    private enum ParticipantSection: Int {
+        case active
+        case listener
+        case left
+    }
     
     @objc override public func viewDidLoad() {
         super.viewDidLoad()
@@ -62,29 +69,32 @@ import VoxeetSDK
         voiceLevelTimer?.invalidate()
     }
     
-    @objc public func append(participant: VTParticipant) {
-        if activeParticipants.filter({ $0.id == participant.id }).isEmpty && inactiveParticipants.filter({ $0.id == participant.id }).isEmpty {
+    public func append(participant: VTParticipant) {
+        if activeParticipants.filter({ $0.id == participant.id }).isEmpty && listenerParticipants.filter({ $0.id == participant.id }).isEmpty && leftParticipants.filter({ $0.id == participant.id }).isEmpty {
             let index: Int
-            let section: Int
+            let section: ParticipantSection
             let previousCount = activeParticipants.count
             
-            if participant.type == .user && !participant.streams.isEmpty {
+            if participant.type == .user && participant.status == .connected {
                 activeParticipants.append(participant)
-                section = 0
+                section = .active
+            } else if participant.type == .listener && participant.status == .connected {
+                listenerParticipants.append(participant)
+                section = .listener
             } else {
-                inactiveParticipants.append(participant)
-                section = 1
+                leftParticipants.append(participant)
+                section = .left
             }
             
-            index = collectionView.numberOfItems(inSection: section)
-            let indexPath = IndexPath(row: index, section: section)
+            index = collectionView.numberOfItems(inSection: section.rawValue)
+            let indexPath = IndexPath(row: index, section: section.rawValue)
             collectionView.insertItems(at: [indexPath])
             collectionView.flashScrollIndicators()
             
             // Reset one-one call optimization.
             if previousCount == 1 && previousCount < activeParticipants.count {
                 // Reload the first participant in order to properly attach the video stream.
-                let indexPath = IndexPath(row: 0, section: 0)
+                let indexPath = IndexPath(row: 0, section: ParticipantSection.active.rawValue)
                 collectionView.reloadItems(at: [indexPath])
             }
         } else {
@@ -92,83 +102,99 @@ import VoxeetSDK
         }
     }
     
-    @objc public func update(participant: VTParticipant) {
-        if let index = activeParticipants.firstIndex(where: { $0.id == participant.id }) {
-            if !participant.streams.isEmpty { /* Reload participant */
-                activeParticipants[index] = participant
-                
-                // Update / Hide video renderer.
-                let indexPath = IndexPath(row: index, section: 0)
-                if let cell = collectionView.cellForItem(at: indexPath) as? VTUXParticipantCollectionViewCell {
-                    if let stream = participant.streams.first(where: { $0.type == .Camera }), !stream.videoTracks.isEmpty {
-                        if collectionView.alpha != 0 { /* One-one call optimization */
-                            cell.avatar.isHidden = true
-                            cell.videoRenderer.isHidden = false
-                            
-                            cell.videoRenderer.attach(participant: participant, stream: stream)
-                        }
-                    } else {
-                        cell.avatar.isHidden = false
-                        cell.videoRenderer.isHidden = true
-                        
-                        cell.videoRenderer.unattach()
-                    }
-                }
-            } else { /* Switch participant from active to inactive list */
-                activeParticipants.remove(at: index)
-                collectionView.deleteItems(at: [IndexPath(row: index, section: 0)])
-                
-                inactiveParticipants.insert(participant, at: 0)
-                collectionView.insertItems(at: [IndexPath(row: 0, section: 1)])
-            }
-        } else if let index = inactiveParticipants.firstIndex(where: { $0.id == participant.id }) {
-            if !participant.streams.isEmpty { /* Switch participant from inactive to active list */
-                inactiveParticipants.remove(at: index)
-                collectionView.deleteItems(at: [IndexPath(row: index, section: 1)])
-                
-                activeParticipants.append(participant)
-                collectionView.insertItems(at: [IndexPath(row: activeParticipants.count - 1, section: 0)])
-            } else { /* Reload participant */
-                inactiveParticipants[index] = participant
-                
-                let indexPath = IndexPath(row: index, section: 1)
-                collectionView.reloadItems(at: [indexPath])
-            }
-        }
-        
-        if participant.id == selectedParticipant?.id, participant.streams.isEmpty {
+    public func update(participant: VTParticipant) {
+        // Reset selected participant.
+        if participant.id == selectedParticipant?.id, participant.status != .connected {
             selectedParticipant = nil
             delegate?.updated(participant: nil)
         }
+        
+        if let index = activeParticipants.firstIndex(where: { $0.id == participant.id }) { /* Active participant update */
+            if participant.type == .user && participant.status == .connected { /* Reload active participant */
+                activeParticipants[index] = participant
+                
+                reloadCell(participant: participant)
+            } else { /* Switch participant from active to left list */
+                switchParticipant(participant, fromSection: .active, toSection: .left, fromIndex: index, toIndex: 0)
+            }
+        } else if let index = listenerParticipants.firstIndex(where: { $0.id == participant.id }) { /* Listener participant update */
+            if participant.status == .left { /* Switch participant from listener to left list */
+                switchParticipant(participant, fromSection: .listener, toSection: .left, fromIndex: index, toIndex: 0)
+            } else { /* Reload listener participant */
+                listenerParticipants[index] = participant
+                
+                let indexPath = IndexPath(row: index, section: ParticipantSection.listener.rawValue)
+                collectionView.reloadItems(at: [indexPath])
+            }
+        } else if let index = leftParticipants.firstIndex(where: { $0.id == participant.id }) { /* Left participant update */
+            if participant.type == .user && participant.status == .connected { /* Switch participant from left to active list */
+                switchParticipant(participant, fromSection: .left, toSection: .active, fromIndex: index)
+            } else if participant.type == .listener && participant.status == .connected { /* Switch participant from left to listener list */
+                switchParticipant(participant, fromSection: .left, toSection: .listener, fromIndex: index)
+            } else { /* Reload left participant */
+                leftParticipants[index] = participant
+                
+                let indexPath = IndexPath(row: index, section: ParticipantSection.left.rawValue)
+                collectionView.reloadItems(at: [indexPath])
+            }
+        }
     }
     
-    @objc public func remove(participant: VTParticipant) {
-        if let index = activeParticipants.firstIndex(where: { $0.id == participant.id }) {
-            activeParticipants.remove(at: index)
-            
-            let indexPath = IndexPath(row: index, section: 0)
-            collectionView.deleteItems(at: [indexPath])
-        } else if let index = inactiveParticipants.firstIndex(where: { $0.id == participant.id }) {
-            inactiveParticipants.remove(at: index)
-            
-            let indexPath = IndexPath(row: index, section: 1)
-            collectionView.deleteItems(at: [indexPath])
-        }
-        
+    public func remove(participant: VTParticipant) {
+        // Reset selected participant.
         if participant.id == selectedParticipant?.id {
             selectedParticipant = nil
             delegate?.updated(participant: nil)
         }
+        
+        if let index = activeParticipants.firstIndex(where: { $0.id == participant.id }) {
+            activeParticipants.remove(at: index)
+            
+            let indexPath = IndexPath(row: index, section: ParticipantSection.active.rawValue)
+            collectionView.deleteItems(at: [indexPath])
+        } else if let index = listenerParticipants.firstIndex(where: { $0.id == participant.id }) {
+            listenerParticipants.remove(at: index)
+            
+            let indexPath = IndexPath(row: index, section: ParticipantSection.listener.rawValue)
+            collectionView.deleteItems(at: [indexPath])
+        } else if let index = leftParticipants.firstIndex(where: { $0.id == participant.id }) {
+            leftParticipants.remove(at: index)
+            
+            let indexPath = IndexPath(row: index, section: ParticipantSection.left.rawValue)
+            collectionView.deleteItems(at: [indexPath])
+        }
     }
     
-    @objc public func reload() {
+    public func reload() {
         // Reload collectionView's data asynchronously to avoid an insert item at the same time.
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
     }
     
-    @objc public func lock(participant: VTParticipant?) {
+    public func reloadCell(participant: VTParticipant) {
+        // Update / Hide video renderer.
+        if let index = activeParticipants.firstIndex(where: { $0.id == participant.id }) {
+            let indexPath = IndexPath(row: index, section: ParticipantSection.active.rawValue)
+            if let cell = collectionView.cellForItem(at: indexPath) as? VTUXParticipantCollectionViewCell {
+                if let stream = participant.streams.first(where: { $0.type == .Camera }), !stream.videoTracks.isEmpty {
+                    if collectionView.alpha != 0 { /* One-one call optimization */
+                        cell.avatar.isHidden = true
+                        cell.videoRenderer.isHidden = false
+                        
+                        cell.videoRenderer.attach(participant: participant, stream: stream)
+                    }
+                } else {
+                    cell.avatar.isHidden = false
+                    cell.videoRenderer.isHidden = true
+                    
+                    cell.videoRenderer.unattach()
+                }
+            }
+        }
+    }
+    
+    public func lock(participant: VTParticipant?) {
         lockedParticipant = participant
         selectedParticipant = lockedParticipant
         
@@ -184,7 +210,7 @@ import VoxeetSDK
         DispatchQueue.main.async {
             let indexPaths = self.collectionView.indexPathsForVisibleItems
             for indexPath in indexPaths {
-                if let cell = self.collectionView.cellForItem(at: indexPath) as? VTUXParticipantCollectionViewCell, indexPath.section == 0 {
+                if let cell = self.collectionView.cellForItem(at: indexPath) as? VTUXParticipantCollectionViewCell, indexPath.section == ParticipantSection.active.rawValue {
                     let participant = self.participantForItem(at: indexPath)
                     var isParticipantTalking = false
                     
@@ -218,33 +244,70 @@ import VoxeetSDK
         }
     }
     
+    private func participantForItem(at indexPath: IndexPath) -> VTParticipant {
+        switch ParticipantSection(rawValue: indexPath.section) {
+        case .active: return activeParticipants[indexPath.row]
+        case .listener: return listenerParticipants[indexPath.row]
+        default: return leftParticipants[indexPath.row]
+        }
+    }
+    
+    private func switchParticipant(_ participant: VTParticipant, fromSection: ParticipantSection, toSection: ParticipantSection, fromIndex: Int, toIndex: Int? = nil) {
+        if fromSection == .active {
+            activeParticipants.remove(at: fromIndex)
+        } else if fromSection == .listener {
+            listenerParticipants.remove(at: fromIndex)
+        } else if fromSection == .left {
+            leftParticipants.remove(at: fromIndex)
+        }
+        collectionView.deleteItems(at: [IndexPath(row: fromIndex, section: fromSection.rawValue)])
+        
+        if toSection == .active {
+            if let toIndex = toIndex {
+                activeParticipants.insert(participant, at: toIndex)
+                collectionView.insertItems(at: [IndexPath(row: toIndex, section: toSection.rawValue)])
+            } else {
+                activeParticipants.append(participant)
+                collectionView.insertItems(at: [IndexPath(row: activeParticipants.count - 1, section: toSection.rawValue)])
+            }
+        } else if toSection == .listener {
+            if let toIndex = toIndex {
+                listenerParticipants.insert(participant, at: toIndex)
+                collectionView.insertItems(at: [IndexPath(row: toIndex, section: toSection.rawValue)])
+            } else {
+                listenerParticipants.append(participant)
+                collectionView.insertItems(at: [IndexPath(row: listenerParticipants.count - 1, section: toSection.rawValue)])
+            }
+        } else if toSection == .left {
+            if let toIndex = toIndex {
+                leftParticipants.insert(participant, at: toIndex)
+                collectionView.insertItems(at: [IndexPath(row: toIndex, section: toSection.rawValue)])
+            } else {
+                leftParticipants.append(participant)
+                collectionView.insertItems(at: [IndexPath(row: leftParticipants.count - 1, section: toSection.rawValue)])
+            }
+        }
+    }
+    
     @objc private func deviceOrientationDidChange(notification: Notification) {
         if previousInterfaceOrientation.isPortrait != UIApplication.shared.statusBarOrientation.isPortrait {
             collectionView.reloadData()
         }
         previousInterfaceOrientation = UIApplication.shared.statusBarOrientation
     }
-    
-    private func participantForItem(at indexPath: IndexPath) -> VTParticipant {
-        if indexPath.section == 0 {
-            return activeParticipants[indexPath.row]
-        } else {
-            return inactiveParticipants[indexPath.row]
-        }
-    }
 }
 
 extension VTUXParticipantsViewController: UICollectionViewDataSource {
-    @objc public func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
+    public func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 3
     }
     
-    @objc public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let participants = activeParticipants + inactiveParticipants
+    public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let participants = activeParticipants + listenerParticipants + leftParticipants
         
         // Hide collection view if there is just one participant live (one-one call).
         var collectionViewAlpha: CGFloat = 1
-        if let participant = participants.first, !participant.streams.isEmpty && participants.count == 1 {
+        if let participant = participants.first, participant.type == .user && participant.status == .connected && participants.count == 1 {
             let mediaStream = participant.streams.first(where: { $0.type == .Camera })
             let screenShareMediaStream = participant.streams.first(where: { $0.type == .ScreenShare })
             
@@ -265,10 +328,14 @@ extension VTUXParticipantsViewController: UICollectionViewDataSource {
             }
         }
         
-        return section == 0 ? activeParticipants.count : inactiveParticipants.count
+        switch ParticipantSection(rawValue: section) {
+        case .active: return activeParticipants.count
+        case .listener: return listenerParticipants.count
+        default: return leftParticipants.count
+        }
     }
     
-    @objc public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "VTUXParticipantCollectionViewCell", for: indexPath) as! VTUXParticipantCollectionViewCell
         cell.avatar.alpha = inactiveAlpha
         cell.name.alpha = cell.avatar.alpha
@@ -294,8 +361,8 @@ extension VTUXParticipantsViewController: UICollectionViewDataSource {
         cell.videoRenderer.layer.borderColor = cell.avatar.layer.borderColor
         cell.videoRenderer.layer.borderWidth = cell.avatar.layer.borderWidth
         
-        // Participant is currently in conference.
-        if !participant.streams.isEmpty {
+        // Participant is currently in conference and is active.
+        if indexPath.section == ParticipantSection.active.rawValue {
             cell.avatar.alpha = 1
         }
         
@@ -305,7 +372,7 @@ extension VTUXParticipantsViewController: UICollectionViewDataSource {
 
 extension VTUXParticipantsViewController: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard indexPath.section == 0 else { return }
+        guard indexPath.section == ParticipantSection.active.rawValue else { return }
         guard let cell = cell as? VTUXParticipantCollectionViewCell else { return }
         
         // Unhide video renderer and attach stream.
@@ -319,7 +386,7 @@ extension VTUXParticipantsViewController: UICollectionViewDelegate {
     }
     
     public func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        guard indexPath.section == 0 else { return }
+        guard indexPath.section == ParticipantSection.active.rawValue else { return }
         guard let cell = cell as? VTUXParticipantCollectionViewCell else { return }
         
         // Hide video renderer.
@@ -330,7 +397,7 @@ extension VTUXParticipantsViewController: UICollectionViewDelegate {
         cell.videoRenderer.unattach()
     }
     
-    @objc public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard lockedParticipant == nil else { return }
         
         let participant = participantForItem(at: indexPath)
@@ -339,16 +406,18 @@ extension VTUXParticipantsViewController: UICollectionViewDelegate {
         // Get participants index paths that need to be reloaded.
         var selectedIndexPath: IndexPath?
         if let row = activeParticipants.firstIndex(where: { $0.id == selectedParticipant?.id }) {
-            selectedIndexPath = IndexPath(row: row, section: 0)
-        } else if let row = inactiveParticipants.firstIndex(where: { $0.id == selectedParticipant?.id })  {
-            selectedIndexPath = IndexPath(row: row, section: 1)
+            selectedIndexPath = IndexPath(row: row, section: ParticipantSection.active.rawValue)
+        } else if let row = listenerParticipants.firstIndex(where: { $0.id == selectedParticipant?.id }) {
+            selectedIndexPath = IndexPath(row: row, section: ParticipantSection.listener.rawValue)
+        } else if let row = leftParticipants.firstIndex(where: { $0.id == selectedParticipant?.id }) {
+            selectedIndexPath = IndexPath(row: row, section: ParticipantSection.left.rawValue)
         }
         if let selectedIndexPath = selectedIndexPath, selectedIndexPath != indexPath {
             indexPaths.append(selectedIndexPath)
         }
         
         // Select / Unselect a participant.
-        if !participant.streams.isEmpty && participant.id != selectedParticipant?.id {
+        if indexPath.section == ParticipantSection.active.rawValue && participant.id != selectedParticipant?.id {
             selectedParticipant = participant
         } else {
             selectedParticipant = nil
@@ -363,7 +432,7 @@ extension VTUXParticipantsViewController: UICollectionViewDelegate {
 }
 
 extension VTUXParticipantsViewController: UICollectionViewDelegateFlowLayout {
-    @objc public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
         let window = UIApplication.shared.keyWindow
         let safeArea: UIEdgeInsets
@@ -373,8 +442,8 @@ extension VTUXParticipantsViewController: UICollectionViewDelegateFlowLayout {
             safeArea = .zero
         }
         
-        if section == 0 {
-            let numberOfItems = CGFloat(activeParticipants.count + inactiveParticipants.count)
+        if section == ParticipantSection.active.rawValue {
+            let numberOfItems = CGFloat(activeParticipants.count + listenerParticipants.count + leftParticipants.count)
             let combinedItemWidth = (numberOfItems * flowLayout.itemSize.width) + ((numberOfItems - 1) * flowLayout.minimumLineSpacing)
             
             let paddingLeft = (view.frame.width - combinedItemWidth) / 2 - safeArea.left
@@ -384,7 +453,15 @@ extension VTUXParticipantsViewController: UICollectionViewDelegateFlowLayout {
                 return UIEdgeInsets(top: edgeInsets.top, left: edgeInsets.left, bottom: edgeInsets.bottom, right: 0)
             }
         } else {
-            let paddingLeft: CGFloat = collectionView.numberOfItems(inSection: 0) != 0 ? flowLayout.minimumLineSpacing : 0
+            var paddingLeft: CGFloat = 0
+            let activeSectionCount = collectionView.numberOfItems(inSection: ParticipantSection.active.rawValue)
+            let previousSectionCount = collectionView.numberOfItems(inSection: section - 1)
+            let currentSectionCount = collectionView.numberOfItems(inSection: section)
+            
+            if (activeSectionCount != 0 || previousSectionCount != 0) && currentSectionCount != 0 {
+                paddingLeft = flowLayout.minimumLineSpacing
+            }
+            
             return UIEdgeInsets(top: edgeInsets.top, left: paddingLeft, bottom: edgeInsets.bottom, right: edgeInsets.right)
         }
     }

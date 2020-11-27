@@ -14,17 +14,33 @@ extension ConferenceViewController: VTConferenceDelegate {
     func participantAdded(participant: VTParticipant) {
         let conferenceConfig = VoxeetUXKit.shared.conferenceController?.configuration
         let participantsConfig = conferenceConfig?.participants
+        let isListener = participant.type == .listener && participant.status == .connected
         let isLeftParticipantsDisplayed = participantsConfig?.displayLeftParticipants ?? false
         let isSessionParticipant = participant.id == VoxeetSDK.shared.session.participant?.id
         
-        // Show invited and/or left participants.
-        if (participant.status == .reserved || isLeftParticipantsDisplayed) && !isSessionParticipant {
-            participantsVC.append(participant: participant)
+        // Append invited, listeners or left participant from collection view.
+        if !isSessionParticipant {
+            if participant.status == .reserved || isListener || isLeftParticipantsDisplayed {
+                participantsVC.append(participant: participant)
+            }
         }
     }
     
     func participantUpdated(participant: VTParticipant) {
         let sessionService = VoxeetSDK.shared.session
+        let conferenceConfig = VoxeetUXKit.shared.conferenceController?.configuration
+        let participantsConfig = conferenceConfig?.participants
+        let isLeftParticipantsDisplayed = participantsConfig?.displayLeftParticipants ?? false
+        let isSessionParticipant = participant.id == VoxeetSDK.shared.session.participant?.id
+        
+        // Append / Update / Remove participant from collection view.
+        if !isSessionParticipant {
+            if participant.status == .connected || isLeftParticipantsDisplayed {
+                participantsVC.append(participant: participant) /* Append or update participant */
+            } else {
+                participantsVC.remove(participant: participant)
+            }
+        }
         
         // Show / Hide own video renderer.
         let videoTracks = sessionService.participant?.streams.first(where: { $0.type == .Camera })?.videoTracks
@@ -100,8 +116,8 @@ extension ConferenceViewController: VTConferenceDelegate {
             // Show / Hide own video renderer.
             hideOwnVideoRenderer(stream.videoTracks.isEmpty || activeParticipants().isEmpty)
         } else {
-            // Append / Refresh participants' collection view.
-            participantsVC.append(participant: participant)
+            // Reload participant's cell from collection view.
+            participantsVC.reloadCell(participant: participant)
         }
         
         // Refresh active speaker.
@@ -112,13 +128,11 @@ extension ConferenceViewController: VTConferenceDelegate {
         let sessionService = VoxeetSDK.shared.session
         
         if participant.id != sessionService.participant?.id {
-            // Reload collection view to update/remove inactive participants.
             let conferenceConfig = VoxeetUXKit.shared.conferenceController?.configuration
             let participantsConfig = conferenceConfig?.participants
             if participantsConfig?.displayLeftParticipants ?? false {
-                participantsVC.update(participant: participant)
-            } else {
-                participantsVC.remove(participant: participant)
+                // Reload participant's cell from collection view.
+                participantsVC.reloadCell(participant: participant)
             }
         }
     }

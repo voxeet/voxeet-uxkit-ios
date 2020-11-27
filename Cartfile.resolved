@@ -1,2 +1,2 @@
-binary "https://raw.githubusercontent.com/voxeet/voxeet-sdk-ios/master/VoxeetSDK.json" "3.0.1"
-github "SDWebImage/SDWebImage" "5.9.5"
+binary "https://raw.githubusercontent.com/voxeet/voxeet-sdk-ios/master/VoxeetSDK.json" "3.0.2"
+github "SDWebImage/SDWebImage" "5.10.0"
