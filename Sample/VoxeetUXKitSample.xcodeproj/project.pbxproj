@@ -187,7 +187,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0830;
-				LastUpgradeCheck = 1220;
+				LastUpgradeCheck = 1230;
 				ORGANIZATIONNAME = "Corentin Larroque";
 				TargetAttributes = {
 					CC8B8B021E8E3C0600AEDD3B = {
@@ -441,7 +441,7 @@
 				INFOPLIST_FILE = VoxeetUXKitSample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.2.4;
+				MARKETING_VERSION = 1.2.5;
 				PRODUCT_BUNDLE_IDENTIFIER = io.voxeet;
 				PRODUCT_NAME = "Voxeet (UXKit)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -466,7 +466,7 @@
 				INFOPLIST_FILE = VoxeetUXKitSample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.2.4;
+				MARKETING_VERSION = 1.2.5;
 				PRODUCT_BUNDLE_IDENTIFIER = io.voxeet;
 				PRODUCT_NAME = "Voxeet (UXKit)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

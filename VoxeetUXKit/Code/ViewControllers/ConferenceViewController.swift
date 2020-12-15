@@ -140,13 +140,6 @@ class ConferenceViewController: OverlayViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackgroundNotification), name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        // Check microphone permission.
-        Permissions.microphone(controller: self)
-    }
-    
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
@@ -227,6 +220,11 @@ class ConferenceViewController: OverlayViewController {
             // Enable conference buttons.
             actionBarVC.buttons(enabled: true)
             minimizeButton.isEnabled(true, animated: true)
+            
+            // Check microphone permission.
+            if VoxeetSDK.shared.conference.mode == .standard {
+                Permissions.microphone(controller: self)
+            }
         case .leaving:
             // Stop active speaker.
             activeSpeaker.end()
