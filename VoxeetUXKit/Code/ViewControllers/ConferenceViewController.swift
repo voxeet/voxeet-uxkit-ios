@@ -297,6 +297,10 @@ class ConferenceViewController: OverlayViewController {
     
     override func tapGesture(recognizer: UITapGestureRecognizer) {
         super.tapGesture(recognizer: recognizer)
+        maximize()
+    }
+
+    func maximize() {
         resizeTransitionUI(minimized: false, animated: true)
         
         // Reset container corner radius.

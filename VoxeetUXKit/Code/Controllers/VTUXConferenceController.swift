@@ -30,6 +30,20 @@ import VoxeetSDK
             }
         }
     }
+
+    @objc public func maximize() {
+        viewController?.show()
+        viewController?.maximize()
+        viewController?.maximize(animated: true)
+    }
+
+    @objc public func minimize() {
+        viewController?.view.alpha = 0
+        viewController?.minimize(animated: false)
+        UIView.animate(withDuration: 0.25) {
+            self.viewController?.view.alpha = 1
+        }
+    }
     
     public override init() {
         super.init()
