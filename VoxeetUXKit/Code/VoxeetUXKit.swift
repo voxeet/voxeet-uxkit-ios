@@ -20,7 +20,8 @@ import VoxeetSDK
     @objc public private(set) var conferenceController: VTUXConferenceController?
     
     /// Conference appear animation default starts maximized. If false, the conference will appear minimized.
-    @objc public var appearMaximized = true { /* Will soon be deprecated */
+    @available(*, deprecated, renamed: "conferenceController.appearMaximized")
+    @objc public var appearMaximized = true {
         didSet {
             initialize()
             conferenceController?.appearMaximized = appearMaximized
@@ -28,7 +29,8 @@ import VoxeetSDK
     }
     
     /// If true, the conference will behave like a cellular call. if a participant hangs up or declines a call, the caller will be disconnected.
-    @objc public var telecom = false { /* Will soon be deprecated */
+    @available(*, deprecated, renamed: "conferenceController.telecom")
+    @objc public var telecom = false {
         didSet {
             initialize()
             conferenceController?.telecom = telecom

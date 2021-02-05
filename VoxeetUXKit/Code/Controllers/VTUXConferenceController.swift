@@ -39,6 +39,14 @@ import VoxeetSDK
         // Conference status notifications.
         NotificationCenter.default.addObserver(self, selector: #selector(conferenceStatusUpdated), name: .VTConferenceStatusUpdated, object: nil)
     }
+    
+    @objc public func maximize() {
+        viewController?.maximize()
+    }
+    
+    @objc public func minimize() {
+        viewController?.minimize()
+    }
 }
 
 /*
@@ -103,6 +111,7 @@ extension VTUXConferenceController {
                 let storyboard = UIStoryboard(name: "VoxeetUXKit", bundle: Bundle(for: type(of: self)))
                 viewController = storyboard.instantiateInitialViewController() as? ConferenceViewController
                 if let vc = viewController {
+                    vc.view.accessibilityIdentifier = "ConferenceView"
                     vc.view.translatesAutoresizingMaskIntoConstraints = false
                     guard let window = UIApplication.shared.keyWindow else { return }
                     window.addSubview(vc.view)

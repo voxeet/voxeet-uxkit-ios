@@ -73,6 +73,7 @@ class OverlayViewController: UIViewController {
         CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(controlPoints: 0.43, 0.91, 0.12, 0.95))
         UIView.animate(withDuration: 0.50, animations: {
             window.layoutIfNeeded()
+            window.rootViewController?.setNeedsStatusBarAppearanceUpdate()
         }, completion: nil)
         CATransaction.commit()
         
@@ -100,6 +101,7 @@ class OverlayViewController: UIViewController {
             CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(controlPoints: 0.43, 0.91, 0.12, 0.95))
             UIView.animate(withDuration: 0.25, animations: {
                 window.layoutIfNeeded()
+                window.rootViewController?.setNeedsStatusBarAppearanceUpdate()
                 self.view.backgroundColor = self.backgroundMaximizedColor
             }, completion: { _ in
                 completion?()
@@ -107,6 +109,7 @@ class OverlayViewController: UIViewController {
             CATransaction.commit()
         } else {
             window.layoutIfNeeded()
+            window.rootViewController?.setNeedsStatusBarAppearanceUpdate()
             view.backgroundColor = backgroundMaximizedColor
             completion?()
         }
@@ -133,6 +136,7 @@ class OverlayViewController: UIViewController {
             CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(controlPoints: 0.43, 0.91, 0.12, 0.95))
             UIView.animate(withDuration: 0.25, animations: {
                 window.layoutIfNeeded()
+                window.rootViewController?.setNeedsStatusBarAppearanceUpdate()
                 self.view.backgroundColor = self.backgroundMinimizedColor
             }, completion: { _ in
                 completion?()
@@ -140,6 +144,7 @@ class OverlayViewController: UIViewController {
             CATransaction.commit()
         } else {
             window.layoutIfNeeded()
+            window.rootViewController?.setNeedsStatusBarAppearanceUpdate()
             view.backgroundColor = backgroundMinimizedColor
             completion?()
         }
@@ -156,11 +161,11 @@ class OverlayViewController: UIViewController {
         if animated {
             if view.frame.width == minimizeSize.width {
                 UIView.animate(withDuration: 0.25, animations: {
+                    window.rootViewController?.setNeedsStatusBarAppearanceUpdate()
                     self.view.alpha = 0
                 }, completion: { _ in
                     // Reset constraints.
                     window.removeConstraints(self.constraintsHorizontal + self.constraintsVertical)
-                    
                     completion?()
                 })
             } else {
@@ -172,15 +177,16 @@ class OverlayViewController: UIViewController {
                 CATransaction.setAnimationTimingFunction(CAMediaTimingFunction(controlPoints: 0.43, 0.91, 0.12, 0.95))
                 UIView.animate(withDuration: 0.5, animations: {
                     window.layoutIfNeeded()
+                    window.rootViewController?.setNeedsStatusBarAppearanceUpdate()
                 }, completion: { _ in
                     // Reset constraints.
                     window.removeConstraints(self.constraintsHorizontal + self.constraintsVertical)
-                    
                     completion?()
                 })
                 CATransaction.commit()
             }
         } else {
+            window.rootViewController?.setNeedsStatusBarAppearanceUpdate()
             completion?()
         }
     }

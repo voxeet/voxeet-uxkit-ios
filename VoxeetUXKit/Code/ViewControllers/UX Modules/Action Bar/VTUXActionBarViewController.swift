@@ -83,11 +83,12 @@ import VoxeetSDK
         leaveButton.isEnabled(enabled, animated: true)
         
         if mode != .standard {
-            UIView.animate(withDuration: 0.25, animations: {
-                self.muteButton.isHidden = true
-                self.cameraButton.isHidden = true
-                self.screenShareButton.isHidden = true
-            })
+            muteButton.isHidden = true
+            cameraButton.isHidden = true
+            screenShareButton.isHidden = true
+            UIView.animate(withDuration: 0.25) {
+                self.view.layoutIfNeeded()
+            }
             
             cameraButton.tag = 0
         }
@@ -118,6 +119,26 @@ import VoxeetSDK
         }
         
         toggle(button: speakerButton, state: state, defaultImageName: "Speaker", customImage: customImage)
+    }
+    
+    func speakerButtonHeadphonesState() {
+        if let actionBarConfig = VoxeetUXKit.shared.conferenceController?.configuration.actionBar,
+           actionBarConfig.overrideSpeakerOff == nil && actionBarConfig.overrideSpeakerOn == nil {
+            let image = UIImage(named: "SpeakerOnHeadphones", in: Bundle(for: type(of: self)), compatibleWith: nil)
+            speakerButton.setImage(image, for: .normal)
+        } else {
+            speakerButton(state: .off)
+        }
+    }
+    
+    func speakerButtonBluetoothState() {
+        if let actionBarConfig = VoxeetUXKit.shared.conferenceController?.configuration.actionBar,
+           actionBarConfig.overrideSpeakerOff == nil && actionBarConfig.overrideSpeakerOn == nil {
+            let image = UIImage(named: "SpeakerOnBluetooth", in: Bundle(for: type(of: self)), compatibleWith: nil)
+            speakerButton.setImage(image, for: .normal)
+        } else {
+            speakerButton(state: .off)
+        }
     }
     
     public func screenShareButton(state: ButtonState) {

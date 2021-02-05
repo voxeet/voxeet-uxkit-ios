@@ -223,7 +223,7 @@ class ConferenceViewController: OverlayViewController {
             
             // Check microphone permission.
             if VoxeetSDK.shared.conference.mode == .standard {
-                Permissions.microphone(controller: self)
+                Permissions.microphone(viewController: self)
             }
         case .leaving:
             // Stop active speaker.
@@ -289,20 +289,12 @@ class ConferenceViewController: OverlayViewController {
      *  MARK: Gesture recognizers
      */
     
-    @IBAction func minimizeAction(_ sender: Any) {
-        minimize()
+    override func tapGesture(recognizer: UITapGestureRecognizer) {
+        maximize()
     }
     
-    override func tapGesture(recognizer: UITapGestureRecognizer) {
-        super.tapGesture(recognizer: recognizer)
-        resizeTransitionUI(minimized: false, animated: true)
-        
-        // Reset container corner radius.
-        view.layer.cornerRadius = 0
-        mainContainer.layer.cornerRadius = view.layer.cornerRadius
-        
-        // Reload collection view layout.
-        participantsVC.reload()
+    @IBAction private func minimizeAction(_ sender: Any) {
+        minimize()
     }
     
     @objc private func switchCamera(recognizer: UITapGestureRecognizer) {
@@ -331,8 +323,20 @@ class ConferenceViewController: OverlayViewController {
     }
     
     /*
-     *  MARK: Minimize / Maximize UI updates
+     *  MARK: Maximize / Minimize UI updates
      */
+    
+    func maximize(animated: Bool = true) {
+        super.maximize(animated: animated)
+        resizeTransitionUI(minimized: false, animated: animated)
+        
+        // Reset container corner radius.
+        view.layer.cornerRadius = 0
+        mainContainer.layer.cornerRadius = view.layer.cornerRadius
+        
+        // Reload collection view layout.
+        participantsVC.reload()
+    }
     
     func minimize(animated: Bool = true) {
         super.minimize(animated: animated)
@@ -454,7 +458,6 @@ class ConferenceViewController: OverlayViewController {
             let output = AVAudioSession.sharedInstance().currentRoute.outputs.first
             if output?.portType == .builtInReceiver || output?.portType == .builtInSpeaker {
                 self.actionBarVC.speakerButton.isEnabled(true, animated: true)
-                
                 if output?.portType == .builtInSpeaker {
                     self.actionBarVC.speakerButton(state: .on)
                     UIDevice.current.isProximityMonitoringEnabled = false
@@ -464,7 +467,13 @@ class ConferenceViewController: OverlayViewController {
                 }
             } else {
                 self.actionBarVC.speakerButton.isEnabled(false, animated: true)
-                self.actionBarVC.speakerButton(state: .off)
+                if output?.portType == .headphones {
+                    self.actionBarVC.speakerButtonHeadphonesState()
+                } else if output?.portType == .bluetoothA2DP || output?.portType == .bluetoothLE || output?.portType == .bluetoothHFP {
+                    self.actionBarVC.speakerButtonBluetoothState()
+                } else {
+                    self.actionBarVC.speakerButton(state: .off)
+                }
                 UIDevice.current.isProximityMonitoringEnabled = false
             }
         }
@@ -597,7 +606,7 @@ extension ConferenceViewController: VTUXActionBarViewControllerDelegate {
     }
     
     func cameraAction() {
-        Permissions.camera(controller: self) { granted in
+        Permissions.camera(viewController: self) { granted in
             guard granted else { return }
             
             if self.actionBarVC.cameraButton.tag == 0 {
@@ -679,7 +688,7 @@ extension ConferenceViewController: VTUXActionBarViewControllerDelegate {
         }
         
         // Reset action bar.
-        actionBarVC.muteButton(state: .off)
+        actionBarVC.muteButton(state: .on)
         actionBarVC.cameraButton(state: .off)
         actionBarVC.speakerButton(state: .off)
         actionBarVC.screenShareButton(state: .off)

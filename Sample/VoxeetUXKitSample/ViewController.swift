@@ -9,7 +9,16 @@
 import UIKit
 import VoxeetSDK
 
+/*
+ *  MARK: - ViewController
+ */
+
 class ViewController: UIViewController {
+    
+    /*
+     *  MARK: Properties
+     */
+    
     @IBOutlet weak private var container: UIView!
     @IBOutlet weak private var conferenceNameTextField: UITextField!
     @IBOutlet weak private var usernameTextField: UITextField!
@@ -18,6 +27,21 @@ class ViewController: UIViewController {
     
     private let kConferenceNameNSUserDefaults = "conferenceNameNSUserDefaults"
     private let kUsernameNSUserDefaults = "usernameNSUserDefaults"
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        if let window = UIApplication.shared.keyWindow {
+            for subview in window.subviews {
+                if subview.accessibilityIdentifier == "ConferenceView" && subview.frame.origin == .zero {
+                    return .lightContent
+                }
+            }
+        }
+        return .default
+    }
+    
+    /*
+     *  MARK: Methods
+     */
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,7 +80,11 @@ class ViewController: UIViewController {
         conferenceNameTextField.becomeFirstResponder()
     }
     
-    @IBAction func startConferenceAction(_ sender: Any? = nil) {
+    /*
+     *  MARK: Actions
+     */
+    
+    @IBAction private func startConferenceAction(_ sender: Any? = nil) {
         guard VoxeetSDK.shared.conference.current?.id == nil else { return }
         
         // Get conference alias and username.
@@ -118,7 +146,9 @@ class ViewController: UIViewController {
         })
     }
     
-    @IBAction func textFieldEditingChanged(_ sender: Any) {
+    @IBAction private func textFieldEditingChanged(_ sender: Any) {
+        guard VoxeetSDK.shared.conference.current?.id == nil else { return }
+        
         // Close session.
         VoxeetSDK.shared.session.close()
         
@@ -128,12 +158,16 @@ class ViewController: UIViewController {
         UserDefaults.standard.synchronize()
     }
     
-    @IBAction func demo(_ sender: Any) {
+    @IBAction private func demo(_ sender: Any? = nil) {
         guard VoxeetSDK.shared.conference.current?.id == nil else { return }
         
+        // Launch demo.
         demoButton.isEnabled = false
-        VoxeetSDK.shared.conference.demo() { _ in
+        VoxeetSDK.shared.conference.demo() { error in
             self.demoButton.isEnabled = true
+            if let error = error {
+                self.errorPopUp(error: error)
+            }
         }
     }
     
@@ -142,15 +176,29 @@ class ViewController: UIViewController {
         usernameTextField.resignFirstResponder()
     }
     
-    private func errorPopUp(error: Error) {
+    /*
+     *  MARK: Helpers
+     */
+    
+    private func errorPopUp(error: NSError?) {
         DispatchQueue.main.async {
+            var title = "Error"
+            if let code = error?.code, code > 0 {
+                title = "HTTP \(code)"
+            }
+            let message = error?.localizedDescription ?? "Unknown"
+            
             // Error message.
-            let alert = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
             self.present(alert, animated: true, completion: nil)
         }
     }
 }
+
+/*
+ *  MARK: - UITextFieldDelegate
+ */
 
 extension ViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -163,6 +211,10 @@ extension ViewController: UITextFieldDelegate {
         return true
     }
 }
+
+/*
+ *  MARK: - UIView extension
+ */
 
 extension UIView {
     func applyGradient(colours: [UIColor], startPoint: CGPoint, endPoint: CGPoint, locations: [NSNumber]? = nil) {
