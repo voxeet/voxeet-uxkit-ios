@@ -90,7 +90,8 @@ extension VTUXConferenceController {
 
 extension VTUXConferenceController {
     @objc private func conferenceStatusUpdated(notification: NSNotification) {
-        guard let status = notification.userInfo?["status"] as? VTConferenceStatus else {
+        guard let rawStatus = notification.userInfo?["status"] as? Int,
+              let status = VTConferenceStatus(rawValue: rawStatus) else {
             return
         }
         // Save current conference status.

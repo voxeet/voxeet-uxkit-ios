@@ -46,9 +46,10 @@ class ConferenceViewController: OverlayViewController {
     var activeSpeaker: VTUXActiveSpeakerTimer!
     
     // Conference states.
-    private var presenterID: String?
+    var presenterID: String?
     var speakerVideoContentFill = false
     var isMinimized = false
+    var audioPermissionInitiate = false
     
     // Conference timer.
     var conferenceStartTimer: Timer?
@@ -219,6 +220,9 @@ class ConferenceViewController: OverlayViewController {
             
             // Enable conference buttons.
             actionBarVC.buttons(enabled: true)
+            if let permissions = VoxeetSDK.shared.conference.current?.permissions {
+                permissionsUpdated(permissions: permissions.map { $0.rawValue })
+            }
             minimizeButton.isEnabled(true, animated: true)
             
             // Check microphone permission.
@@ -427,7 +431,7 @@ class ConferenceViewController: OverlayViewController {
             // Force leave.
             VoxeetSDK.shared.conference.leave { _ in
                 // Close conference UI.
-                NotificationCenter.default.post(name: .VTConferenceStatusUpdated, object: nil, userInfo: ["status": VTConferenceStatus.error])
+                NotificationCenter.default.post(name: .VTConferenceStatusUpdated, object: nil, userInfo: ["status": VTConferenceStatus.error.rawValue])
             }
             
             return
@@ -597,10 +601,27 @@ extension ConferenceViewController: VTUXParticipantsViewControllerDelegate {
 extension ConferenceViewController: VTUXActionBarViewControllerDelegate {
     func muteAction() {
         let isMuted = actionBarVC.muteButton.tag == 0
+        
+        // Enable / Disable mute button.
         actionBarVC.muteButton(state: isMuted ? .on : .off)
-        VoxeetSDK.shared.conference.mute(isMuted) { error in
-            if error != nil {
-                self.actionBarVC.muteButton(state: .off)
+        
+        // Unmuting with empty audio tracks should restart the audio (can happen when `sendAudio` permission is lost).
+        actionBarVC.muteButton.isUserInteractionEnabled = false
+        if !isMuted && audioPermissionInitiate {
+            VoxeetSDK.shared.conference.startAudio { error in
+                self.actionBarVC.muteButton.isUserInteractionEnabled = true
+                if error != nil {
+                    self.actionBarVC.muteButton(state: .off)
+                } else {
+                    self.audioPermissionInitiate = false
+                }
+            }
+        } else {
+            VoxeetSDK.shared.conference.mute(isMuted) { error in
+                self.actionBarVC.muteButton.isUserInteractionEnabled = true
+                if error != nil {
+                    self.actionBarVC.muteButton(state: .off)
+                }
             }
         }
     }

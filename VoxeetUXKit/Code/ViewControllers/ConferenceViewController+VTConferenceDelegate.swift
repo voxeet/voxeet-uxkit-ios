@@ -11,6 +11,59 @@ import VoxeetSDK
 extension ConferenceViewController: VTConferenceDelegate {
     func statusUpdated(status: VTConferenceStatus) {}
     
+    func permissionsUpdated(permissions: [Int]) {
+        let conferenceConfig = VoxeetUXKit.shared.conferenceController?.configuration
+        let actionBarConfig = conferenceConfig?.actionBar
+        
+        // Check conference mode.
+        let mode = VoxeetSDK.shared.conference.mode
+        guard mode == .standard else { return }
+        
+        // Get permissions.
+        var conferencePermissions = [VTConferencePermission]()
+        for permission in permissions {
+            if let conferencePermission = VTConferencePermission(rawValue: permission) {
+                conferencePermissions.append(conferencePermission)
+            }
+        }
+        
+        // Video permission.
+        if actionBarConfig?.displayCamera == true {
+            if !conferencePermissions.contains(.sendVideo) {
+                actionBarVC.cameraButton(state: .off)
+                actionBarVC.cameraButton.isHidden = true
+            } else {
+                actionBarVC.cameraButton.isHidden = false
+            }
+        }
+        // Screen share permission.
+        if actionBarConfig?.displayScreenShare == true {
+            if !conferencePermissions.contains(.shareScreen) {
+                if presenterID == nil {
+                    actionBarVC.screenShareButton(state: .off)
+                }
+                actionBarVC.screenShareButton.isHidden = true
+            } else {
+                actionBarVC.screenShareButton.isHidden = false
+            }
+        }
+        // Audio permission.
+        if actionBarConfig?.displayMute == true {
+            if !conferencePermissions.contains(.sendAudio) {
+                actionBarVC.muteButton(state: .on)
+                actionBarVC.muteButton.isHidden = true
+            } else {
+                actionBarVC.muteButton.isHidden = false
+                audioPermissionInitiate = true
+            }
+        }
+        
+        // Action bar animation.
+        UIView.animate(withDuration: 0.25) {
+            self.actionBarVC.view.layoutIfNeeded()
+        }
+    }
+    
     func participantAdded(participant: VTParticipant) {
         let conferenceConfig = VoxeetUXKit.shared.conferenceController?.configuration
         let participantsConfig = conferenceConfig?.participants
