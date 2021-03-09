@@ -52,9 +52,11 @@ extension ConferenceViewController: VTConferenceDelegate {
             if !conferencePermissions.contains(.sendAudio) {
                 actionBarVC.muteButton(state: .on)
                 actionBarVC.muteButton.isHidden = true
+                
+                // Monkey patch: need to restart the audio after loosing the permission.
+                audioPermissionInitiate = true
             } else {
                 actionBarVC.muteButton.isHidden = false
-                audioPermissionInitiate = true
             }
         }
         
@@ -126,7 +128,7 @@ extension ConferenceViewController: VTConferenceDelegate {
     }
     
     func streamAdded(participant: VTParticipant, stream: MediaStream) {
-        // Monkey patch: Wait WebRTC media to be started (avoids sound button to blink).
+        // Monkey patch: wait WebRTC media to be started (avoids sound button to blink).
         if conferenceStartTimer == nil {
             conferenceStartTimer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(conferenceStarted), userInfo: nil, repeats: false)
         }

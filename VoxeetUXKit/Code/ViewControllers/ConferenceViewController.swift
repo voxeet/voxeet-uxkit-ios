@@ -614,6 +614,13 @@ extension ConferenceViewController: VTUXActionBarViewControllerDelegate {
                     self.actionBarVC.muteButton(state: .off)
                 } else {
                     self.audioPermissionInitiate = false
+                    
+                    // Monkey patch: need to unmute after being invited without audio permission.
+                    VoxeetSDK.shared.conference.mute(false) { error in
+                        if error != nil {
+                            self.actionBarVC.muteButton(state: .off)
+                        }
+                    }
                 }
             }
         } else {
