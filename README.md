@@ -13,4 +13,4 @@ The Voxeet iOS SDK and UXKit rely on these open source projects:
 * [Alamofire](https://github.com/Alamofire/Alamofire), an HTTP networking library.
 * [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON), a tool for handling JSON data.
 
-© Voxeet, 2020
+© Voxeet, 2021
