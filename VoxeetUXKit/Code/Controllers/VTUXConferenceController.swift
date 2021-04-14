@@ -55,23 +55,23 @@ import VoxeetSDK
 
 extension VTUXConferenceController {
     @objc private func participantUpdated(notification: NSNotification) {
-        // Get JSON.
-        guard let userInfo = notification.userInfo?.values.first as? Data else { return }
+        // Get participant.
+        guard let participant = notification.userInfo?["participant"] as? VTParticipant else {
+            return
+        }
         
         // Debug.
         print("[VoxeetUXKit] \(String(describing: VoxeetUXKit.self)).\(#function).\(#line)")
         
         // Stop conference if a participant declines or leaves it.
-        if let json = try? JSONSerialization.jsonObject(with: userInfo, options: .mutableContainers) {
-            if let jsonDict = json as? [String: Any], let status = jsonDict["status"] as? String, status == "DECLINE" || status == "LEFT" {
-                // Update conference state label.
-                if status == "DECLINE" {
-                    self.viewController?.conferenceStateLabel.text = VTUXLocalized.string("VTUX_CONFERENCE_STATE_DECLINED")
-                }
-                
-                // Leave current conference.
-                VoxeetSDK.shared.conference.leave()
+        if participant.status == .decline || participant.status == .left {
+            // Update conference state label.
+            if participant.status == .decline {
+                self.viewController?.conferenceStateLabel.text = VTUXLocalized.string("VTUX_CONFERENCE_STATE_DECLINED")
             }
+            
+            // Leave current conference.
+            VoxeetSDK.shared.conference.leave()
         }
     }
     
