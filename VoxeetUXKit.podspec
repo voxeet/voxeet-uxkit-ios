@@ -1,12 +1,12 @@
 Pod::Spec.new do |spec|
   spec.name = "VoxeetUXKit"
-  spec.version = "1.4.6"
+  spec.version = "1.4.7"
   spec.summary = "The Voxeet UXKit is a quick way of adding premium audio, video chats, and other supported options."
   spec.license = "Dolby Software License Agreement"
   spec.author = "Voxeet"
   spec.homepage = "https://dolby.io"
   spec.platform = :ios, "11.0"
-  spec.swift_version = "5.3.2"
+  spec.swift_version = "5.4"
   spec.source = { :git => "https://github.com/voxeet/voxeet-uxkit-ios.git", :tag => spec.version }
   spec.framework = "VoxeetUXKit"
   spec.source_files = "VoxeetUXKit/**/*.{h,m,swift}"
