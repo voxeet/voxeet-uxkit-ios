@@ -31,6 +31,7 @@ Before the installation, obtain your `Consumer Key` and `Consumer Secret`.
 2. Enable the `Audio, AirPlay, and Picture in Picture` and `Voice over IP` options.
 
 > Note: To enable the VoIP push notifications with CallKit, enable push notifications and upload your [VoIP push certificate](https://developer.apple.com/account/ios/certificate/) to the developer portal.
+> Read this [Manage push notifications](https://github.com/voxeet/voxeet-sdk-ios/wiki/Manage-push-notification) wiki page for more information.
 
 3. Add the following keys to the `Info.plist` file to enable the required permissions:
 
@@ -56,7 +57,9 @@ github "voxeet/voxeet-uxkit-ios" ~> 1.0
 
 - Run `carthage update` to build the frameworks and drag and drop `VoxeetUXKit.framework`, `VoxeetSDK.framework`, and `WebRTC.framework` to the `Embedded Binaries` category in your Xcode project.
 
-**Note**: For more information about building platform-specific bundles using Carthage, see the [Carthage documentation](https://github.com/Carthage/Carthage#if-youre-building-for-ios-tvos-or-watchos).
+> Note: For more information about building platform-specific bundles using Carthage, see the [Carthage documentation](https://github.com/Carthage/Carthage#if-youre-building-for-ios-tvos-or-watchos).
+
+> If you are using Xcode 12, please see the workaround from [carthage](https://github.com/Carthage/Carthage/blob/master/Documentation/Xcode12Workaround.md)
 
 #### Install the SDK using CocoaPods
 
