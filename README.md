@@ -23,7 +23,7 @@ Before the installation, obtain your `Consumer Key` and `Consumer Secret`.
 2. Click the `DASHBOARD` link visible in the upper right corner of the website.
 3. Select your application from the `APPLICATIONS` category located on the left side menu.
 4. Select the `API Keys` category from the drop-down menu visible under your application.
-5. In the `Interactivity APIs` section, you can access your `Consumer Key` and `Consumer Secret`.
+5. In the `Communications APIs` section, you can access your `Consumer Key` and `Consumer Secret`.
 
 ### Procedure
 
@@ -112,9 +112,9 @@ VoxeetUXKit.shared.telecom = false
 
 ## Using UXKit
 
-The following procedure explains how to initialize the iOS SDK, open a session, and create and join a conference. If you wish to see more information about using the iOS SDK, see the documents available in the [Guides](doc:guides-dolby-voice) section or check the [Reference](doc:overview-) documentation.
+The following procedure explains how to initialize the iOS SDK, open a session, and create and join a conference. If you wish to see more information about using the iOS SDK, see the documents available in the [Getting Started](https://docs.dolby.io/communications/docs/getting-started-with-ios) section or check the [Reference](https://docs.dolby.io/communications/docs/client-sdk) documentation.
 
-1. Use the [initialize](https://docs.dolby.io/interactivity/docs/ios-client-sdk-voxeetsdk#initialize) method to initialize the Voxeet SDK.
+1. Use the [initialize](https://docs.dolby.io/communications/docs/ios-client-sdk-voxeetsdk#initialize) method to initialize the Voxeet SDK.
 
 ```swift
 import VoxeetSDK
@@ -140,18 +140,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 ```
 
-> Note: For more information about integrating the Dolby Interactivity APIs Client SDK into your application, see the reference documentation or the [Initializing]() document.
+> Note: For more information about integrating the Dolby.io Communications Client SDK into your application, see the reference documentation or the [Initializing](https://docs.dolby.io/communications/docs/initializing) document.
 
-2. [Open](https://docs.dolby.io/interactivity/docs/ios-client-sdk-sessionservice#open) a new session.
+2. [Open](https://docs.dolby.io/communications/docs/ios-client-sdk-sessionservice#open) a new session.
 
 ```swift
 let info = VTParticipantInfo(externalID: "1234", name: "Username", avatarURL: "https://www.gravatar.com/avatar/1234")
 VoxeetSDK.shared.session.open(info: info) { error in }
 ```
 
-> Note: The SDK invite process requires invitees to use the [open](https://docs.dolby.io/interactivity/docs/ios-client-sdk-sessionservice#open) method to be able to receive the conference invitations. If you use CallKit, you can receive conference invitations even when you do not have an open session.
+> Note: The SDK invite process requires invitees to use the [open](https://docs.dolby.io/communications/docs/ios-client-sdk-sessionservice#open) method to be able to receive the conference invitations. If you use CallKit, you can receive conference invitations even when you do not have an open session.
 
-3. Call the [create](https://docs.dolby.io/interactivity/docs/ios-client-sdk-conferenceservice#create) and [join](https://docs.dolby.io/interactivity/docs/ios-client-sdk-conferenceservice#join) methods to create and join a conference.
+3. Call the [create](https://docs.dolby.io/communications/docs/ios-client-sdk-conferenceservice#create) and [join](https://docs.dolby.io/communications/docs/ios-client-sdk-conferenceservice#join) methods to create and join a conference.
 
 ```swift
 // Create a conference (with a custom conference alias).
@@ -173,15 +173,15 @@ VoxeetSDK.shared.conference.create(options: options, success: { conference in
 })
 ```
 
-> Note: For more information about joining conferences, see the [Conferencing](https://docs.dolby.io/interactivity/docs/ios-client-sdk-conferenceservice) document.
+> Note: For more information about joining conferences, see the [Conferencing](https://docs.dolby.io/communications/docs/ios-client-sdk-conferenceservice) document.
 
-4. Call the [leave](https://docs.dolby.io/interactivity/docs/ios-client-sdk-conferenceservice#leave) method to leave the conference.
+4. Call the [leave](https://docs.dolby.io/communications/docs/ios-client-sdk-conferenceservice#leave) method to leave the conference.
 
 ```swift
 VoxeetSDK.shared.conference.leave { error in }
 ```
 
-5. Call the [close](https://docs.dolby.io/interactivity/docs/ios-client-sdk-sessionservice#close) method to close the current session. The method closes the web socket and does not allow sending the VoIP push notifications.
+5. Call the [close](https://docs.dolby.io/communications/docs/ios-client-sdk-sessionservice#close) method to close the current session. The method closes the web socket and does not allow sending the VoIP push notifications.
 
 ```swift
 VoxeetSDK.shared.session.close { error in }
