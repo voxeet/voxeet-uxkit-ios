@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name = "VoxeetUXKit"
-  spec.version = "1.5.3"
+  spec.version = "1.6.0"
   spec.summary = "The Voxeet UXKit is a quick way of adding premium audio, video chats, and other supported options."
   spec.license = "Dolby Software License Agreement"
   spec.author = "Voxeet"
