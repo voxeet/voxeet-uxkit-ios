@@ -45,8 +45,8 @@ import VoxeetSDK
         super.init()
         
         // Debug.
-        if let version = Bundle(for: type(of: self)).infoDictionary?["CFBundleShortVersionString"],
-            let build = Bundle(for: type(of: self)).infoDictionary?["CFBundleVersion"] {
+        if let version = Bundle(for: type(of: self)).infoDictionary?["UXKitVersion"],
+            let build = Bundle(for: type(of: self)).infoDictionary?["UXKitBuild"] {
             Swift.print("[VoxeetUXKit] \(version) (\(build))")
         }
     }
