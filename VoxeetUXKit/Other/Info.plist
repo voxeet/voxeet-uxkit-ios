@@ -16,6 +16,10 @@
 	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
+	<key>UXKitVersion</key>
+	<string>1.5.4</string>
+	<key>UXKitBuild</key>
+	<string>0</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>NSPrincipalClass</key>
