@@ -20,6 +20,8 @@ import VoxeetSDK
     
     private var activeSpeakerTimer: Timer?
     private let activeSpeakerDelay: TimeInterval = 3
+
+    private let audioLevelTreshold: Float = 0.05
     
     @objc public func begin() {
         guard selectedParticipant == nil else { return }
@@ -92,7 +94,7 @@ import VoxeetSDK
         
         // Optimize active speaker updates.
         if let loudestSpeaker = loudestSpeaker {
-            if (loudestVoiceLevel >= 0.01 || speaker == nil) && loudestSpeaker.id != speaker?.id {
+            if (loudestVoiceLevel >= audioLevelTreshold || speaker == nil) && loudestSpeaker.id != speaker?.id {
                 speaker = loudestSpeaker
                 delegate?.activeSpeakerUpdated(participant: speaker)
             }

@@ -22,6 +22,10 @@
 	<string>0</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>UXKitVersion</key>
+	<string>1.6.0</string>
+	<key>UXKitBuild</key>
+	<string>0</string>
 	<key>NSPrincipalClass</key>
 	<string></string>
 </dict>
