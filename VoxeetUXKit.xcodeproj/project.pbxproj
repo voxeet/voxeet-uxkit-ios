@@ -13,7 +13,9 @@
 		8C63CF5727721BDB007180B9 /* VoxeetSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8C63CF5027721BDB007180B9 /* VoxeetSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8C63CF5827721BDB007180B9 /* dvclient.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C63CF5127721BDB007180B9 /* dvclient.xcframework */; };
 		8C63CF5927721BDB007180B9 /* dvclient.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8C63CF5127721BDB007180B9 /* dvclient.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		8CEE35E027728EAC006CCD64 /* SDWebImage.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CEE35DF27728EAC006CCD64 /* SDWebImage.xcframework */; };
+		8CEE35E2277291ED006CCD64 /* SDWebImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 8CEE35E1277291ED006CCD64 /* SDWebImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8CEE35E427729258006CCD64 /* SDWebImage.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CEE35DF27728EAC006CCD64 /* SDWebImage.xcframework */; };
+		8CEE35E527729258006CCD64 /* SDWebImage.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8CEE35DF27728EAC006CCD64 /* SDWebImage.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CC2B28B61E54501E00E3EB57 /* VoxeetUXKit.h in Headers */ = {isa = PBXBuildFile; fileRef = CC2B28B41E54501E00E3EB57 /* VoxeetUXKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CC2B28D21E54522100E3EB57 /* VoxeetUXKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2B28D11E54522100E3EB57 /* VoxeetUXKit.swift */; };
 		CC2B290D1E5469C300E3EB57 /* ConferenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2B290C1E5469C300E3EB57 /* ConferenceViewController.swift */; };
@@ -55,6 +57,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				8C63CF5927721BDB007180B9 /* dvclient.xcframework in Embed Frameworks */,
+				8CEE35E527729258006CCD64 /* SDWebImage.xcframework in Embed Frameworks */,
 				8C63CF5527721BDB007180B9 /* WebRTC.xcframework in Embed Frameworks */,
 				8C63CF5727721BDB007180B9 /* VoxeetSDK.xcframework in Embed Frameworks */,
 			);
@@ -68,6 +71,7 @@
 		8C63CF5027721BDB007180B9 /* VoxeetSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = VoxeetSDK.xcframework; path = Carthage/Build/VoxeetSDK.xcframework; sourceTree = "<group>"; };
 		8C63CF5127721BDB007180B9 /* dvclient.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = dvclient.xcframework; path = Carthage/Build/dvclient.xcframework; sourceTree = "<group>"; };
 		8CEE35DF27728EAC006CCD64 /* SDWebImage.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = SDWebImage.xcframework; sourceTree = "<group>"; };
+		8CEE35E1277291ED006CCD64 /* SDWebImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SDWebImage.h; path = "VoxeetUXKit/Frameworks/SDWebImage.xcframework/ios-arm64_armv7/SDWebImage.framework/Headers/SDWebImage.h"; sourceTree = "<group>"; };
 		CC2B28B11E54501E00E3EB57 /* VoxeetUXKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VoxeetUXKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC2B28B41E54501E00E3EB57 /* VoxeetUXKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VoxeetUXKit.h; sourceTree = "<group>"; };
 		CC2B28B51E54501E00E3EB57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -110,7 +114,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8C63CF5827721BDB007180B9 /* dvclient.xcframework in Frameworks */,
-				8CEE35E027728EAC006CCD64 /* SDWebImage.xcframework in Frameworks */,
+				8CEE35E427729258006CCD64 /* SDWebImage.xcframework in Frameworks */,
 				8C63CF5427721BDB007180B9 /* WebRTC.xcframework in Frameworks */,
 				8C63CF5627721BDB007180B9 /* VoxeetSDK.xcframework in Frameworks */,
 			);
@@ -130,6 +134,7 @@
 		CC2B28A71E54501E00E3EB57 = {
 			isa = PBXGroup;
 			children = (
+				8CEE35E1277291ED006CCD64 /* SDWebImage.h */,
 				CC2B28B31E54501E00E3EB57 /* VoxeetUXKit */,
 				CC8AD12C1E65E4E500083A34 /* Frameworks */,
 				CC2B28B21E54501E00E3EB57 /* Products */,
@@ -343,6 +348,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CC2B28B61E54501E00E3EB57 /* VoxeetUXKit.h in Headers */,
+				8CEE35E2277291ED006CCD64 /* SDWebImage.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
