@@ -3,10 +3,20 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8C63CF5427721BDB007180B9 /* WebRTC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C63CF4F27721BDB007180B9 /* WebRTC.xcframework */; };
+		8C63CF5527721BDB007180B9 /* WebRTC.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8C63CF4F27721BDB007180B9 /* WebRTC.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8C63CF5627721BDB007180B9 /* VoxeetSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C63CF5027721BDB007180B9 /* VoxeetSDK.xcframework */; };
+		8C63CF5727721BDB007180B9 /* VoxeetSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8C63CF5027721BDB007180B9 /* VoxeetSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8C63CF5827721BDB007180B9 /* dvclient.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C63CF5127721BDB007180B9 /* dvclient.xcframework */; };
+		8C63CF5927721BDB007180B9 /* dvclient.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8C63CF5127721BDB007180B9 /* dvclient.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8C63CF5A27721BDB007180B9 /* SDWebImageMapKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C63CF5227721BDB007180B9 /* SDWebImageMapKit.xcframework */; };
+		8C63CF5B27721BDB007180B9 /* SDWebImageMapKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8C63CF5227721BDB007180B9 /* SDWebImageMapKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8C63CF5C27721BDB007180B9 /* SDWebImage.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C63CF5327721BDB007180B9 /* SDWebImage.xcframework */; };
+		8C63CF5D27721BDB007180B9 /* SDWebImage.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8C63CF5327721BDB007180B9 /* SDWebImage.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CC2B28B61E54501E00E3EB57 /* VoxeetUXKit.h in Headers */ = {isa = PBXBuildFile; fileRef = CC2B28B41E54501E00E3EB57 /* VoxeetUXKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CC2B28D21E54522100E3EB57 /* VoxeetUXKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2B28D11E54522100E3EB57 /* VoxeetUXKit.swift */; };
 		CC2B290D1E5469C300E3EB57 /* ConferenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2B290C1E5469C300E3EB57 /* ConferenceViewController.swift */; };
@@ -23,9 +33,6 @@
 		FA3FC2DD22BD18BE007E60E0 /* VTUXSpeakerVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3FC2DC22BD18BE007E60E0 /* VTUXSpeakerVideoViewController.swift */; };
 		FA55399A22B8DD9800A761DE /* VTUXParticipantsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA55399922B8DD9800A761DE /* VTUXParticipantsViewController.swift */; };
 		FA72C5B42448911700489112 /* VoxeetUXKit.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FA72C5B32448911700489112 /* VoxeetUXKit.xcassets */; };
-		FA826094254AF42400304A06 /* WebRTC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA826091254AF42400304A06 /* WebRTC.framework */; };
-		FA826095254AF42400304A06 /* dvclient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA826092254AF42400304A06 /* dvclient.framework */; };
-		FA826096254AF42400304A06 /* VoxeetSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA826093254AF42400304A06 /* VoxeetSDK.framework */; };
 		FA867E9122F9D46300D15DC8 /* VTUXOverlayConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA867E9022F9D46300D15DC8 /* VTUXOverlayConfiguration.swift */; };
 		FA89276822E5BAD20048DD46 /* CallJoined.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FA89276522E5BAD10048DD46 /* CallJoined.mp3 */; };
 		FA89276A22E5DCC40048DD46 /* CallHangUp.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FA89276922E5DCC30048DD46 /* CallHangUp.mp3 */; };
@@ -41,10 +48,32 @@
 		FACCE65F22B8E88500D2B33E /* VTUXParticipantsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACCE65E22B8E88500D2B33E /* VTUXParticipantsCollectionViewCell.swift */; };
 		FADBB26522B39D7D005806DC /* VTUXActiveSpeakerTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADBB26422B39D7D005806DC /* VTUXActiveSpeakerTimer.swift */; };
 		FAF523822304116B00421A84 /* VTUXLocalized.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF523812304116B00421A84 /* VTUXLocalized.swift */; };
-		FAFAFFC323A791FF00840B17 /* SDWebImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAFAFFC023A791FF00840B17 /* SDWebImage.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		8C63CF5E27721BDB007180B9 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				8C63CF5927721BDB007180B9 /* dvclient.xcframework in Embed Frameworks */,
+				8C63CF5B27721BDB007180B9 /* SDWebImageMapKit.xcframework in Embed Frameworks */,
+				8C63CF5D27721BDB007180B9 /* SDWebImage.xcframework in Embed Frameworks */,
+				8C63CF5527721BDB007180B9 /* WebRTC.xcframework in Embed Frameworks */,
+				8C63CF5727721BDB007180B9 /* VoxeetSDK.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		8C63CF4F27721BDB007180B9 /* WebRTC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WebRTC.xcframework; path = Carthage/Build/WebRTC.xcframework; sourceTree = "<group>"; };
+		8C63CF5027721BDB007180B9 /* VoxeetSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = VoxeetSDK.xcframework; path = Carthage/Build/VoxeetSDK.xcframework; sourceTree = "<group>"; };
+		8C63CF5127721BDB007180B9 /* dvclient.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = dvclient.xcframework; path = Carthage/Build/dvclient.xcframework; sourceTree = "<group>"; };
+		8C63CF5227721BDB007180B9 /* SDWebImageMapKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SDWebImageMapKit.xcframework; path = Carthage/Build/SDWebImageMapKit.xcframework; sourceTree = "<group>"; };
+		8C63CF5327721BDB007180B9 /* SDWebImage.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SDWebImage.xcframework; path = Carthage/Build/SDWebImage.xcframework; sourceTree = "<group>"; };
 		CC2B28B11E54501E00E3EB57 /* VoxeetUXKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VoxeetUXKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC2B28B41E54501E00E3EB57 /* VoxeetUXKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VoxeetUXKit.h; sourceTree = "<group>"; };
 		CC2B28B51E54501E00E3EB57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -90,10 +119,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FA826096254AF42400304A06 /* VoxeetSDK.framework in Frameworks */,
-				FA826095254AF42400304A06 /* dvclient.framework in Frameworks */,
-				FAFAFFC323A791FF00840B17 /* SDWebImage.framework in Frameworks */,
-				FA826094254AF42400304A06 /* WebRTC.framework in Frameworks */,
+				8C63CF5827721BDB007180B9 /* dvclient.xcframework in Frameworks */,
+				8C63CF5A27721BDB007180B9 /* SDWebImageMapKit.xcframework in Frameworks */,
+				8C63CF5C27721BDB007180B9 /* SDWebImage.xcframework in Frameworks */,
+				8C63CF5427721BDB007180B9 /* WebRTC.xcframework in Frameworks */,
+				8C63CF5627721BDB007180B9 /* VoxeetSDK.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,6 +207,11 @@
 		CC8AD12C1E65E4E500083A34 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8C63CF5127721BDB007180B9 /* dvclient.xcframework */,
+				8C63CF5327721BDB007180B9 /* SDWebImage.xcframework */,
+				8C63CF5227721BDB007180B9 /* SDWebImageMapKit.xcframework */,
+				8C63CF5027721BDB007180B9 /* VoxeetSDK.xcframework */,
+				8C63CF4F27721BDB007180B9 /* WebRTC.xcframework */,
 				FA826092254AF42400304A06 /* dvclient.framework */,
 				FAFAFFC023A791FF00840B17 /* SDWebImage.framework */,
 				FA826093254AF42400304A06 /* VoxeetSDK.framework */,
@@ -330,6 +365,7 @@
 				CC2B28AD1E54501E00E3EB57 /* Frameworks */,
 				CC2B28AE1E54501E00E3EB57 /* Headers */,
 				CC2B28AF1E54501E00E3EB57 /* Resources */,
+				8C63CF5E27721BDB007180B9 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -558,7 +594,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -578,13 +615,17 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build",
 				);
 				INFOPLIST_FILE = VoxeetUXKit/Other/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 1.6.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.6.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.voxeet.uxkit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -606,13 +647,17 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
+					"$(PROJECT_DIR)/Carthage/Build",
 				);
 				INFOPLIST_FILE = VoxeetUXKit/Other/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MARKETING_VERSION = 1.6.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.6.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.voxeet.uxkit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
