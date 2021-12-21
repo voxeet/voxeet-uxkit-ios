@@ -7,6 +7,7 @@ Pod::Spec.new do |spec|
   spec.homepage = "https://dolby.io"
   spec.platform = :ios, "11.0"
   spec.source = { :git => "https://github.com/voxeet/voxeet-uxkit-ios.git", :tag => spec.version }
+  spec.swift_version = "5.5.2"
   spec.framework = "VoxeetUXKit"
   spec.source_files = "VoxeetUXKit/**/*.{h,m,swift}"
   spec.resources = "VoxeetUXKit/**/*.{mp3,storyboard,xcassets,lproj}"
