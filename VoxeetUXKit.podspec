@@ -13,7 +13,6 @@ Pod::Spec.new do |spec|
   spec.resources = "VoxeetUXKit/**/*.{mp3,storyboard,xcassets,lproj}"
   spec.framework = "UIKit"
   spec.dependency "VoxeetSDK", "~> 3.0"
-  spec.dependency "SDWebImage", "~> 5.0"
 
   # MacBook arm simulator isn't supported.
   spec.pod_target_xcconfig = { 
