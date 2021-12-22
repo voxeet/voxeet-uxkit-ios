@@ -1,8 +1,7 @@
 Pod::Spec.new do |spec|
   spec.name = "VoxeetUXKit"
-  spec.version = "1.6.2"
+  spec.version = "1.6.3"
   spec.summary = "The Voxeet UXKit is a quick way of adding premium audio, video chats, and other supported options."
-  spec.license = "Dolby Software License Agreement"
   spec.author = "Voxeet"
   spec.homepage = "https://dolby.io"
   spec.platform = :ios, "11.0"
@@ -13,7 +12,7 @@ Pod::Spec.new do |spec|
   spec.resources = "VoxeetUXKit/**/*.{mp3,storyboard,xcassets,lproj}"
   spec.framework = "UIKit"
   spec.dependency "VoxeetSDK", "~> 3.0"
-  spec.dependency "SDWebImage", "~> 5.0"
+  spec.dependency "Kingfisher"
 
   # MacBook arm simulator isn't supported.
   spec.pod_target_xcconfig = { 

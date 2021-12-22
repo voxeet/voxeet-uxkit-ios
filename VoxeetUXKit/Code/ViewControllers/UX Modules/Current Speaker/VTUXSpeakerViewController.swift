@@ -7,7 +7,7 @@
 //
 
 import VoxeetSDK
-import SDWebImage
+import Kingfisher
 
 @objc public class VTUXSpeakerViewController: UIViewController {
     @IBOutlet weak private var avatar: UIRoundImageView!
@@ -47,7 +47,7 @@ import SDWebImage
         let avatarURL = participant.info.avatarURL ?? ""
         let imageURLStr = avatarURL.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         let placeholderImage = UIImage(named: "UserPlaceholder", in: Bundle(for: type(of: self)), compatibleWith: nil)
-        avatar.sd_setImage(with: URL(string: imageURLStr), placeholderImage: placeholderImage)
+        avatar.kf.setImage(with: URL(string: imageURLStr), placeholder: placeholderImage, options: nil, progressBlock: nil, completionHandler: nil)
         name.text = participant.info.name
         name.alpha = inactiveAlpha
         
