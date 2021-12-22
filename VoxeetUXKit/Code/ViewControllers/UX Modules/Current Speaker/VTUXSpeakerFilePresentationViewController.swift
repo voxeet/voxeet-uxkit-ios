@@ -7,7 +7,7 @@
 //
 
 import VoxeetSDK
-import SDWebImage
+import Kingfisher
 
 @objc public protocol VTUXSpeakerFilePresentationViewControllerDelegate {
     func filePresentationStarted(participant: VTParticipant?)
@@ -33,7 +33,7 @@ extension VTUXSpeakerFilePresentationViewController: VTFilePresentationDelegate 
     
     public func started(filePresentation: VTFilePresentation) {
         if let url = VoxeetSDK.shared.filePresentation.image(page: filePresentation.position) {
-            fileImageView.sd_setImage(with: url)
+            fileImageView.kf.setImage(with: url)
             
             // Started delegate.
             delegate?.filePresentationStarted(participant: filePresentation.owner)
@@ -45,7 +45,7 @@ extension VTUXSpeakerFilePresentationViewController: VTFilePresentationDelegate 
     
     public func updated(filePresentation: VTFilePresentation) {
         if let url = VoxeetSDK.shared.filePresentation.image(page: filePresentation.position) {
-            fileImageView.sd_setImage(with: url)
+            fileImageView.kf.setImage(with: url)
             
             // Reset zoom when image change.
             scrollView.zoomScale = 1
