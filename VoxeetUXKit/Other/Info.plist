@@ -21,8 +21,8 @@
 	<key>NSPrincipalClass</key>
 	<string></string>
 	<key>UXKitBuild</key>
-	<string>0</string>
+	<string>1</string>
 	<key>UXKitVersion</key>
-	<string>1.6.3</string>
+	<string>1.6.4</string>
 </dict>
 </plist>
