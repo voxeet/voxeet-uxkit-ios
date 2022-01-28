@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5B8F7FE1279F2A03004A2E58 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8F7FE0279F2A03004A2E58 /* UIApplicationExtension.swift */; };
 		8C63CF5427721BDB007180B9 /* WebRTC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C63CF4F27721BDB007180B9 /* WebRTC.xcframework */; };
 		8C63CF5527721BDB007180B9 /* WebRTC.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8C63CF4F27721BDB007180B9 /* WebRTC.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8C63CF5627721BDB007180B9 /* VoxeetSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C63CF5027721BDB007180B9 /* VoxeetSDK.xcframework */; };
@@ -66,6 +67,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		5B8F7FE0279F2A03004A2E58 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
 		8C63CF4F27721BDB007180B9 /* WebRTC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WebRTC.xcframework; path = Carthage/Build/WebRTC.xcframework; sourceTree = "<group>"; };
 		8C63CF5027721BDB007180B9 /* VoxeetSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = VoxeetSDK.xcframework; path = Carthage/Build/VoxeetSDK.xcframework; sourceTree = "<group>"; };
 		8C63CF5127721BDB007180B9 /* dvclient.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = dvclient.xcframework; path = Carthage/Build/dvclient.xcframework; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 		CC2B290E1E548C0300E3EB57 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				5B8F7FE0279F2A03004A2E58 /* UIApplicationExtension.swift */,
 				CCEEEEF01F0A9C52000F4D61 /* Print+Extension.swift */,
 				FA1A98AC22F4666500ECD4E6 /* UIButton+Extension.swift */,
 			);
@@ -431,6 +434,7 @@
 				FAADC93122F87C6700F59938 /* VTUXConferenceControllerConfiguration.swift in Sources */,
 				FAADC93922F8841100F59938 /* VTUXConferenceController.swift in Sources */,
 				FA234A8822B2759500C3216C /* VTUXSpeakerViewController.swift in Sources */,
+				5B8F7FE1279F2A03004A2E58 /* UIApplicationExtension.swift in Sources */,
 				FAADC93722F87CD700F59938 /* VTUXParticipantsConfiguration.swift in Sources */,
 				FA867E9122F9D46300D15DC8 /* VTUXOverlayConfiguration.swift in Sources */,
 				FAF523822304116B00421A84 /* VTUXLocalized.swift in Sources */,

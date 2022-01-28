@@ -434,7 +434,7 @@ extension VTUXParticipantsViewController: UICollectionViewDelegate {
 extension VTUXParticipantsViewController: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
-        let window = UIApplication.shared.keyWindow
+        let window = UIApplication.keyWindow
         let safeArea: UIEdgeInsets
         if #available(iOS 11.0, *) {
             safeArea = window?.safeAreaInsets ?? .zero
