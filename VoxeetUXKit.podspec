@@ -14,13 +14,9 @@ Pod::Spec.new do |spec|
   spec.dependency "VoxeetSDK", "~> 3.0"
   spec.dependency "Kingfisher"
 
-  # MacBook arm simulator isn't supported.
   spec.pod_target_xcconfig = { 
-    'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64',
     'ENABLE_BITCODE' => 'NO' # Disable bitcode to support dvclient.framework dependency.
   }
-  spec.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
-
 
   spec.license = { :type => "Dolby Software License Agreement", :text => <<-LICENSE
     **BEFORE DOWNLOADING THE SOFTWARE, PLEASE CAREFULLY READ THE FOLLOWING AGREEMENT. DO NOT DOWNLOAD, INSTALL, ACTIVATE OR USE THIS SOFTWARE IF YOU HAVE NOT
