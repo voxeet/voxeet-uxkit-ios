@@ -8,7 +8,7 @@
 
 class VTUXLocalized {
     static func string(_ key: String) -> String {
-        let strLocalBundle = NSLocalizedString(key, bundle: Bundle(for: VTUXLocalized.self), comment: "")
+        let strLocalBundle = NSLocalizedString(key, bundle: .module, comment: "")
         let strMainBundle = NSLocalizedString(key, comment: "")
         
         return strMainBundle != key ? strMainBundle : strLocalBundle

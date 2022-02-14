@@ -38,7 +38,15 @@ Before the installation, obtain your `Consumer Key` and `Consumer Secret`.
     - Privacy: Microphone Usage Description
     - Privacy: Camera Usage Description
 
-4. Install the SDK using **Carthage**, **CocoaPods**, or install the SDK **manually**.
+4. Install the SDK using  **Swift Package Manager**, **Carthage**, **CocoaPods**, or install the SDK **manually**.
+
+#### Install the SDK using Swift Package Manager
+
+- Follow the official Apple's instruction [Adding Package Dependencies to Your App](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app).
+- Use https://github.com/voxeet/voxeet-uxkit-ios.git and select the release of your preference. Swift Package Manager support is available since Swift UXKit version 1.6.5.
+
+- Check if `Project` `Package Dependencies` tab contains `VoxeetUXKit` package.
+- Check if `Frameworks, Libraries, and Embedded Content` category contains `VoxeetUXKit` library.
 
 #### Install the SDK using Carthage
 
@@ -84,11 +92,11 @@ pod 'VoxeetUXKit', '~> 1.0'
 
 - Unzip the downloaded files and drag and drop the frameworks to your Xcode project.
 
-- Select the `Copy items if needed` option using the proper target. In the `general` tab of your target, add the `VoxeetUXKit.framework`, `VoxeetSDK.framework`, and `WebRTC.framework` to the `Embedded Binaries` category.
+- Select the `Copy items if needed` option using the proper target. In the `general` tab of your target, add the `VoxeetUXKit.xcframework`, `VoxeetSDK.xcframework`, and `WebRTC.xcframework` to the `Embedded Binaries` category.
 
-- Download the SDWebImage library from [GitHub](https://github.com/SDWebImage/SDWebImage) and install the framework manually or using Carthage or CocoaPods.
+- Download the Kingfisher library from [GitHub](https://github.com/onevcat/Kingfisher) and install the framework manually or using Carthage or CocoaPods.
 
-After the installation, check if the SDWebImage library is included on the the list of libraries. If you installed the library manually or you used Carthage, check if the `SDWebImage.framework` library is mentioned in the `Frameworks, Libraries, and Embedded Content` category in your Xcode project. If you installed the library using CocoaPods, check if the SDWebImage library is included inside the `Pods` project in the client xcworkspace.
+After the installation, check if the Kingfisher library is included on the the list of libraries. If you installed the library manually or you used Carthage, check if the `Kingfisher.xcframework` library is mentioned in the `Frameworks, Libraries, and Embedded Content` category in your Xcode project. If you installed the library using CocoaPods, check if the Kingfisher library is included inside the `Pods` project in the client xcworkspace.
 
 ## Configuring UXKit
 

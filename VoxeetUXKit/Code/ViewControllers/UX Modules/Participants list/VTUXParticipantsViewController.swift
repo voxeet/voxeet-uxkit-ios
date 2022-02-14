@@ -346,7 +346,7 @@ extension VTUXParticipantsViewController: UICollectionViewDataSource {
         // Cell data.
         let avatarURL = participant.info.avatarURL ?? ""
         let imageURLStr = avatarURL.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        let placeholderImage = UIImage(named: "UserPlaceholder", in: Bundle(for: type(of: self)), compatibleWith: nil)
+        let placeholderImage = UIImage(named: "UserPlaceholder", in: .module, compatibleWith: nil)
         cell.avatar.kf.setImage(with: URL(string: imageURLStr), placeholder: placeholderImage, options: nil, progressBlock: nil, completionHandler: nil)
         cell.name.text = participant.info.name
         
