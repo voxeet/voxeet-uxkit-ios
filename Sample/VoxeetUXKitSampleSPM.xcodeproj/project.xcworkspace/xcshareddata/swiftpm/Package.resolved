@@ -1,0 +1,34 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Kingfisher",
+        "repositoryURL": "https://github.com/onevcat/Kingfisher.git",
+        "state": {
+          "branch": null,
+          "revision": "0c02c46cfdc0656ce74fd0963a75e5000a0b7f23",
+          "version": "7.1.2"
+        }
+      },
+      {
+        "package": "VoxeetSDK",
+        "repositoryURL": "https://github.com/voxeet/voxeet-sdk-ios.git",
+        "state": {
+          "branch": null,
+          "revision": "b36d3dc1606dbdf34b06a03bf2b9935774ee305e",
+          "version": "3.3.3"
+        }
+      },
+      {
+        "package": "VoxeetUXKit",
+        "repositoryURL": "https://github.com/voxeet/voxeet-uxkit-ios.git",
+        "state": {
+          "branch": "feature/CCU_256_add_spm",
+          "revision": "0785179f8c3925e1266dc7e10685d4bfc99f15af",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}

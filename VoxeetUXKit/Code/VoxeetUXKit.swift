@@ -7,6 +7,10 @@
 //
 
 import VoxeetSDK
+#if SWIFT_PACKAGE
+@_exported import UIKit
+@_exported import Foundation
+#endif
 
 /*
  *  MARK: - VoxeetUXKit
@@ -44,9 +48,10 @@ import VoxeetSDK
     override private init() {
         super.init()
         
+        let settings = NSDictionary(contentsOfFile: Bundle.module.path(forResource: "settings", ofType: "plist") ?? "")
         // Debug.
-        if let version = Bundle(for: type(of: self)).infoDictionary?["UXKitVersion"],
-            let build = Bundle(for: type(of: self)).infoDictionary?["UXKitBuild"] {
+        if let version = settings?["UXKitVersion"],
+            let build = settings?["UXKitBuild"] {
             Swift.print("[VoxeetUXKit] \(version) (\(build))")
         }
     }
