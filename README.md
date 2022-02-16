@@ -10,9 +10,9 @@ Follow this instruction to install the Swift UXKit.
 
 Before installing the Swift UXKit, ensure that you meet the minimum hardware and software requirements.
 
-- **Operating systems**: iOS 11.0 and later
-- **Integrated development environment**: [Xcode 12.5+](https://developer.apple.com/xcode/)
-- **Language**: Swift 5.4.2+
+- **Operating systems**: iOS 12.0 and later
+- **Integrated development environment**: [Xcode 13+](https://developer.apple.com/xcode/)
+- **Language**: Swift 5.5.2
 - **Supported architectures**: armv7, arm64, i386, x86_64
 
 ### Before you start
@@ -55,11 +55,9 @@ brew install carthage
 github "voxeet/voxeet-uxkit-ios" ~> 1.0
 ```
 
-- Run `carthage update` to build the frameworks and drag and drop `VoxeetUXKit.framework`, `VoxeetSDK.framework`, and `WebRTC.framework` to the `Embedded Binaries` category in your Xcode project.
+- Run `carthage update --use-xcframeworks --platform iOS` to build the frameworks and drag and drop `VoxeetUXKit.xcframework`, `VoxeetSDK.xcframework`, `WebRTC.xcframework`, and `Kingfisher.xcframework` to the `Embedded Binaries` category in your Xcode project.
 
 > Note: For more information about building platform-specific bundles using Carthage, see the [Carthage documentation](https://github.com/Carthage/Carthage#if-youre-building-for-ios-tvos-or-watchos).
-
-> If you are using Xcode 12, please see the workaround from [carthage](https://github.com/Carthage/Carthage/blob/master/Documentation/Xcode12Workaround.md)
 
 #### Install the SDK using CocoaPods
 
@@ -191,7 +189,7 @@ VoxeetSDK.shared.session.close { error in }
 
 The Voxeet iOS SDK and UXKit rely on these open source projects:
 
-* [SDWebImage](https://github.com/SDWebImage/SDWebImage), provides an async image downloader with cache support.
+* [Kingfisher](https://github.com/onevcat/Kingfisher), provides an async image downloader with cache support.
 * [Starscream](https://github.com/daltoniam/Starscream), a conforming WebSocket (RFC 6455) client library.
 * [Alamofire](https://github.com/Alamofire/Alamofire), an HTTP networking library.
 * [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON), a tool for handling JSON data.

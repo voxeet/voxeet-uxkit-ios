@@ -347,7 +347,7 @@ extension VTUXParticipantsViewController: UICollectionViewDataSource {
         let avatarURL = participant.info.avatarURL ?? ""
         let imageURLStr = avatarURL.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         let placeholderImage = UIImage(named: "UserPlaceholder", in: Bundle(for: type(of: self)), compatibleWith: nil)
-        cell.avatar.sd_setImage(with: URL(string: imageURLStr), placeholderImage: placeholderImage)
+        cell.avatar.kf.setImage(with: URL(string: imageURLStr), placeholder: placeholderImage, options: nil, progressBlock: nil, completionHandler: nil)
         cell.name.text = participant.info.name
         
         // Cell border property.
@@ -434,7 +434,7 @@ extension VTUXParticipantsViewController: UICollectionViewDelegate {
 extension VTUXParticipantsViewController: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         let flowLayout = collectionViewLayout as! UICollectionViewFlowLayout
-        let window = UIApplication.shared.keyWindow
+        let window = UIApplication.keyWindow
         let safeArea: UIEdgeInsets
         if #available(iOS 11.0, *) {
             safeArea = window?.safeAreaInsets ?? .zero

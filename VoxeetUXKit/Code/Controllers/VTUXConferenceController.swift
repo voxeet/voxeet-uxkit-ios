@@ -114,7 +114,7 @@ extension VTUXConferenceController {
                 if let vc = viewController {
                     vc.view.accessibilityIdentifier = "ConferenceView"
                     vc.view.translatesAutoresizingMaskIntoConstraints = false
-                    guard let window = UIApplication.shared.keyWindow else { return }
+                    guard let window = UIApplication.keyWindow else { return }
                     window.addSubview(vc.view)
                 }
                 
