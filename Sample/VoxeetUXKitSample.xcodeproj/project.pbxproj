@@ -53,7 +53,7 @@
 		8CA2DAA4277312A800021373 /* VoxeetUXKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = VoxeetUXKit.xcframework; path = Carthage/Build/VoxeetUXKit.xcframework; sourceTree = SOURCE_ROOT; };
 		CC26652B1F2B2DBA0077CFF5 /* CallKitOnHold.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CallKitOnHold.mp3; sourceTree = "<group>"; };
 		CC693E9D1EA9FD37004985B7 /* VoxeetUXKitSample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VoxeetUXKitSample.entitlements; sourceTree = "<group>"; };
-		CC8B8B031E8E3C0600AEDD3B /* Voxeet (UXKit).app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Voxeet (UXKit).app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC8B8B031E8E3C0600AEDD3B /* VoxeetUXKitSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VoxeetUXKitSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC8B8B061E8E3C0600AEDD3B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CC8B8B081E8E3C0600AEDD3B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		CC8B8B0B1E8E3C0600AEDD3B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -93,7 +93,7 @@
 		CC8B8B041E8E3C0600AEDD3B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CC8B8B031E8E3C0600AEDD3B /* Voxeet (UXKit).app */,
+				CC8B8B031E8E3C0600AEDD3B /* VoxeetUXKitSample.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -186,7 +186,7 @@
 			);
 			name = VoxeetUXKitSample;
 			productName = VoxeetConferenceKitSample;
-			productReference = CC8B8B031E8E3C0600AEDD3B /* Voxeet (UXKit).app */;
+			productReference = CC8B8B031E8E3C0600AEDD3B /* VoxeetUXKitSample.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -429,7 +429,7 @@
 				);
 				MARKETING_VERSION = 1.2.6;
 				PRODUCT_BUNDLE_IDENTIFIER = io.voxeet;
-				PRODUCT_NAME = "Voxeet (UXKit)";
+				PRODUCT_NAME = VoxeetUXKitSample;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};
@@ -457,7 +457,7 @@
 				);
 				MARKETING_VERSION = 1.2.6;
 				PRODUCT_BUNDLE_IDENTIFIER = io.voxeet;
-				PRODUCT_NAME = "Voxeet (UXKit)";
+				PRODUCT_NAME = VoxeetUXKitSample;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};

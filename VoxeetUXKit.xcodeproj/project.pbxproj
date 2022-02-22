@@ -9,13 +9,9 @@
 /* Begin PBXBuildFile section */
 		5B8F7FE1279F2A03004A2E58 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8F7FE0279F2A03004A2E58 /* UIApplicationExtension.swift */; };
 		8C63CF5427721BDB007180B9 /* WebRTC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C63CF4F27721BDB007180B9 /* WebRTC.xcframework */; };
-		8C63CF5527721BDB007180B9 /* WebRTC.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8C63CF4F27721BDB007180B9 /* WebRTC.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8C63CF5627721BDB007180B9 /* VoxeetSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C63CF5027721BDB007180B9 /* VoxeetSDK.xcframework */; };
-		8C63CF5727721BDB007180B9 /* VoxeetSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8C63CF5027721BDB007180B9 /* VoxeetSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8C63CF5827721BDB007180B9 /* dvclient.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C63CF5127721BDB007180B9 /* dvclient.xcframework */; };
-		8C63CF5927721BDB007180B9 /* dvclient.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8C63CF5127721BDB007180B9 /* dvclient.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8CEE37922772AC3D006CCD64 /* Kingfisher.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CEE37902772AC2A006CCD64 /* Kingfisher.xcframework */; };
-		8CEE37932772AC3D006CCD64 /* Kingfisher.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8CEE37902772AC2A006CCD64 /* Kingfisher.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CC2B28B61E54501E00E3EB57 /* VoxeetUXKit.h in Headers */ = {isa = PBXBuildFile; fileRef = CC2B28B41E54501E00E3EB57 /* VoxeetUXKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CC2B28D21E54522100E3EB57 /* VoxeetUXKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2B28D11E54522100E3EB57 /* VoxeetUXKit.swift */; };
 		CC2B290D1E5469C300E3EB57 /* ConferenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC2B290C1E5469C300E3EB57 /* ConferenceViewController.swift */; };
@@ -48,23 +44,6 @@
 		FADBB26522B39D7D005806DC /* VTUXActiveSpeakerTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FADBB26422B39D7D005806DC /* VTUXActiveSpeakerTimer.swift */; };
 		FAF523822304116B00421A84 /* VTUXLocalized.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAF523812304116B00421A84 /* VTUXLocalized.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		8C63CF5E27721BDB007180B9 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				8C63CF5927721BDB007180B9 /* dvclient.xcframework in Embed Frameworks */,
-				8C63CF5527721BDB007180B9 /* WebRTC.xcframework in Embed Frameworks */,
-				8C63CF5727721BDB007180B9 /* VoxeetSDK.xcframework in Embed Frameworks */,
-				8CEE37932772AC3D006CCD64 /* Kingfisher.xcframework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		5B8F7FE0279F2A03004A2E58 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
@@ -354,7 +333,6 @@
 				CC2B28AD1E54501E00E3EB57 /* Frameworks */,
 				CC2B28AE1E54501E00E3EB57 /* Headers */,
 				CC2B28AF1E54501E00E3EB57 /* Resources */,
-				8C63CF5E27721BDB007180B9 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
