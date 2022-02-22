@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "CC8B8B021E8E3C0600AEDD3B"
-               BuildableName = "Voxeet (UXKit).app"
+               BuildableName = "VoxeetUXKitSample.app"
                BlueprintName = "VoxeetUXKitSample"
                ReferencedContainer = "container:VoxeetUXKitSample.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CC8B8B021E8E3C0600AEDD3B"
-            BuildableName = "Voxeet (UXKit).app"
+            BuildableName = "VoxeetUXKitSample.app"
             BlueprintName = "VoxeetUXKitSample"
             ReferencedContainer = "container:VoxeetUXKitSample.xcodeproj">
          </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CC8B8B021E8E3C0600AEDD3B"
-            BuildableName = "Voxeet (UXKit).app"
+            BuildableName = "VoxeetUXKitSample.app"
             BlueprintName = "VoxeetUXKitSample"
             ReferencedContainer = "container:VoxeetUXKitSample.xcodeproj">
          </BuildableReference>
