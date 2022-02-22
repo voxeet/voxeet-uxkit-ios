@@ -1,0 +1,11 @@
+project 'VoxeetUXKitSampleCocoaPods.xcodeproj'
+
+platform :ios, '12.0'
+
+target 'VoxeetUXKitSample' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for VoxeetUXKitSample
+  pod 'VoxeetUXKit', :git => 'https://github.com/voxeet/voxeet-uxkit-ios.git', :branch => 'feature/CCU_256_add_spm'
+end
