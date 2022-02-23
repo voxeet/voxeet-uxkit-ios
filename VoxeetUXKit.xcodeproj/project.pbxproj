@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		5B8F7FE1279F2A03004A2E58 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8F7FE0279F2A03004A2E58 /* UIApplicationExtension.swift */; };
+		7470DC1927BD35700005CD12 /* settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7470DC1827BD35700005CD12 /* settings.plist */; };
+		74ED2E4C27BD3338008DBC95 /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ED2E4B27BD3338008DBC95 /* Bundle+Extension.swift */; };
 		8C63CF5427721BDB007180B9 /* WebRTC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C63CF4F27721BDB007180B9 /* WebRTC.xcframework */; };
 		8C63CF5627721BDB007180B9 /* VoxeetSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C63CF5027721BDB007180B9 /* VoxeetSDK.xcframework */; };
 		8C63CF5827721BDB007180B9 /* dvclient.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C63CF5127721BDB007180B9 /* dvclient.xcframework */; };
@@ -47,13 +49,14 @@
 
 /* Begin PBXFileReference section */
 		5B8F7FE0279F2A03004A2E58 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
+		7470DC1827BD35700005CD12 /* settings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = settings.plist; sourceTree = "<group>"; };
+		74ED2E4B27BD3338008DBC95 /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		8C63CF4F27721BDB007180B9 /* WebRTC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WebRTC.xcframework; path = Carthage/Build/WebRTC.xcframework; sourceTree = "<group>"; };
 		8C63CF5027721BDB007180B9 /* VoxeetSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = VoxeetSDK.xcframework; path = Carthage/Build/VoxeetSDK.xcframework; sourceTree = "<group>"; };
 		8C63CF5127721BDB007180B9 /* dvclient.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = dvclient.xcframework; path = Carthage/Build/dvclient.xcframework; sourceTree = "<group>"; };
 		8CEE37902772AC2A006CCD64 /* Kingfisher.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Kingfisher.xcframework; path = Carthage/Build/Kingfisher.xcframework; sourceTree = "<group>"; };
 		CC2B28B11E54501E00E3EB57 /* VoxeetUXKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VoxeetUXKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC2B28B41E54501E00E3EB57 /* VoxeetUXKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VoxeetUXKit.h; sourceTree = "<group>"; };
-		CC2B28B51E54501E00E3EB57 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CC2B28D11E54522100E3EB57 /* VoxeetUXKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoxeetUXKit.swift; sourceTree = "<group>"; };
 		CC2B290C1E5469C300E3EB57 /* ConferenceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConferenceViewController.swift; sourceTree = "<group>"; };
 		CC5D082B1E56086F007845BA /* ConferenceViewController+VTConferenceDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ConferenceViewController+VTConferenceDelegate.swift"; sourceTree = "<group>"; };
@@ -132,7 +135,7 @@
 		CC2B28D01E5451FE00E3EB57 /* Other */ = {
 			isa = PBXGroup;
 			children = (
-				CC2B28B51E54501E00E3EB57 /* Info.plist */,
+				7470DC1827BD35700005CD12 /* settings.plist */,
 				CC2B28B41E54501E00E3EB57 /* VoxeetUXKit.h */,
 			);
 			path = Other;
@@ -163,6 +166,7 @@
 				5B8F7FE0279F2A03004A2E58 /* UIApplicationExtension.swift */,
 				CCEEEEF01F0A9C52000F4D61 /* Print+Extension.swift */,
 				FA1A98AC22F4666500ECD4E6 /* UIButton+Extension.swift */,
+				74ED2E4B27BD3338008DBC95 /* Bundle+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -389,6 +393,7 @@
 				FA72C5B42448911700489112 /* VoxeetUXKit.xcassets in Resources */,
 				CCC1BF111FE424E600C61343 /* Localizable.strings in Resources */,
 				FA89276A22E5DCC40048DD46 /* CallHangUp.mp3 in Resources */,
+				7470DC1927BD35700005CD12 /* settings.plist in Resources */,
 				FA89276822E5BAD20048DD46 /* CallJoined.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -403,6 +408,7 @@
 				FA89276C22E6F3840048DD46 /* UIRoundImageView.swift in Sources */,
 				FA55399A22B8DD9800A761DE /* VTUXParticipantsViewController.swift in Sources */,
 				FA1A98AD22F4666500ECD4E6 /* UIButton+Extension.swift in Sources */,
+				74ED2E4C27BD3338008DBC95 /* Bundle+Extension.swift in Sources */,
 				FAADC93B22F967A800F59938 /* OverlayViewController.swift in Sources */,
 				FACCE65F22B8E88500D2B33E /* VTUXParticipantsCollectionViewCell.swift in Sources */,
 				FA10CBDE2328F3F20084DD8F /* VTUXSpeakerConfiguration.swift in Sources */,
@@ -590,7 +596,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build",
 				);
-				INFOPLIST_FILE = VoxeetUXKit/Other/Info.plist;
+				INFOPLIST_FILE = VoxeetUXKit/Other/settings.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -623,7 +629,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build",
 				);
-				INFOPLIST_FILE = VoxeetUXKit/Other/Info.plist;
+				INFOPLIST_FILE = VoxeetUXKit/Other/settings.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (

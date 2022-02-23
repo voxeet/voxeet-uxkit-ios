@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vX9-VW-Q3b">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="vX9-VW-Q3b">
     <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -11,7 +11,7 @@
         <!--Conference View Controller-->
         <scene sceneID="N2R-xx-WaH">
             <objects>
-                <viewController id="vX9-VW-Q3b" customClass="ConferenceViewController" customModule="VoxeetUXKit" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="vX9-VW-Q3b" customClass="ConferenceViewController" customModule="VoxeetUXKit" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0gX-6N-twr">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -206,7 +206,7 @@
         <!--Participants View Controller-->
         <scene sceneID="c7y-kd-CqV">
             <objects>
-                <viewController storyboardIdentifier="VTUXParticipantsViewController" id="JvT-sH-dB0" customClass="VTUXParticipantsViewController" customModule="VoxeetUXKit" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VTUXParticipantsViewController" id="JvT-sH-dB0" customClass="VTUXParticipantsViewController" customModule="VoxeetUXKit" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ebQ-04-RVo">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -221,14 +221,14 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="VTUXParticipantCollectionViewCell" id="WEs-KL-rLl" customClass="VTUXParticipantCollectionViewCell" customModule="VoxeetUXKit" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="VTUXParticipantCollectionViewCell" id="WEs-KL-rLl" customClass="VTUXParticipantCollectionViewCell" customModule="VoxeetUXKit">
                                         <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="w5q-jN-BvG" customClass="UIRoundImageView" customModule="VoxeetUXKit" customModuleProvider="target">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="w5q-jN-BvG" customClass="UIRoundImageView" customModule="VoxeetUXKit">
                                                     <rect key="frame" x="15" y="0.0" width="50" height="50"/>
                                                     <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
@@ -301,7 +301,7 @@
         <!--Speaker View Controller-->
         <scene sceneID="Bsw-rU-Ks3">
             <objects>
-                <viewController storyboardIdentifier="VTUXSpeakerViewController" id="xxT-ES-Ghj" customClass="VTUXSpeakerViewController" customModule="VoxeetUXKit" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VTUXSpeakerViewController" id="xxT-ES-Ghj" customClass="VTUXSpeakerViewController" customModule="VoxeetUXKit" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="G1w-wr-so6">
                         <rect key="frame" x="0.0" y="0.0" width="359" height="200"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -309,7 +309,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="YfC-Tf-i4P">
                                 <rect key="frame" x="122" y="29.666666666666671" width="115" height="141"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2iK-9i-XAE" customClass="UIRoundImageView" customModule="VoxeetUXKit" customModuleProvider="target">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2iK-9i-XAE" customClass="UIRoundImageView" customModule="VoxeetUXKit">
                                         <rect key="frame" x="0.0" y="0.0" width="115" height="115"/>
                                         <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -350,7 +350,7 @@
         <!--Speaker Video View Controller-->
         <scene sceneID="tbg-RT-hk0">
             <objects>
-                <viewController storyboardIdentifier="VTUXSpeakerVideoViewController" id="8Au-2j-3sL" customClass="VTUXSpeakerVideoViewController" customModule="VoxeetUXKit" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VTUXSpeakerVideoViewController" id="8Au-2j-3sL" customClass="VTUXSpeakerVideoViewController" customModule="VoxeetUXKit" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pVH-yW-yZy">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -384,7 +384,7 @@
         <!--Action Bar View Controller-->
         <scene sceneID="N0q-dt-8cd">
             <objects>
-                <viewController storyboardIdentifier="VTUXActionBarViewController" id="Q3B-h3-n53" customClass="VTUXActionBarViewController" customModule="VoxeetUXKit" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VTUXActionBarViewController" id="Q3B-h3-n53" customClass="VTUXActionBarViewController" customModule="VoxeetUXKit" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ij3-dB-RZh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -471,7 +471,7 @@
         <!--Speaker Video Presentation View Controller-->
         <scene sceneID="kSh-7c-8jA">
             <objects>
-                <viewController storyboardIdentifier="VTUXSpeakerVideoPresentationViewController" id="KU8-WY-T4j" customClass="VTUXSpeakerVideoPresentationViewController" customModule="VoxeetUXKit" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VTUXSpeakerVideoPresentationViewController" id="KU8-WY-T4j" customClass="VTUXSpeakerVideoPresentationViewController" customModule="VoxeetUXKit" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="up9-b3-uFU">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -486,7 +486,7 @@
         <!--Speaker File Presentation View Controller-->
         <scene sceneID="Y2d-1F-vdc">
             <objects>
-                <viewController storyboardIdentifier="VTUXSpeakerFilePresentationViewController" id="d8H-mt-b9e" customClass="VTUXSpeakerFilePresentationViewController" customModule="VoxeetUXKit" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="VTUXSpeakerFilePresentationViewController" id="d8H-mt-b9e" customClass="VTUXSpeakerFilePresentationViewController" customModule="VoxeetUXKit" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oOu-kT-T0U">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

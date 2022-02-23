@@ -109,7 +109,7 @@ extension VTUXConferenceController {
             // Create and show conference view.
             if viewController == nil {
                 // Create conference UI and adds it to the window.
-                let storyboard = UIStoryboard(name: "VoxeetUXKit", bundle: Bundle(for: type(of: self)))
+                let storyboard = UIStoryboard(name: "VoxeetUXKit", bundle: .module)
                 viewController = storyboard.instantiateInitialViewController() as? ConferenceViewController
                 if let vc = viewController {
                     vc.view.accessibilityIdentifier = "ConferenceView"

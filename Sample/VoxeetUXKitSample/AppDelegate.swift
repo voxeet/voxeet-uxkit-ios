@@ -23,9 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         VoxeetSDK.shared.notification.push.type = .callKit
         VoxeetSDK.shared.conference.defaultBuiltInSpeaker = true
         VoxeetSDK.shared.conference.defaultVideo = false
-        VoxeetUXKit.shared.appearMaximized = true
-        VoxeetUXKit.shared.telecom = false
-        
+        VoxeetUXKit.shared.conferenceController?.appearMaximized = true
+        VoxeetUXKit.shared.conferenceController?.telecom = false
+
         return true
     }
 }
