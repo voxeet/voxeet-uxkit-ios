@@ -41,7 +41,7 @@ import VoxeetSDK
             speakerButton.isHidden = !actionBarConfig.displaySpeaker
             screenShareButton.isHidden = !actionBarConfig.displayScreenShare
             leaveButton.isHidden = !actionBarConfig.displayLeave
-            leaveButton.setImage(actionBarConfig.overrideLeave ?? UIImage(named: "Leave", in: Bundle(for: type(of: self)), compatibleWith: nil), for: .normal)
+          leaveButton.setImage(actionBarConfig.overrideLeave ?? UIImage(named: "Leave", in: .module, compatibleWith: nil), for: .normal)
         }
         muteButton(state: .off)
         cameraButton(state: .off)
@@ -124,7 +124,7 @@ import VoxeetSDK
     func speakerButtonHeadphonesState() {
         if let actionBarConfig = VoxeetUXKit.shared.conferenceController?.configuration.actionBar,
            actionBarConfig.overrideSpeakerOff == nil && actionBarConfig.overrideSpeakerOn == nil {
-            let image = UIImage(named: "SpeakerOnHeadphones", in: Bundle(for: type(of: self)), compatibleWith: nil)
+            let image = UIImage(named: "SpeakerOnHeadphones", in: .module, compatibleWith: nil)
             speakerButton.setImage(image, for: .normal)
         } else {
             speakerButton(state: .off)
@@ -134,7 +134,7 @@ import VoxeetSDK
     func speakerButtonBluetoothState() {
         if let actionBarConfig = VoxeetUXKit.shared.conferenceController?.configuration.actionBar,
            actionBarConfig.overrideSpeakerOff == nil && actionBarConfig.overrideSpeakerOn == nil {
-            let image = UIImage(named: "SpeakerOnBluetooth", in: Bundle(for: type(of: self)), compatibleWith: nil)
+          let image = UIImage(named: "SpeakerOnBluetooth", in: .module, compatibleWith: nil)
             speakerButton.setImage(image, for: .normal)
         } else {
             speakerButton(state: .off)
@@ -151,8 +151,7 @@ import VoxeetSDK
     }
     
     private func toggle(button: UIButton, state: ButtonState, defaultImageName: String, customImage: UIImage?) {
-        let defaultImage = UIImage(named: defaultImageName + (state == .off ? "Off" : "On"), in: Bundle(for: type(of: self)), compatibleWith: nil)
-        
+        let defaultImage = UIImage(named: defaultImageName + (state == .off ? "Off" : "On"), in: .module, compatibleWith: nil)
         button.tag = state.rawValue
         button.setImage(customImage ?? defaultImage, for: .normal)
     }

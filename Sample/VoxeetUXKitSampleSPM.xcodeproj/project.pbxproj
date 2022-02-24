@@ -7,16 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8CA2DAA5277312A800021373 /* dvclient.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA2DAA0277312A700021373 /* dvclient.xcframework */; };
-		8CA2DAA6277312A800021373 /* dvclient.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA2DAA0277312A700021373 /* dvclient.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		8CA2DAA7277312A800021373 /* Kingfisher.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA2DAA1277312A700021373 /* Kingfisher.xcframework */; };
-		8CA2DAA8277312A800021373 /* Kingfisher.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA2DAA1277312A700021373 /* Kingfisher.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		8CA2DAA9277312A800021373 /* WebRTC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA2DAA2277312A700021373 /* WebRTC.xcframework */; };
-		8CA2DAAA277312A800021373 /* WebRTC.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA2DAA2277312A700021373 /* WebRTC.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		8CA2DAAB277312A800021373 /* VoxeetSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA2DAA3277312A800021373 /* VoxeetSDK.xcframework */; };
-		8CA2DAAC277312A800021373 /* VoxeetSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA2DAA3277312A800021373 /* VoxeetSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		8CA2DAAD277312A800021373 /* VoxeetUXKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA2DAA4277312A800021373 /* VoxeetUXKit.xcframework */; };
-		8CA2DAAE277312A800021373 /* VoxeetUXKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA2DAA4277312A800021373 /* VoxeetUXKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		74E698D427C668C2006702DD /* VoxeetUXKit in Frameworks */ = {isa = PBXBuildFile; productRef = 74E698D327C668C2006702DD /* VoxeetUXKit */; };
 		CC26652C1F2B2DBA0077CFF5 /* CallKitOnHold.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CC26652B1F2B2DBA0077CFF5 /* CallKitOnHold.mp3 */; };
 		CC8B8B071E8E3C0600AEDD3B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8B8B061E8E3C0600AEDD3B /* AppDelegate.swift */; };
 		CC8B8B091E8E3C0600AEDD3B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8B8B081E8E3C0600AEDD3B /* ViewController.swift */; };
@@ -34,11 +25,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				8CA2DAA6277312A800021373 /* dvclient.xcframework in Embed Frameworks */,
-				8CA2DAAC277312A800021373 /* VoxeetSDK.xcframework in Embed Frameworks */,
-				8CA2DAA8277312A800021373 /* Kingfisher.xcframework in Embed Frameworks */,
-				8CA2DAAE277312A800021373 /* VoxeetUXKit.xcframework in Embed Frameworks */,
-				8CA2DAAA277312A800021373 /* WebRTC.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -46,11 +32,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		8CA2DAA0277312A700021373 /* dvclient.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = dvclient.xcframework; path = Carthage/Build/dvclient.xcframework; sourceTree = SOURCE_ROOT; };
-		8CA2DAA1277312A700021373 /* Kingfisher.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Kingfisher.xcframework; path = Carthage/Build/Kingfisher.xcframework; sourceTree = SOURCE_ROOT; };
-		8CA2DAA2277312A700021373 /* WebRTC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WebRTC.xcframework; path = Carthage/Build/WebRTC.xcframework; sourceTree = SOURCE_ROOT; };
-		8CA2DAA3277312A800021373 /* VoxeetSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = VoxeetSDK.xcframework; path = Carthage/Build/VoxeetSDK.xcframework; sourceTree = SOURCE_ROOT; };
-		8CA2DAA4277312A800021373 /* VoxeetUXKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = VoxeetUXKit.xcframework; path = Carthage/Build/VoxeetUXKit.xcframework; sourceTree = SOURCE_ROOT; };
+		74E698D127C66893006702DD /* voxeet-uxkit-ios */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "voxeet-uxkit-ios"; path = ..; sourceTree = "<group>"; };
 		CC26652B1F2B2DBA0077CFF5 /* CallKitOnHold.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CallKitOnHold.mp3; sourceTree = "<group>"; };
 		CC693E9D1EA9FD37004985B7 /* VoxeetUXKitSample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VoxeetUXKitSample.entitlements; sourceTree = "<group>"; };
 		CC8B8B031E8E3C0600AEDD3B /* VoxeetUXKitSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VoxeetUXKitSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -70,23 +52,35 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8CA2DAA5277312A800021373 /* dvclient.xcframework in Frameworks */,
-				8CA2DAAB277312A800021373 /* VoxeetSDK.xcframework in Frameworks */,
-				8CA2DAA7277312A800021373 /* Kingfisher.xcframework in Frameworks */,
-				8CA2DAAD277312A800021373 /* VoxeetUXKit.xcframework in Frameworks */,
-				8CA2DAA9277312A800021373 /* WebRTC.xcframework in Frameworks */,
+				74E698D427C668C2006702DD /* VoxeetUXKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		74E698D027C66893006702DD /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				74E698D127C66893006702DD /* voxeet-uxkit-ios */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		74E698D227C668C2006702DD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		CC8B8AFA1E8E3C0600AEDD3B = {
 			isa = PBXGroup;
 			children = (
+				74E698D027C66893006702DD /* Packages */,
 				CC8B8B051E8E3C0600AEDD3B /* VoxeetUXKitSample */,
-				CC8B8B181E8E3C6A00AEDD3B /* Frameworks */,
 				CC8B8B041E8E3C0600AEDD3B /* Products */,
+				74E698D227C668C2006702DD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -109,19 +103,6 @@
 				CCADC3CE1EBA0BD200B85516 /* Other */,
 			);
 			path = VoxeetUXKitSample;
-			sourceTree = "<group>";
-		};
-		CC8B8B181E8E3C6A00AEDD3B /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				8CA2DAA0277312A700021373 /* dvclient.xcframework */,
-				8CA2DAA1277312A700021373 /* Kingfisher.xcframework */,
-				8CA2DAA3277312A800021373 /* VoxeetSDK.xcframework */,
-				8CA2DAA4277312A800021373 /* VoxeetUXKit.xcframework */,
-				8CA2DAA2277312A700021373 /* WebRTC.xcframework */,
-			);
-			name = Frameworks;
-			path = VoxeetConferenceKitSample;
 			sourceTree = "<group>";
 		};
 		CCADC3CB1EBA0B7400B85516 /* Assets */ = {
@@ -171,9 +152,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		CC8B8B021E8E3C0600AEDD3B /* VoxeetUXKitSample */ = {
+		CC8B8B021E8E3C0600AEDD3B /* VoxeetUXKitSampleSPM */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CC8B8B151E8E3C0600AEDD3B /* Build configuration list for PBXNativeTarget "VoxeetUXKitSample" */;
+			buildConfigurationList = CC8B8B151E8E3C0600AEDD3B /* Build configuration list for PBXNativeTarget "VoxeetUXKitSampleSPM" */;
 			buildPhases = (
 				CC8B8AFF1E8E3C0600AEDD3B /* Sources */,
 				CC8B8B001E8E3C0600AEDD3B /* Frameworks */,
@@ -184,7 +165,10 @@
 			);
 			dependencies = (
 			);
-			name = VoxeetUXKitSample;
+			name = VoxeetUXKitSampleSPM;
+			packageProductDependencies = (
+				74E698D327C668C2006702DD /* VoxeetUXKit */,
+			);
 			productName = VoxeetConferenceKitSample;
 			productReference = CC8B8B031E8E3C0600AEDD3B /* VoxeetUXKitSample.app */;
 			productType = "com.apple.product-type.application";
@@ -215,7 +199,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CC8B8AFE1E8E3C0600AEDD3B /* Build configuration list for PBXProject "VoxeetUXKitSample" */;
+			buildConfigurationList = CC8B8AFE1E8E3C0600AEDD3B /* Build configuration list for PBXProject "VoxeetUXKitSampleSPM" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -225,11 +209,13 @@
 				fr,
 			);
 			mainGroup = CC8B8AFA1E8E3C0600AEDD3B;
+			packageReferences = (
+			);
 			productRefGroup = CC8B8B041E8E3C0600AEDD3B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CC8B8B021E8E3C0600AEDD3B /* VoxeetUXKitSample */,
+				CC8B8B021E8E3C0600AEDD3B /* VoxeetUXKitSampleSPM */,
 			);
 		};
 /* End PBXProject section */
@@ -419,7 +405,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/VoxeetUXKitSample",
-					"$(PROJECT_DIR)/Carthage/Build",
 				);
 				INFOPLIST_FILE = VoxeetUXKitSample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -447,7 +432,6 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/VoxeetUXKitSample",
-					"$(PROJECT_DIR)/Carthage/Build",
 				);
 				INFOPLIST_FILE = VoxeetUXKitSample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -466,7 +450,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CC8B8AFE1E8E3C0600AEDD3B /* Build configuration list for PBXProject "VoxeetUXKitSample" */ = {
+		CC8B8AFE1E8E3C0600AEDD3B /* Build configuration list for PBXProject "VoxeetUXKitSampleSPM" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CC8B8B131E8E3C0600AEDD3B /* Debug */,
@@ -475,7 +459,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CC8B8B151E8E3C0600AEDD3B /* Build configuration list for PBXNativeTarget "VoxeetUXKitSample" */ = {
+		CC8B8B151E8E3C0600AEDD3B /* Build configuration list for PBXNativeTarget "VoxeetUXKitSampleSPM" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CC8B8B161E8E3C0600AEDD3B /* Debug */,
@@ -485,6 +469,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		74E698D327C668C2006702DD /* VoxeetUXKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = VoxeetUXKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CC8B8AFB1E8E3C0600AEDD3B /* Project object */;
 }
