@@ -42,11 +42,15 @@ Before the installation, obtain your `Consumer Key` and `Consumer Secret`.
 
 #### Install the SDK using Swift Package Manager
 
-- Follow the official Apple's instruction [Adding Package Dependencies to Your App](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app).
-- Use https://github.com/voxeet/voxeet-uxkit-ios.git and select the release of your preference. Swift Package Manager support is available since Swift UXKit version 1.6.5.
+The Swift Package Manager is a tool for automating the process of downloading, compiling, and linking dependencies. The Swift Package Manager is supported in UXKit 1.6.5 and later versions.
 
-- Check if `Project` `Package Dependencies` tab contains `VoxeetUXKit` package.
-- Check if `Frameworks, Libraries, and Embedded Content` category contains `VoxeetUXKit` library.
+1. Select `File` ▸ `Add Packages…` to add package dependency.
+2. In the opened window, find the search box and specify the URL to the SDK repository: https://github.com/voxeet/voxeet-uxkit-ios.git
+3. Choose VoxeetUXKit from the results list.
+4. Check if the VoxeetUXKit package is listed in the `Package Dependencies` tab.
+5. Check if the `Frameworks, Libraries, and Embedded Content` category contains the `VoxeetUXKit` library.
+
+For more information, see [additional instructions](https://developer.apple.com/documentation/swift_packages/adding_package_dependencies_to_your_app) in the Apple Developer Documentation.
 
 #### Install the SDK using Carthage
 
