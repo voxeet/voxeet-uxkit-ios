@@ -3,20 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		8CA2DAA5277312A800021373 /* dvclient.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA2DAA0277312A700021373 /* dvclient.xcframework */; };
-		8CA2DAA6277312A800021373 /* dvclient.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA2DAA0277312A700021373 /* dvclient.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		8CA2DAA7277312A800021373 /* Kingfisher.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA2DAA1277312A700021373 /* Kingfisher.xcframework */; };
-		8CA2DAA8277312A800021373 /* Kingfisher.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA2DAA1277312A700021373 /* Kingfisher.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		8CA2DAA9277312A800021373 /* WebRTC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA2DAA2277312A700021373 /* WebRTC.xcframework */; };
-		8CA2DAAA277312A800021373 /* WebRTC.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA2DAA2277312A700021373 /* WebRTC.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		8CA2DAAB277312A800021373 /* VoxeetSDK.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA2DAA3277312A800021373 /* VoxeetSDK.xcframework */; };
-		8CA2DAAC277312A800021373 /* VoxeetSDK.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA2DAA3277312A800021373 /* VoxeetSDK.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		8CA2DAAD277312A800021373 /* VoxeetUXKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA2DAA4277312A800021373 /* VoxeetUXKit.xcframework */; };
-		8CA2DAAE277312A800021373 /* VoxeetUXKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA2DAA4277312A800021373 /* VoxeetUXKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9389F4CFD75AF221AFCD602F /* Pods_VoxeetUXKitSample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E711AAB8D0B56BEBBF0BE0DD /* Pods_VoxeetUXKitSample.framework */; };
 		CC26652C1F2B2DBA0077CFF5 /* CallKitOnHold.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CC26652B1F2B2DBA0077CFF5 /* CallKitOnHold.mp3 */; };
 		CC8B8B071E8E3C0600AEDD3B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8B8B061E8E3C0600AEDD3B /* AppDelegate.swift */; };
 		CC8B8B091E8E3C0600AEDD3B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC8B8B081E8E3C0600AEDD3B /* ViewController.swift */; };
@@ -34,11 +25,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				8CA2DAA6277312A800021373 /* dvclient.xcframework in Embed Frameworks */,
-				8CA2DAAC277312A800021373 /* VoxeetSDK.xcframework in Embed Frameworks */,
-				8CA2DAA8277312A800021373 /* Kingfisher.xcframework in Embed Frameworks */,
-				8CA2DAAE277312A800021373 /* VoxeetUXKit.xcframework in Embed Frameworks */,
-				8CA2DAAA277312A800021373 /* WebRTC.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -46,11 +32,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		8CA2DAA0277312A700021373 /* dvclient.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = dvclient.xcframework; path = Carthage/Build/dvclient.xcframework; sourceTree = SOURCE_ROOT; };
-		8CA2DAA1277312A700021373 /* Kingfisher.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Kingfisher.xcframework; path = Carthage/Build/Kingfisher.xcframework; sourceTree = SOURCE_ROOT; };
-		8CA2DAA2277312A700021373 /* WebRTC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WebRTC.xcframework; path = Carthage/Build/WebRTC.xcframework; sourceTree = SOURCE_ROOT; };
-		8CA2DAA3277312A800021373 /* VoxeetSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = VoxeetSDK.xcframework; path = Carthage/Build/VoxeetSDK.xcframework; sourceTree = SOURCE_ROOT; };
-		8CA2DAA4277312A800021373 /* VoxeetUXKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = VoxeetUXKit.xcframework; path = Carthage/Build/VoxeetUXKit.xcframework; sourceTree = SOURCE_ROOT; };
+		37C91D811D1C2AC53B76DF84 /* Pods-VoxeetUXKitSample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VoxeetUXKitSample.debug.xcconfig"; path = "Target Support Files/Pods-VoxeetUXKitSample/Pods-VoxeetUXKitSample.debug.xcconfig"; sourceTree = "<group>"; };
+		6AFE0357317E32AD3ACB58FC /* Pods-VoxeetUXKitSample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VoxeetUXKitSample.release.xcconfig"; path = "Target Support Files/Pods-VoxeetUXKitSample/Pods-VoxeetUXKitSample.release.xcconfig"; sourceTree = "<group>"; };
 		CC26652B1F2B2DBA0077CFF5 /* CallKitOnHold.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CallKitOnHold.mp3; sourceTree = "<group>"; };
 		CC693E9D1EA9FD37004985B7 /* VoxeetUXKitSample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VoxeetUXKitSample.entitlements; sourceTree = "<group>"; };
 		CC8B8B031E8E3C0600AEDD3B /* VoxeetUXKitSample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VoxeetUXKitSample.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -63,6 +46,7 @@
 		CCADC3C91EBA0A8200B85516 /* CallKitSound.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = CallKitSound.mp3; sourceTree = "<group>"; };
 		CCB49B132189B076003DD11C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CCB49B152189B092003DD11C /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E711AAB8D0B56BEBBF0BE0DD /* Pods_VoxeetUXKitSample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VoxeetUXKitSample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,23 +54,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8CA2DAA5277312A800021373 /* dvclient.xcframework in Frameworks */,
-				8CA2DAAB277312A800021373 /* VoxeetSDK.xcframework in Frameworks */,
-				8CA2DAA7277312A800021373 /* Kingfisher.xcframework in Frameworks */,
-				8CA2DAAD277312A800021373 /* VoxeetUXKit.xcframework in Frameworks */,
-				8CA2DAA9277312A800021373 /* WebRTC.xcframework in Frameworks */,
+				9389F4CFD75AF221AFCD602F /* Pods_VoxeetUXKitSample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		74F62499E8775D6E51A40090 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				37C91D811D1C2AC53B76DF84 /* Pods-VoxeetUXKitSample.debug.xcconfig */,
+				6AFE0357317E32AD3ACB58FC /* Pods-VoxeetUXKitSample.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		C32C96CF27BCDE11B0CA16AB /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E711AAB8D0B56BEBBF0BE0DD /* Pods_VoxeetUXKitSample.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		CC8B8AFA1E8E3C0600AEDD3B = {
 			isa = PBXGroup;
 			children = (
 				CC8B8B051E8E3C0600AEDD3B /* VoxeetUXKitSample */,
-				CC8B8B181E8E3C6A00AEDD3B /* Frameworks */,
 				CC8B8B041E8E3C0600AEDD3B /* Products */,
+				74F62499E8775D6E51A40090 /* Pods */,
+				C32C96CF27BCDE11B0CA16AB /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -109,19 +107,6 @@
 				CCADC3CE1EBA0BD200B85516 /* Other */,
 			);
 			path = VoxeetUXKitSample;
-			sourceTree = "<group>";
-		};
-		CC8B8B181E8E3C6A00AEDD3B /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				8CA2DAA0277312A700021373 /* dvclient.xcframework */,
-				8CA2DAA1277312A700021373 /* Kingfisher.xcframework */,
-				8CA2DAA3277312A800021373 /* VoxeetSDK.xcframework */,
-				8CA2DAA4277312A800021373 /* VoxeetUXKit.xcframework */,
-				8CA2DAA2277312A700021373 /* WebRTC.xcframework */,
-			);
-			name = Frameworks;
-			path = VoxeetConferenceKitSample;
 			sourceTree = "<group>";
 		};
 		CCADC3CB1EBA0B7400B85516 /* Assets */ = {
@@ -175,10 +160,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CC8B8B151E8E3C0600AEDD3B /* Build configuration list for PBXNativeTarget "VoxeetUXKitSample" */;
 			buildPhases = (
+				C3788CDE269944B5B0A418AB /* [CP] Check Pods Manifest.lock */,
 				CC8B8AFF1E8E3C0600AEDD3B /* Sources */,
 				CC8B8B001E8E3C0600AEDD3B /* Frameworks */,
 				CC8B8B011E8E3C0600AEDD3B /* Resources */,
 				CCC908E721747ECD002FE6D6 /* Embed Frameworks */,
+				0F347385209720026DC9AF86 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -215,7 +202,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CC8B8AFE1E8E3C0600AEDD3B /* Build configuration list for PBXProject "VoxeetUXKitSample" */;
+			buildConfigurationList = CC8B8AFE1E8E3C0600AEDD3B /* Build configuration list for PBXProject "VoxeetUXKitSampleCocoaPods" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -249,6 +236,57 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0F347385209720026DC9AF86 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VoxeetUXKitSample/Pods-VoxeetUXKitSample-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
+				"${BUILT_PRODUCTS_DIR}/VoxeetUXKit/VoxeetUXKit.framework",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/VoxeetSDK/VoxeetSDK.framework/VoxeetSDK",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/VoxeetSDK/WebRTC.framework/WebRTC",
+				"${PODS_XCFRAMEWORKS_BUILD_DIR}/VoxeetSDK/dvclient.framework/dvclient",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VoxeetUXKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VoxeetSDK.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WebRTC.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/dvclient.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VoxeetUXKitSample/Pods-VoxeetUXKitSample-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C3788CDE269944B5B0A418AB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-VoxeetUXKitSample-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		CC8B8AFF1E8E3C0600AEDD3B /* Sources */ = {
@@ -341,7 +379,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -396,11 +434,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -409,6 +446,7 @@
 		};
 		CC8B8B161E8E3C0600AEDD3B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 37C91D811D1C2AC53B76DF84 /* Pods-VoxeetUXKitSample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = VoxeetUXKitSample/VoxeetUXKitSample.entitlements;
@@ -423,10 +461,7 @@
 				);
 				INFOPLIST_FILE = VoxeetUXKitSample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.2.6;
 				PRODUCT_BUNDLE_IDENTIFIER = io.voxeet;
 				PRODUCT_NAME = VoxeetUXKitSample;
@@ -437,6 +472,7 @@
 		};
 		CC8B8B171E8E3C0600AEDD3B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6AFE0357317E32AD3ACB58FC /* Pods-VoxeetUXKitSample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = VoxeetUXKitSample/VoxeetUXKitSample.entitlements;
@@ -451,10 +487,7 @@
 				);
 				INFOPLIST_FILE = VoxeetUXKitSample/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MARKETING_VERSION = 1.2.6;
 				PRODUCT_BUNDLE_IDENTIFIER = io.voxeet;
 				PRODUCT_NAME = VoxeetUXKitSample;
@@ -466,7 +499,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CC8B8AFE1E8E3C0600AEDD3B /* Build configuration list for PBXProject "VoxeetUXKitSample" */ = {
+		CC8B8AFE1E8E3C0600AEDD3B /* Build configuration list for PBXProject "VoxeetUXKitSampleCocoaPods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CC8B8B131E8E3C0600AEDD3B /* Debug */,

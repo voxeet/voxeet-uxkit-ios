@@ -114,21 +114,21 @@ class ConferenceViewController: OverlayViewController {
         ownVideoRenderer.addGestureRecognizer(tap)
         
         // Sounds set up.
-        if let outgoingSoundURL = Bundle(for: type(of: self)).url(forResource: "CallOutgoing", withExtension: "mp3") {
+        if let outgoingSoundURL = Bundle.module.url(forResource: "CallOutgoing", withExtension: "mp3") {
             outgoingSound = try? AVAudioPlayer(contentsOf: outgoingSoundURL, fileTypeHint: AVFileType.mp3.rawValue)
             outgoingSound?.numberOfLoops = -1
             if !VoxeetSDK.shared.conference.defaultBuiltInSpeaker {
                 outgoingSound?.prepareToPlay()
             }
         }
-        if let joinedSoundURL = Bundle(for: type(of: self)).url(forResource: "CallJoined", withExtension: "mp3") {
+        if let joinedSoundURL = Bundle.module.url(forResource: "CallJoined", withExtension: "mp3") {
             joinedSound = try? AVAudioPlayer(contentsOf: joinedSoundURL, fileTypeHint: AVFileType.mp3.rawValue)
             joinedSound?.volume = 0.4
             if VoxeetSDK.shared.conference.defaultBuiltInSpeaker {
                 joinedSound?.prepareToPlay()
             }
         }
-        if let hangUpSoundURL = Bundle(for: type(of: self)).url(forResource: "CallHangUp", withExtension: "mp3") {
+        if let hangUpSoundURL = Bundle.module.url(forResource: "CallHangUp", withExtension: "mp3") {
             hangUpSound = try? AVAudioPlayer(contentsOf: hangUpSoundURL, fileTypeHint: AVFileType.mp3.rawValue)
             hangUpSound?.volume = 0.4
             hangUpSound?.prepareToPlay()
