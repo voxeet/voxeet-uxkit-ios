@@ -14,7 +14,7 @@ let package = Package(
       .package(
         name: "VoxeetSDK",
         url: "https://github.com/voxeet/voxeet-sdk-ios.git",
-        from: "3.3.3"
+        from: "3.4.0"
       ),
       .package(
         name: "Kingfisher",
