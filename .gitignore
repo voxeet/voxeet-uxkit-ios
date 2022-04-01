@@ -52,7 +52,7 @@ Carthage/
 Sample/Carthage/
 
 #SPM
-./swiftpm/
+.swiftpm/
 
 # fastlane
 #
