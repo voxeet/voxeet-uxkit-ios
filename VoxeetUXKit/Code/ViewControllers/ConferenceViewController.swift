@@ -250,11 +250,14 @@ class ConferenceViewController: OverlayViewController {
             filePresentationContainerView.isHidden = true
             videoPresentationContainerView.isHidden = true
             
-            // Stop outgoing sounds if they were started.
+            // Stop all sounds if they were started.
+            // All AVPlayers have to be stopped before call to VoxeetSDK.shared.conference.leave().
             outgoingSound?.stop()
             outgoingSound = nil
             joinedSound?.stop()
             joinedSound = nil
+            hangUpSound?.stop()
+            hangUpSound = nil
         default: break
         }
     }
@@ -698,6 +701,7 @@ extension ConferenceViewController: VTUXActionBarViewControllerDelegate {
         
         // Hang up sound.
         hangUpSound?.play()
+        sleep(1)
         
         // Remove audio observer to desactivate speakerButton behaviour.
         conferenceStartTimer?.invalidate()

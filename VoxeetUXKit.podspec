@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name = "VoxeetUXKit"
-  spec.version = "1.6.5"
+  spec.version = "1.7.0"
   spec.summary = "The Voxeet UXKit is a quick way of adding premium audio, video chats, and other supported options."
   spec.author = "Voxeet"
   spec.homepage = "https://dolby.io"
@@ -12,15 +12,11 @@ Pod::Spec.new do |spec|
   spec.resources = "VoxeetUXKit/**/*.{mp3,storyboard,xcassets,lproj}"
   spec.framework = "UIKit"
   spec.dependency "VoxeetSDK", "~> 3.0"
-  spec.dependency "Kingfisher"
+  spec.dependency "Kingfisher", "~> 7.0"
 
-  # MacBook arm simulator isn't supported.
   spec.pod_target_xcconfig = { 
-    'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64',
     'ENABLE_BITCODE' => 'NO' # Disable bitcode to support dvclient.framework dependency.
   }
-  spec.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
-
 
   spec.license = { :type => "Dolby Software License Agreement", :text => <<-LICENSE
     **BEFORE DOWNLOADING THE SOFTWARE, PLEASE CAREFULLY READ THE FOLLOWING AGREEMENT. DO NOT DOWNLOAD, INSTALL, ACTIVATE OR USE THIS SOFTWARE IF YOU HAVE NOT
