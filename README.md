@@ -13,7 +13,7 @@ Before installing the Swift UXKit, ensure that you meet the minimum hardware and
 - **Operating systems**: iOS 12.0 and later
 - **Integrated development environment**: [Xcode 13+](https://developer.apple.com/xcode/)
 - **Language**: Swift 5.5.2
-- **Supported architectures**: armv7, arm64, i386, x86_64
+- **Supported architectures**: arm64, x86_64
 
 ### Before you start
 
