@@ -14,12 +14,12 @@ let package = Package(
       .package(
         name: "VoxeetSDK",
         url: "https://github.com/voxeet/voxeet-sdk-ios.git",
-        from: "3.4.0"
+        .upToNextMajor(from: "3.0.0")
       ),
       .package(
         name: "Kingfisher",
         url: "https://github.com/onevcat/Kingfisher.git",
-        from: "7.1.0"
+        .upToNextMajor(from: "7.0.0")
       )
     ],
     targets:
