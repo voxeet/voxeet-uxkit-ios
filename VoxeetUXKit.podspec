@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name = "VoxeetUXKit"
-  spec.version = "1.7.0-beta.1"
+  spec.version = "1.7.0"
   spec.summary = "The Voxeet UXKit is a quick way of adding premium audio, video chats, and other supported options."
   spec.author = "Voxeet"
   spec.homepage = "https://dolby.io"
@@ -12,7 +12,7 @@ Pod::Spec.new do |spec|
   spec.resources = "VoxeetUXKit/**/*.{mp3,storyboard,xcassets,lproj}"
   spec.framework = "UIKit"
   spec.dependency "VoxeetSDK", "~> 3.0"
-  spec.dependency "Kingfisher"
+  spec.dependency "Kingfisher", "~> 7.0"
 
   spec.pod_target_xcconfig = { 
     'ENABLE_BITCODE' => 'NO' # Disable bitcode to support dvclient.framework dependency.

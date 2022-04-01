@@ -50,6 +50,11 @@ playground.xcworkspace
 
 Carthage/
 Sample/Carthage/
+Sample/Pods/
+Sample/VoxeetUXKitSampleCocoaPods.xcworkspace/
+
+#SPM
+.swiftpm/
 
 # fastlane
 #
