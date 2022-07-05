@@ -130,7 +130,16 @@ extension ConferenceViewController: VTConferenceDelegate {
     func streamAdded(participant: VTParticipant, stream: MediaStream) {
         // Monkey patch: wait WebRTC media to be started (avoids sound button to blink).
         if conferenceStartTimer == nil {
-            conferenceStartTimer = Timer.scheduledTimer(timeInterval: 1.5, target: self, selector: #selector(conferenceStarted), userInfo: nil, repeats: false)
+            conferenceStartTimer = Timer.scheduledTimer(
+                timeInterval: 2,
+                target: self,
+                selector: #selector(conferenceStarted),
+                userInfo: nil,
+                repeats: false
+            )
+            if let conferenceStartTimer = conferenceStartTimer {
+                RunLoop.current.add(conferenceStartTimer, forMode: .common)
+            }
         }
         
         streamUpdated(participant: participant, stream: stream)
