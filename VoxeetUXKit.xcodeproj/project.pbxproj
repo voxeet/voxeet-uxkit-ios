@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5B8F7FE1279F2A03004A2E58 /* UIApplicationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B8F7FE0279F2A03004A2E58 /* UIApplicationExtension.swift */; };
+		7462B08128894BE400D654F5 /* dvdnr.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7462B08028894BE400D654F5 /* dvdnr.xcframework */; };
 		7470DC1927BD35700005CD12 /* settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7470DC1827BD35700005CD12 /* settings.plist */; };
 		74ED2E4C27BD3338008DBC95 /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74ED2E4B27BD3338008DBC95 /* Bundle+Extension.swift */; };
 		8C63CF5427721BDB007180B9 /* WebRTC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C63CF4F27721BDB007180B9 /* WebRTC.xcframework */; };
@@ -49,6 +50,7 @@
 
 /* Begin PBXFileReference section */
 		5B8F7FE0279F2A03004A2E58 /* UIApplicationExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIApplicationExtension.swift; sourceTree = "<group>"; };
+		7462B08028894BE400D654F5 /* dvdnr.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = dvdnr.xcframework; path = Carthage/Build/dvdnr.xcframework; sourceTree = "<group>"; };
 		7470DC1827BD35700005CD12 /* settings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = settings.plist; sourceTree = "<group>"; };
 		74ED2E4B27BD3338008DBC95 /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		8C63CF4F27721BDB007180B9 /* WebRTC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WebRTC.xcframework; path = Carthage/Build/WebRTC.xcframework; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8C63CF5827721BDB007180B9 /* dvclient.xcframework in Frameworks */,
+				7462B08128894BE400D654F5 /* dvdnr.xcframework in Frameworks */,
 				8C63CF5427721BDB007180B9 /* WebRTC.xcframework in Frameworks */,
 				8C63CF5627721BDB007180B9 /* VoxeetSDK.xcframework in Frameworks */,
 				8CEE37922772AC3D006CCD64 /* Kingfisher.xcframework in Frameworks */,
@@ -185,6 +188,7 @@
 			isa = PBXGroup;
 			children = (
 				8C63CF5127721BDB007180B9 /* dvclient.xcframework */,
+				7462B08028894BE400D654F5 /* dvdnr.xcframework */,
 				8C63CF5027721BDB007180B9 /* VoxeetSDK.xcframework */,
 				8C63CF4F27721BDB007180B9 /* WebRTC.xcframework */,
 				8CEE37902772AC2A006CCD64 /* Kingfisher.xcframework */,
