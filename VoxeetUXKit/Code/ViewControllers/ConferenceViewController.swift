@@ -495,8 +495,8 @@ class ConferenceViewController: OverlayViewController {
         // Unpause current camera.
         if actionBarVC.cameraButton.tag == 2 {
             let isFrontCamera = VoxeetSDK.shared.mediaDevice.isFrontCamera
-            VoxeetSDK.shared.conference.startVideo(isDefaultFrontFacing: isFrontCamera) { _ in
-                self.actionBarVC.cameraButton.isUserInteractionEnabled = true
+            VoxeetSDK.shared.video.local.start(isDefaultFrontFacing: isFrontCamera) { [weak self] _ in
+                self?.actionBarVC.cameraButton.isUserInteractionEnabled = true
             }
         } else {
             actionBarVC.cameraButton.isUserInteractionEnabled = true
@@ -523,10 +523,9 @@ class ConferenceViewController: OverlayViewController {
         if !(cameraStream?.videoTracks.isEmpty ?? true) {
             actionBarVC.cameraButton.tag = 2
             actionBarVC.cameraButton.isUserInteractionEnabled = false
-            VoxeetSDK.shared.conference.stopVideo { err in
-                if err != nil {
-                    self.actionBarVC.cameraButton.isUserInteractionEnabled = true
-                }
+            VoxeetSDK.shared.video.local.stop { [weak self] error in
+                guard error != nil else { return }
+                self?.actionBarVC.cameraButton.isUserInteractionEnabled = true
             }
         }
         
@@ -611,17 +610,17 @@ extension ConferenceViewController: VTUXActionBarViewControllerDelegate {
         // Unmuting with empty audio tracks should restart the audio (can happen when `sendAudio` permission is lost).
         actionBarVC.muteButton.isUserInteractionEnabled = false
         if !isMuted && audioPermissionInitiate {
-            VoxeetSDK.shared.conference.startAudio { error in
-                self.actionBarVC.muteButton.isUserInteractionEnabled = true
+            VoxeetSDK.shared.audio.local.start { [weak self] error in
+                self?.actionBarVC.muteButton.isUserInteractionEnabled = true
                 if error != nil {
-                    self.actionBarVC.muteButton(state: .off)
+                    self?.actionBarVC.muteButton(state: .off)
                 } else {
-                    self.audioPermissionInitiate = false
+                    self?.audioPermissionInitiate = false
                     
                     // Monkey patch: need to unmute after being invited without audio permission.
                     VoxeetSDK.shared.conference.mute(false) { error in
                         if error != nil {
-                            self.actionBarVC.muteButton(state: .off)
+                            self?.actionBarVC.muteButton(state: .off)
                         }
                     }
                 }
@@ -643,17 +642,17 @@ extension ConferenceViewController: VTUXActionBarViewControllerDelegate {
             if self.actionBarVC.cameraButton.tag == 0 {
                 self.actionBarVC.cameraButton(state: .on)
                 self.actionBarVC.cameraButton.isUserInteractionEnabled = false
-                VoxeetSDK.shared.conference.startVideo { error in
-                    self.actionBarVC.cameraButton.isUserInteractionEnabled = true
+                VoxeetSDK.shared.video.local.start { [weak self] error in
+                    self?.actionBarVC.cameraButton.isUserInteractionEnabled = true
                     if error != nil {
-                        self.actionBarVC.cameraButton(state: .off)
+                        self?.actionBarVC.cameraButton(state: .off)
                     }
                 }
             } else {
                 self.actionBarVC.cameraButton(state: .off)
                 self.actionBarVC.cameraButton.isUserInteractionEnabled = false
-                VoxeetSDK.shared.conference.stopVideo { error in
-                    self.actionBarVC.cameraButton.isUserInteractionEnabled = true
+                VoxeetSDK.shared.video.local.stop { [weak self] error in
+                    self?.actionBarVC.cameraButton.isUserInteractionEnabled = true
                 }
             }
         }
