@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7485FB3C28896B1500452B84 /* dvdnr.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7485FB3A28896B0E00452B84 /* dvdnr.xcframework */; };
+		7485FB3D28896B1500452B84 /* dvdnr.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 7485FB3A28896B0E00452B84 /* dvdnr.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8CA2DAA5277312A800021373 /* dvclient.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA2DAA0277312A700021373 /* dvclient.xcframework */; };
 		8CA2DAA6277312A800021373 /* dvclient.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA2DAA0277312A700021373 /* dvclient.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8CA2DAA7277312A800021373 /* Kingfisher.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CA2DAA1277312A700021373 /* Kingfisher.xcframework */; };
@@ -38,6 +40,7 @@
 				8CA2DAAC277312A800021373 /* VoxeetSDK.xcframework in Embed Frameworks */,
 				8CA2DAA8277312A800021373 /* Kingfisher.xcframework in Embed Frameworks */,
 				8CA2DAAE277312A800021373 /* VoxeetUXKit.xcframework in Embed Frameworks */,
+				7485FB3D28896B1500452B84 /* dvdnr.xcframework in Embed Frameworks */,
 				8CA2DAAA277312A800021373 /* WebRTC.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -46,6 +49,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7485FB3A28896B0E00452B84 /* dvdnr.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = dvdnr.xcframework; path = Carthage/Build/dvdnr.xcframework; sourceTree = SOURCE_ROOT; };
 		8CA2DAA0277312A700021373 /* dvclient.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = dvclient.xcframework; path = Carthage/Build/dvclient.xcframework; sourceTree = SOURCE_ROOT; };
 		8CA2DAA1277312A700021373 /* Kingfisher.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Kingfisher.xcframework; path = Carthage/Build/Kingfisher.xcframework; sourceTree = SOURCE_ROOT; };
 		8CA2DAA2277312A700021373 /* WebRTC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WebRTC.xcframework; path = Carthage/Build/WebRTC.xcframework; sourceTree = SOURCE_ROOT; };
@@ -74,6 +78,7 @@
 				8CA2DAAB277312A800021373 /* VoxeetSDK.xcframework in Frameworks */,
 				8CA2DAA7277312A800021373 /* Kingfisher.xcframework in Frameworks */,
 				8CA2DAAD277312A800021373 /* VoxeetUXKit.xcframework in Frameworks */,
+				7485FB3C28896B1500452B84 /* dvdnr.xcframework in Frameworks */,
 				8CA2DAA9277312A800021373 /* WebRTC.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -115,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				8CA2DAA0277312A700021373 /* dvclient.xcframework */,
+				7485FB3A28896B0E00452B84 /* dvdnr.xcframework */,
 				8CA2DAA1277312A700021373 /* Kingfisher.xcframework */,
 				8CA2DAA3277312A800021373 /* VoxeetSDK.xcframework */,
 				8CA2DAA4277312A800021373 /* VoxeetUXKit.xcframework */,
