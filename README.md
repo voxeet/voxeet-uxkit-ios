@@ -1,6 +1,6 @@
 # Voxeet UXKit iOS
 
-The Swift UXKit is a framework based on [iOS SDK](https://github.com/voxeet/voxeet-sdk-ios). If you wish to see how UXKit looks like and how it works, check a sample application available in the [Sample](Sample) folder.
+The Swift UXKit is a framework based on [iOS SDK](https://github.com/voxeet/voxeet-sdk-ios).
 
 ## Installing the UXKit
 
@@ -67,7 +67,7 @@ brew install carthage
 github "voxeet/voxeet-uxkit-ios" ~> 1.0
 ```
 
-- Run `carthage update --use-xcframeworks --platform iOS` to build the frameworks and drag and drop `VoxeetUXKit.xcframework`, `VoxeetSDK.xcframework`, `WebRTC.xcframework`, and `Kingfisher.xcframework` to the `Embedded Binaries` category in your Xcode project.
+- Run `carthage update --use-xcframeworks --platform iOS` to build the frameworks and drag and drop `VoxeetUXKit.xcframework`, `VoxeetSDK.xcframework`, `dvclient.xcframework`, `dvdnr.xcframework`,  `WebRTC.xcframework` and `Kingfisher.xcframework` to the `Embedded Binaries` category in your Xcode project.
 
 > Note: For more information about building platform-specific bundles using Carthage, see the [Carthage documentation](https://github.com/Carthage/Carthage#if-youre-building-for-ios-tvos-or-watchos).
 
@@ -96,7 +96,7 @@ pod 'VoxeetUXKit', '~> 1.0'
 
 - Unzip the downloaded files and drag and drop the frameworks to your Xcode project.
 
-- Select the `Copy items if needed` option using the proper target. In the `general` tab of your target, add the `VoxeetUXKit.xcframework`, `VoxeetSDK.xcframework`, and `WebRTC.xcframework` to the `Embedded Binaries` category.
+- Select the `Copy items if needed` option using the proper target. In the `general` tab of your target, add the `VoxeetUXKit.xcframework`, `VoxeetSDK.xcframework`, `dvclient.xcframework`, `dvdnr.xcframework` and `WebRTC.xcframework` to the `Embedded Binaries` category.
 
 - Download the Kingfisher library from [GitHub](https://github.com/onevcat/Kingfisher) and install the framework manually or using Carthage or CocoaPods.
 
