@@ -24,5 +24,6 @@ class VTUXParticipantCollectionViewCell: UICollectionViewCell {
         
         // Unattach the old stream before reusing the cell.
         videoRenderer.unattach()
+        videoRenderer.isMirrorEffect = VoxeetUXKit.shared.conferenceController?.isVideoViewMirrorEffect
     }
 }

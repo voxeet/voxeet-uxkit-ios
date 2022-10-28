@@ -31,6 +31,7 @@ import VoxeetSDK
         let pinch = UIPinchGestureRecognizer(target: self,
                                              action: #selector(pinchGesture))
         videoRenderer.addGestureRecognizer(pinch)
+        videoRenderer.isMirrorEffect = VoxeetUXKit.shared.conferenceController?.isVideoViewMirrorEffect
         
         // Speaker configuration.
         let speakerConfig = VoxeetUXKit.shared.conferenceController?.configuration.speaker
@@ -57,7 +58,6 @@ import VoxeetSDK
             videoRenderer.subviews.first?.alpha = 0
             VoxeetSDK.shared.mediaDevice.switchCamera {
                 DispatchQueue.main.async {
-                    self.videoRenderer.mirrorEffect.toggle()
                     self.videoRenderer.isUserInteractionEnabled = true
                 }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {

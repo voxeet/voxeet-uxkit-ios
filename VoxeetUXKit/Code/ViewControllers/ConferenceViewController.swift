@@ -112,7 +112,8 @@ class ConferenceViewController: OverlayViewController {
         // Own video renderer tap gesture.
         let tap = UITapGestureRecognizer(target: self, action: #selector(switchCamera(recognizer:)))
         ownVideoRenderer.addGestureRecognizer(tap)
-        
+        ownVideoRenderer.isMirrorEffect = VoxeetUXKit.shared.conferenceController?.isVideoViewMirrorEffect
+
         // Sounds set up.
         if let outgoingSoundURL = Bundle.module.url(forResource: "CallOutgoing", withExtension: "mp3") {
             outgoingSound = try? AVAudioPlayer(contentsOf: outgoingSoundURL, fileTypeHint: AVFileType.mp3.rawValue)
@@ -305,26 +306,18 @@ class ConferenceViewController: OverlayViewController {
     }
     
     @objc private func switchCamera(recognizer: UITapGestureRecognizer) {
-        let mirrorEffectTransformation = self.ownVideoRenderer.layer.transform.m11 * -1
         flipImage.isHidden = true
         ownVideoRenderer.isUserInteractionEnabled = false
-        UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseIn, animations: {
-            self.ownVideoRenderer.transform = CGAffineTransform(scaleX: 1.2 * mirrorEffectTransformation, y: 1.2)
-        }) { _ in
-            UIView.animate(withDuration: 0.10, delay: 0, options: .curveEaseOut, animations: {
-                self.ownVideoRenderer.transform = CGAffineTransform(scaleX: 1 * mirrorEffectTransformation, y: 1)
-            }) { _ in
-                self.flipImage.isHidden = false
-                self.ownVideoRenderer.isUserInteractionEnabled = true
-            }
-        }
-        
         ownVideoRenderer.subviews.first?.alpha = 0
+        UIView.transition(with: ownVideoRenderer, duration: 0.6, options: .transitionFlipFromLeft, animations: nil)
         VoxeetSDK.shared.mediaDevice.switchCamera {
             DispatchQueue.main.async {
-                UIView.animate(withDuration: 0.10, animations: {
+                UIView.animate(withDuration: 0.1) {
                     self.ownVideoRenderer.subviews.first?.alpha = 1
-                })
+                } completion: { _ in
+                    self.flipImage.isHidden = false
+                    self.ownVideoRenderer.isUserInteractionEnabled = true
+                }
             }
         }
     }

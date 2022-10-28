@@ -30,6 +30,18 @@ import VoxeetSDK
             }
         }
     }
+
+    /// Enable or disable the mirror effect for all `VTVideoView`s. Setting the value to `nil` enables an automatic mirror effect.
+    public var isVideoViewMirrorEffect: Bool? = nil {
+        didSet {
+            let isMirrorEffect = isVideoViewMirrorEffect
+            DispatchQueue.main.async { [weak self] in
+                self?.viewController?.ownVideoRenderer.isMirrorEffect = isMirrorEffect
+                self?.viewController?.speakerVideoVC.videoRenderer.isMirrorEffect = isMirrorEffect
+                self?.viewController?.participantsVC.reload()
+            }
+        }
+    }
     
     public override init() {
         super.init()
