@@ -305,26 +305,18 @@ class ConferenceViewController: OverlayViewController {
     }
     
     @objc private func switchCamera(recognizer: UITapGestureRecognizer) {
-        let mirrorEffectTransformation = self.ownVideoRenderer.layer.transform.m11 * -1
         flipImage.isHidden = true
         ownVideoRenderer.isUserInteractionEnabled = false
-        UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseIn, animations: {
-            self.ownVideoRenderer.transform = CGAffineTransform(scaleX: 1.2 * mirrorEffectTransformation, y: 1.2)
-        }) { _ in
-            UIView.animate(withDuration: 0.10, delay: 0, options: .curveEaseOut, animations: {
-                self.ownVideoRenderer.transform = CGAffineTransform(scaleX: 1 * mirrorEffectTransformation, y: 1)
-            }) { _ in
-                self.flipImage.isHidden = false
-                self.ownVideoRenderer.isUserInteractionEnabled = true
-            }
-        }
-        
         ownVideoRenderer.subviews.first?.alpha = 0
+        UIView.transition(with: ownVideoRenderer, duration: 0.6, options: .transitionFlipFromLeft, animations: nil)
         VoxeetSDK.shared.mediaDevice.switchCamera {
             DispatchQueue.main.async {
-                UIView.animate(withDuration: 0.10, animations: {
+                UIView.animate(withDuration: 0.1) {
                     self.ownVideoRenderer.subviews.first?.alpha = 1
-                })
+                } completion: { _ in
+                    self.flipImage.isHidden = false
+                    self.ownVideoRenderer.isUserInteractionEnabled = true
+                }
             }
         }
     }
