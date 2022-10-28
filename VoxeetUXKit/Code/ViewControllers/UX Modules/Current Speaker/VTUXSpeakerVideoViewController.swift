@@ -57,7 +57,6 @@ import VoxeetSDK
             videoRenderer.subviews.first?.alpha = 0
             VoxeetSDK.shared.mediaDevice.switchCamera {
                 DispatchQueue.main.async {
-                    self.videoRenderer.mirrorEffect.toggle()
                     self.videoRenderer.isUserInteractionEnabled = true
                 }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
