@@ -112,7 +112,8 @@ class ConferenceViewController: OverlayViewController {
         // Own video renderer tap gesture.
         let tap = UITapGestureRecognizer(target: self, action: #selector(switchCamera(recognizer:)))
         ownVideoRenderer.addGestureRecognizer(tap)
-        
+        ownVideoRenderer.isMirrorEffect = VoxeetUXKit.shared.conferenceController?.isVideoViewMirrorEffect
+
         // Sounds set up.
         if let outgoingSoundURL = Bundle.module.url(forResource: "CallOutgoing", withExtension: "mp3") {
             outgoingSound = try? AVAudioPlayer(contentsOf: outgoingSoundURL, fileTypeHint: AVFileType.mp3.rawValue)
