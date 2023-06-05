@@ -177,11 +177,18 @@ import VoxeetSDK
         if let index = activeParticipants.firstIndex(where: { $0.id == participant.id }) {
             let indexPath = IndexPath(row: index, section: ParticipantSection.active.rawValue)
             if let cell = collectionView.cellForItem(at: indexPath) as? VTUXParticipantCollectionViewCell {
-                if let stream = participant.streams.first(where: { $0.type == .Camera }), !stream.videoTracks.isEmpty {
+                if let stream = participant.streams.first(where: { $0.type == .ScreenShare }) {
                     if collectionView.alpha != 0 { /* One-one call optimization */
                         cell.avatar.isHidden = true
                         cell.videoRenderer.isHidden = false
                         
+                        cell.videoRenderer.attach(participant: participant, stream: stream)
+                    }
+                } else if let stream = participant.streams.first(where: { $0.type == .Camera }), !stream.videoTracks.isEmpty {
+                    if collectionView.alpha != 0 { /* One-one call optimization */
+                        cell.avatar.isHidden = true
+                        cell.videoRenderer.isHidden = false
+
                         cell.videoRenderer.attach(participant: participant, stream: stream)
                     }
                 } else {
@@ -198,6 +205,17 @@ import VoxeetSDK
         lockedParticipant = participant
         selectedParticipant = lockedParticipant
         
+        let indexPaths = collectionView.indexPathsForVisibleItems
+        UIView.performWithoutAnimation {
+            collectionView.reloadItems(at: indexPaths)
+        }
+    }
+
+    public func select(participant: VTParticipant) {
+        // Select a participant.
+        selectedParticipant = participant
+
+        // Reload collection view.
         let indexPaths = collectionView.indexPathsForVisibleItems
         UIView.performWithoutAnimation {
             collectionView.reloadItems(at: indexPaths)
@@ -377,7 +395,12 @@ extension VTUXParticipantsViewController: UICollectionViewDelegate {
         
         // Unhide video renderer and attach stream.
         let participant = participantForItem(at: indexPath)
-        if let stream = participant.streams.first(where: { $0.type == .Camera }), !stream.videoTracks.isEmpty {
+        if let stream = participant.streams.first(where: { $0.type == .ScreenShare }) {
+            cell.avatar.isHidden = true
+            cell.videoRenderer.isHidden = false
+
+            cell.videoRenderer.attach(participant: participant, stream: stream)
+        } else if let stream = participant.streams.first(where: { $0.type == .Camera }),!stream.videoTracks.isEmpty {
             cell.avatar.isHidden = true
             cell.videoRenderer.isHidden = false
             
