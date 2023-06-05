@@ -203,39 +203,27 @@ extension ConferenceViewController: VTConferenceDelegate {
     
     private func screenShareStreamUpdated(participant: VTParticipant, stream: MediaStream) {
         if participant.id == VoxeetSDK.shared.session.participant?.id {
+            localScreenSharePresenterId = participant.id
             // Enable screen share button when broadcast mode is enabled.
             let broadcast = VoxeetSDK.shared.appGroup != nil
             if broadcast {
-                actionBarVC.screenShareButton(state: .on)
+                updateScreenShareButton()
             }
         } else if !stream.videoTracks.isEmpty {
-            // Stop active speaker and lock the current participant.
-            startPresentation(participant: participant)
-            
-            // Attach screen share stream.
-            speakerVideoContentFill = speakerVideoVC.videoRenderer.contentFill
-            speakerVideoVC.unattach()
-            speakerVideoVC.attach(participant: participant, stream: stream)
-            speakerVideoVC.contentFill(false, animated: false)
-            speakerVideoVC.view.isHidden = false
+            startReceivingScreenSharing(participant: participant)
         }
     }
     
     private func screenShareStreamRemoved(participant: VTParticipant, stream: MediaStream) {
         if participant.id == VoxeetSDK.shared.session.participant?.id {
+            localScreenSharePresenterId = nil
             // Disable screen share button when broadcast mode is enabled.
             let broadcast = VoxeetSDK.shared.appGroup != nil
             if broadcast {
-                actionBarVC.screenShareButton(state: .off)
+                updateScreenShareButton()
             }
         } else {
-            // Unattach screen share stream.
-            speakerVideoVC.unattach()
-            speakerVideoVC.contentFill(speakerVideoContentFill, animated: false)
-            speakerVideoVC.view.isHidden = true
-            
-            // Reset active speaker and unlock previous participant.
-            stopPresentation()
+            stopReceivingScreenSharing(participant: participant)
         }
     }
     

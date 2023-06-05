@@ -50,6 +50,8 @@ class ConferenceViewController: OverlayViewController {
     var speakerVideoContentFill = false
     var isMinimized = false
     var audioPermissionInitiate = false
+    var screenSharePresenterIds = [String]()
+    var localScreenSharePresenterId: String?
     
     // Conference timer.
     var conferenceStartTimer: Timer?
@@ -275,10 +277,6 @@ class ConferenceViewController: OverlayViewController {
         presenterID = participant?.id
         participantsVC.lock(participant: participant)
         activeSpeaker.end()
-        
-        // Disable screen share button.
-        actionBarVC.screenShareButton(state: .on)
-        actionBarVC.screenShareButton.isEnabled(false, animated: true)
     }
     
     func stopPresentation() {
@@ -287,10 +285,56 @@ class ConferenceViewController: OverlayViewController {
         participantsVC.lock(participant: nil)
         activeSpeaker.begin()
         activeSpeaker.refresh()
-        
-        // Enable screen share button.
-        actionBarVC.screenShareButton(state: .off)
-        actionBarVC.screenShareButton.isEnabled(true, animated: true)
+    }
+
+    func startReceivingScreenSharing(participant: VTParticipant) {
+        if let presenterId = participant.id {
+            screenSharePresenterIds.append(presenterId)
+        }
+        if screenSharePresenterIds.count == 1 {
+            speakerVideoContentFill = speakerVideoVC.videoRenderer.contentFill
+            speakerVideoVC.contentFill(false, animated: false)
+            speakerVideoVC.view.isHidden = false
+
+            updateScreenShareButton()
+        }
+        participantsVC.select(participant: participant)
+        updated(participant: participant)
+    }
+
+    func stopReceivingScreenSharing(participant: VTParticipant) {
+        screenSharePresenterIds.removeAll(where: { $0 == participant.id })
+
+        if let first = screenSharePresenterIds.first,
+           let participant = VoxeetSDK.shared.conference.current?.participants.first(where: { $0.id == first })
+        {
+            participantsVC.select(participant: participant)
+            updated(participant: participant)
+        } else {
+            speakerVideoVC.unattach()
+            speakerVideoVC.contentFill(speakerVideoContentFill, animated: false)
+            speakerVideoVC.view.isHidden = true
+            participantsVC.lock(participant: nil)
+            updated(participant: nil)
+
+            updateScreenShareButton()
+        }
+    }
+
+    func updateScreenShareButton() {
+        if localScreenSharePresenterId != nil || !screenSharePresenterIds.isEmpty {
+            actionBarVC.screenShareButton(state: .on)
+        } else {
+            actionBarVC.screenShareButton(state: .off)
+        }
+
+        if localScreenSharePresenterId != nil {
+            actionBarVC.screenShareButton.isEnabled(true, animated: true)
+        } else if !screenSharePresenterIds.isEmpty {
+            actionBarVC.screenShareButton.isEnabled(false, animated: true)
+        } else {
+            actionBarVC.screenShareButton.isEnabled(VoxeetSDK.shared.conference.mode == .standard, animated: true)
+        }
     }
     
     /*
@@ -562,10 +606,14 @@ extension ConferenceViewController: VTUXActiveSpeakerTimerDelegate {
         }
         
         // Attach / Unattach video stream.
-        let stream = participant.streams.first(where: { $0.type == .Camera })
-        if let stream = stream, !stream.videoTracks.isEmpty {
+        if let stream = participant.streams.first(where: { $0.type == .ScreenShare }), !stream.videoTracks.isEmpty {
             speakerVideoVC.attach(participant: participant, stream: stream)
             
+            speakerVideoVC.view.isHidden = false
+            speakerVC.view.isHidden = true
+        } else if let stream = participant.streams.first(where: { $0.type == .Camera }), !stream.videoTracks.isEmpty {
+            speakerVideoVC.attach(participant: participant, stream: stream)
+
             speakerVideoVC.view.isHidden = false
             speakerVC.view.isHidden = true
         } else {
@@ -676,7 +724,7 @@ extension ConferenceViewController: VTUXActionBarViewControllerDelegate {
                 actionBarVC.screenShareButton(state: .on)
                 VoxeetSDK.shared.conference.startScreenShare(broadcast: broadcast) { error in
                     if error != nil {
-                        self.actionBarVC.screenShareButton(state: .off)
+                        self.updateScreenShareButton()
                     }
                 }
             } else {
