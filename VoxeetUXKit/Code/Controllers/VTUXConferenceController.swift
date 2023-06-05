@@ -111,8 +111,9 @@ extension VTUXConferenceController {
         
         switch status {
         case .creating, .joining:
-            // Properly remove the viewController from superview when joining if the previous conference status wasn't the one expected (`created`).
-            if status == .joining && previousStatus != .created {
+            // Properly remove the viewController from superview when joining
+            // if the previous conference status wasn't one of the expected (`created`, `joined`).
+            if status == .joining, ![VTConferenceStatus.created, .joined].contains(previousStatus) {
                 // Remove conference view from superview.
                 self.viewController?.view.removeFromSuperview()
                 self.viewController = nil
